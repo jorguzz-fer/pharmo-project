@@ -2,10 +2,7 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy root tsconfig base (from packages parent)
-COPY ../tsconfig.base.json* ./
-
-# Copy server package files
+# Copy server package files (sem o tsconfig.base.json)
 COPY server/package*.json ./
 COPY server/tsconfig.json ./
 
