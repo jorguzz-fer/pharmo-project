@@ -1,0 +1,200 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  OPERATOR
+  FINANCIAL
+}
+
+enum VetStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+enum PrescricaoStatus {
+  DRAFT
+  SIGNED
+  SENT
+}
+
+enum PagamentoStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PedidoStatus {
+  AGUARDANDO_PAGAMENTO
+  PAGAMENTO_CONFIRMADO
+  EM_PRODUCAO
+  PRONTO_ENTREGA
+  ENTREGUE
+  CANCELADO
+}
+
+enum MetodoPagamento {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+}
+
+// 1. Veterinarios
+model Veterinario {
+  id            String        @id @default(uuid())
+  crv           String        @unique
+  nome          String
+  email         String        @unique
+  telefone      String
+  senha_hash    String
+  especialidade String?
+  status        VetStatus     @default(PENDING)
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+
+  prescricoes   Prescricao[]
+
+  @@map("veterinarios")
+}
+
+// 2. Tutores
+model Tutor {
+  id         String   @id @default(uuid())
+  nome       String
+  cpf        String   @unique
+  email      String?
+  telefone   String?
+  endereco   String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  animais     Animal[]
+  prescricoes Prescricao[]
+
+  @@map("tutores")
+}
+
+// 3. Animais
+model Animal {
+  id              String   @id @default(uuid())
+  tutor_id        String
+  nome            String
+  especie         String
+  raca            String?
+  peso            Float?
+  data_nascimento DateTime?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  tutor       Tutor        @relation(fields: [tutor_id], references: [id], onDelete: Cascade)
+  prescricoes Prescricao[]
+
+  @@map("animais")
+}
+
+// 4. Bulario
+model Bulario {
+  id              String   @id @default(uuid())
+  doenca          String
+  principio_ativo String
+  concentracao    String
+  posologia       String
+  contraindicacoes String?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@map("bulario")
+}
+
+// 5. Prescricoes
+model Prescricao {
+  id                 String           @id @default(uuid())
+  veterinario_id     String
+  tutor_id           String
+  animal_id          String
+  doenca             String?
+  medicamento        String
+  dosagem            String
+  forma_farmaceutica String
+  quantidade         String
+  observacoes        String?
+  status             PrescricaoStatus @default(DRAFT)
+  created_at         DateTime         @default(now())
+  updated_at         DateTime         @updatedAt
+
+  veterinario Veterinario @relation(fields: [veterinario_id], references: [id])
+  tutor       Tutor       @relation(fields: [tutor_id], references: [id])
+  animal      Animal      @relation(fields: [animal_id], references: [id])
+  orcamento   Orcamento?
+
+  @@map("prescricoes")
+}
+
+// 6. Orcamentos
+model Orcamento {
+  id               String            @id @default(uuid())
+  prescricao_id    String            @unique
+  valor_total      Decimal           @db.Decimal(10, 2)
+  status_pagamento PagamentoStatus   @default(PENDING)
+  link_pagamento   String?
+  data_pagamento   DateTime?
+  metodo_pagamento MetodoPagamento?
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+
+  prescricao Prescricao @relation(fields: [prescricao_id], references: [id])
+  pedido     Pedido?
+
+  @@map("orcamentos")
+}
+
+// 7. Conversas IA
+model ConversaIA {
+  id         String   @id @default(uuid())
+  telefone   String
+  mensagem   String
+  resposta   String
+  tipo       String?  // Ex: "duvida_tecnica", "orcamento"
+  created_at DateTime @default(now())
+
+  @@map("conversas_ia")
+}
+
+// 8. Pedidos
+model Pedido {
+  id              String       @id @default(uuid())
+  orcamento_id    String       @unique
+  status_producao PedidoStatus @default(AGUARDANDO_PAGAMENTO)
+  data_producao   DateTime?
+  data_entrega    DateTime?
+  observacoes     String?
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+
+  orcamento Orcamento @relation(fields: [orcamento_id], references: [id])
+
+  @@map("pedidos")
+}
+
+// 9. Usuarios Admin
+model UsuarioAdmin {
+  id         String   @id @default(uuid())
+  nome       String
+  email      String   @unique
+  senha_hash String
+  role       UserRole @default(OPERATOR)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("usuarios_admin")
+}
