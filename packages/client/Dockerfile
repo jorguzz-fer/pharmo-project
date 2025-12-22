@@ -6,27 +6,26 @@ WORKDIR /app
 # Instalar dependências necessárias
 RUN apk add --no-cache openssl libc6-compat
 
-# COPIAR ARQUIVOS DA RAIZ (Necessário para o TS e para as dependências)
+# 1. Copiar arquivos de configuração da RAIZ
 COPY package*.json ./
 COPY tsconfig.base.json ./
 
-# COPIAR ARQUIVOS DO CLIENTE
+# 2. Copiar arquivos específicos do CLIENT
 COPY packages/client/package*.json ./packages/client/
 
-# Instalar dependências (na raiz ou na subpasta conforme seu setup)
+# 3. Instalar tudo (o npm resolve as dependências do workspace)
 RUN npm install
 
-# Copiar o restante do código
+# 4. Copiar o código de todo o repositório
 COPY . .
 
-# EXECUTAR O BUILD APONTANDO PARA A PASTA CORRETA
-# Ajustamos o WORKDIR temporariamente para rodar o build do cliente
+# 5. Entrar na pasta do cliente e buildar
 WORKDIR /app/packages/client
 RUN npm run build
 
-# Estágio de Produção com Nginx
+# Estágio de Produção
 FROM nginx:alpine
-# O caminho aqui deve bater com onde o Vite gera os arquivos (geralmente dist)
+# Copia o resultado do build da subpasta para o Nginx
 COPY --from=builder /app/packages/client/dist /usr/share/nginx/html
 
 EXPOSE 80
