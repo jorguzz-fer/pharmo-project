@@ -1,7 +1,9 @@
 # Backend Dockerfile
 FROM node:18-alpine AS builder
-
 WORKDIR /app
+
+# Copy root tsconfig base (needed for monorepo)
+COPY ../../tsconfig.base.json* ./
 
 # Copy package files
 COPY package*.json ./
@@ -22,7 +24,6 @@ RUN npm run build
 
 # Production stage
 FROM node:18-alpine
-
 WORKDIR /app
 
 # Copy package files
@@ -37,7 +38,7 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 # Expose port
-EXPOSE 3001
+EXPOSE 3000
 
 # Start command
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
