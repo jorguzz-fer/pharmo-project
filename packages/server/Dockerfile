@@ -1,8 +1,12 @@
 # Backend Dockerfile
 FROM node:18-alpine AS builder
+
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
-# Copy server package files (sem o tsconfig.base.json)
+# Copy server package files
 COPY server/package*.json ./
 COPY server/tsconfig.json ./
 
@@ -21,6 +25,10 @@ RUN npm run build
 
 # Production stage
 FROM node:18-alpine
+
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
 # Copy package files
