@@ -1,0 +1,7 @@
+# Ignore node_modules in Docker context
+**/node_modules
+**/dist
+**/.git
+**/.env
+**/.env.local
+*.log

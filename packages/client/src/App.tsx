@@ -5,10 +5,23 @@ import { Dashboard } from './pages/Dashboard';
 import { PrescriptionWizard } from './pages/PrescriptionWizard';
 import { MainLayout } from './layouts/MainLayout';
 import { useAuthStore } from './store/auth';
+import { AdminLogin } from './pages/admin/AdminLogin';
+// We will create this next
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { AdminFollowUps } from './pages/admin/AdminFollowUps';
+import { AdminReports } from './pages/admin/AdminReports';
+import { OrderStatus } from './pages/OrderStatus';
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+function ProtectedRoute({ children, role }: { children: React.ReactNode, role?: 'VET' | 'ADMIN' }) {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (role && user?.role !== role) {
+    // Redirect based on role if trying to access unauthorized area
+    return user?.role === 'ADMIN' ? <Navigate to="/admin/dashboard" /> : <Navigate to="/dashboard" />;
+  }
+
+  return <>{children}</>;
 }
 
 export default function App() {
@@ -16,15 +29,29 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<AdminLogin />} />
 
+        {/* Vet Routes */}
         <Route path="/" element={
-          <ProtectedRoute>
+          <ProtectedRoute role="VET">
             <MainLayout />
           </ProtectedRoute>
         }>
           <Route index element={<Navigate to="/dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="prescricoes/nova" element={<PrescriptionWizard />} />
+          <Route path="pedidos/:id" element={<OrderStatus />} />
+        </Route>
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={
+          <ProtectedRoute role="ADMIN">
+            <MainLayout />
+          </ProtectedRoute>
+        }>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="follow-ups" element={<AdminFollowUps />} />
+          <Route path="relatorios" element={<AdminReports />} />
         </Route>
       </Routes>
     </BrowserRouter>

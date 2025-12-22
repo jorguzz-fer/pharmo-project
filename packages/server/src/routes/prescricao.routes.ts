@@ -14,5 +14,6 @@ router.get('/bulario/buscar', authMiddleware, bularioController.search);
 router.post('/prescricoes', authMiddleware, prescricaoController.create);
 router.get('/prescricoes', authMiddleware, prescricaoController.listByVet);
 router.post('/prescricoes/:id/enviar', authMiddleware, prescricaoController.sendToClient);
+router.get('/prescricoes/:id/status', authMiddleware, prescricaoController.getOrderStatus);
 
 export { router as prescricaoRoutes };

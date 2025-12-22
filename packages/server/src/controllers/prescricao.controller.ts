@@ -107,4 +107,41 @@ export class PrescricaoController {
             return res.status(500).json({ error: 'Internal server error' });
         }
     }
+
+    async getOrderStatus(req: Request, res: Response) {
+        const { id } = req.params;
+
+        try {
+            const orcamento = await prisma.orcamento.findFirst({
+                where: { prescricao_id: id },
+                include: {
+                    prescricao: {
+                        include: {
+                            tutor: true,
+                            animal: true
+                        }
+                    },
+                    pedido: true
+                }
+            });
+
+            if (!orcamento) {
+                return res.status(404).json({ error: 'Pedido não encontrado' });
+            }
+
+            return res.json({
+                orcamento: {
+                    id: orcamento.id,
+                    valor_total: orcamento.valor_total,
+                    status_pagamento: orcamento.status_pagamento,
+                    link_pagamento: orcamento.link_pagamento,
+                    data_pagamento: orcamento.data_pagamento,
+                    prescricao: orcamento.prescricao
+                },
+                pedido: orcamento.pedido
+            });
+        } catch (error) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
 }

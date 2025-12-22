@@ -5,5 +5,6 @@ const router = Router();
 const authController = new AuthController();
 
 router.post('/auth/veterinario/login', authController.loginVet);
+router.post('/auth/admin/login', authController.loginAdmin);
 
 export { router as authRoutes };

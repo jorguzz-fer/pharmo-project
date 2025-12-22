@@ -110,6 +110,7 @@ model Bulario {
   concentracao    String
   posologia       String
   contraindicacoes String?
+  controlado       Boolean @default(false)
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
@@ -181,7 +182,8 @@ model Pedido {
   created_at      DateTime     @default(now())
   updated_at      DateTime     @updatedAt
 
-  orcamento Orcamento @relation(fields: [orcamento_id], references: [id])
+  orcamento Orcamento  @relation(fields: [orcamento_id], references: [id])
+  followups FollowUp[]
 
   @@map("pedidos")
 }
@@ -197,4 +199,19 @@ model UsuarioAdmin {
   updated_at DateTime @updatedAt
 
   @@map("usuarios_admin")
+}
+
+// 10. Follow-ups
+model FollowUp {
+  id           String   @id @default(uuid())
+  pedido_id    String
+  mensagem     String
+  realizado    Boolean  @default(false)
+  data_contato DateTime
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  pedido Pedido @relation(fields: [pedido_id], references: [id])
+
+  @@map("follow_ups")
 }

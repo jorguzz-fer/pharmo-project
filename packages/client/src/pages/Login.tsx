@@ -34,7 +34,8 @@ export function Login() {
                     <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-4">
                         <Pill className="text-white w-7 h-7" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900">Acesso Veterinário</h1>
+                    <h2 className="text-3xl font-bold text-green-700 mb-2">PharmoPet</h2>
+                    <h1 className="text-xl font-semibold text-gray-900">Acesso Veterinário</h1>
                     <p className="text-gray-500">Entre com seu CRV para acessar</p>
                 </div>
 

@@ -77,14 +77,71 @@ export class PaymentController {
                         data_pagamento: new Date(),
                         metodo_pagamento: 'PIX'
                     },
-                    include: { prescricao: { include: { tutor: true } } }
+                    include: {
+                        prescricao: {
+                            include: {
+                                tutor: true,
+                                animal: true
+                            }
+                        }
+                    }
                 });
 
-                // 2. Create Order for Production
-                await tx.pedido.create({
+                // 2. Create or Update Order for Production
+                const existingPedido = await tx.pedido.findUnique({
+                    where: { orcamento_id: orcamento_id }
+                });
+
+                let pedido;
+                if (existingPedido) {
+                    pedido = await tx.pedido.update({
+                        where: { id: existingPedido.id },
+                        data: { status_producao: 'PAGAMENTO_CONFIRMADO' }
+                    });
+                } else {
+                    pedido = await tx.pedido.create({
+                        data: {
+                            orcamento_id: orcamento_id,
+                            status_producao: 'PAGAMENTO_CONFIRMADO'
+                        }
+                    });
+                }
+
+                // 3. Send to Production (PrismaFive Integration)
+                const { PrismaFiveService } = await import('../services/prismaFive.service');
+                const prismaFiveService = new PrismaFiveService();
+
+                const osId = await prismaFiveService.sendOrderToProduction(
+                    pedido.id,
+                    {
+                        medicamento: orc.prescricao.medicamento,
+                        dosagem: orc.prescricao.dosagem,
+                        quantidade: orc.prescricao.quantidade,
+                        tutor: orc.prescricao.tutor.nome,
+                        animal: orc.prescricao.animal.nome
+                    }
+                );
+
+                // 4. Update Order Status to EM_PRODUCAO
+                await tx.pedido.update({
+                    where: { id: pedido.id },
                     data: {
-                        orcamento_id: orcamento_id,
-                        status_producao: 'PAGAMENTO_CONFIRMADO'
+                        status_producao: 'EM_PRODUCAO',
+                        data_producao: new Date(),
+                        observacoes: `OS PrismaFive: ${osId}`
+                    }
+                });
+
+                // 5. Create Follow-up for 3 days from now
+                const followUpDate = new Date();
+                followUpDate.setDate(followUpDate.getDate() + 3);
+
+                await tx.followUp.create({
+                    data: {
+                        pedido_id: pedido.id,
+                        mensagem: `Verificar status de produção - ${orc.prescricao.medicamento}`,
+                        data_contato: followUpDate,
+                        realizado: false
                     }
                 });
 
@@ -99,6 +156,8 @@ export class PaymentController {
                     updatedOrcamento.prescricao_id.slice(0, 8) // Short ID for display
                 );
             }
+
+            console.log(`[WEBHOOK] ✅ Payment confirmed and order sent to production for ${orcamento_id}`);
         }
 
         return res.status(200).send('OK');
