@@ -2,19 +2,19 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy root tsconfig base (needed for monorepo)
-COPY ../../tsconfig.base.json* ./
+# Copy root tsconfig base (from packages parent)
+COPY ../tsconfig.base.json* ./
 
-# Copy package files
-COPY package*.json ./
-COPY tsconfig.json ./
+# Copy server package files
+COPY server/package*.json ./
+COPY server/tsconfig.json ./
 
 # Install dependencies
 RUN npm ci
 
 # Copy source code
-COPY src ./src
-COPY prisma ./prisma
+COPY server/src ./src
+COPY server/prisma ./prisma
 
 # Generate Prisma Client
 RUN npx prisma generate
@@ -27,7 +27,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY server/package*.json ./
 
 # Install production dependencies only
 RUN npm ci --only=production
