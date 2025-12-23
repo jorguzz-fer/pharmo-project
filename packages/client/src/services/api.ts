@@ -1,6 +1,15 @@
 import { useAuthStore } from '../store/auth';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
+const getBaseUrl = () => {
+    let url = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
+    // Remove trailing slash if present
+    if (url.endsWith('/')) url = url.slice(0, -1);
+    // Add /api if not present
+    if (!url.endsWith('/api')) url = `${url}/api`;
+    return url;
+};
+
+const API_URL = getBaseUrl();
 
 export const api = {
     async get(endpoint: string) {
@@ -12,8 +21,8 @@ export const api = {
             }
         });
         if (!res.ok) {
-            const error = await res.text();
-            throw new Error(error);
+            const error = await res.json().catch(() => ({ message: res.statusText }));
+            throw new Error(error.error || error.message || 'Erro na requisição');
         }
         return res.json();
     },
@@ -29,8 +38,8 @@ export const api = {
             body: JSON.stringify(data)
         });
         if (!res.ok) {
-            const error = await res.text();
-            throw new Error(error);
+            const error = await res.json().catch(() => ({ message: res.statusText }));
+            throw new Error(error.error || error.message || 'Erro na requisição');
         }
         return res.json();
     }
