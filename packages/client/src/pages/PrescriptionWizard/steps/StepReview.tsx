@@ -6,7 +6,7 @@ import { useAuthStore } from '../../../store/auth';
 import { api } from '../../../services/api';
 
 export function StepReview() {
-    const { tutor, animal, medication, setStep, reset } = usePrescriptionStore();
+    const { tutor, animal, medications, setStep, reset } = usePrescriptionStore();
     const { user } = useAuthStore();
     const navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
@@ -16,24 +16,25 @@ export function StepReview() {
         setIsSending(true);
         try {
             // Validate required data
-            if (!tutor?.id || !animal?.id || !user?.id || !medication) {
-                console.error("Missing data", { tutor, animal, user, medication });
-                alert('Erro: Dados incompletos');
+            if (!tutor?.id || !animal?.id || !user?.id || medications.length === 0) {
+                console.error("Missing data", { tutor, animal, user, medications });
+                alert('Erro: Dados incompletos. Adicione pelo menos um medicamento.');
                 setIsSending(false);
                 return;
             }
 
-            // Create Prescription
+            // Create Prescription with first medication (for compatibility)
+            const firstMed = medications[0];
             const data = {
                 veterinario_id: user.id,
                 tutor_id: tutor.id,
                 animal_id: animal.id,
-                medicamento: medication.drug,
-                dosagem: medication.dosage,
-                forma_farmaceutica: medication.form,
-                quantidade: medication.amount,
-                observacoes: medication.observations,
-                doenca: medication.disease
+                medicamento: firstMed.drug,
+                dosagem: firstMed.dosage,
+                forma_farmaceutica: firstMed.form,
+                quantidade: firstMed.amount,
+                observacoes: firstMed.observations,
+                doenca: '' // TODO: Add disease field
             };
 
             const response = await api.post('/prescricoes', data);
@@ -101,15 +102,21 @@ export function StepReview() {
                     </div>
 
                     <div className="border-t border-b border-gray-100 py-6 mb-6">
-                        <h4 className="font-bold text-gray-900 mb-4">Uso Veterinário</h4>
+                        <h4 className="font-bold text-gray-900 mb-4">Uso Veterinário ({medications.length} medicamento{medications.length > 1 ? 's' : ''})</h4>
 
-                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                            <div className="flex justify-between items-start mb-2">
-                                <span className="font-bold text-lg text-gray-900">{medication?.drug}</span>
-                                <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-bold">{medication?.form}</span>
-                            </div>
-                            <p className="text-sm text-gray-600 mb-1">Dose: {medication?.dosage} • Quantidade: {medication?.amount}</p>
-                            <p className="text-sm text-gray-800 italic mt-2">"{medication?.observations}"</p>
+                        <div className="space-y-3">
+                            {medications.map((med, index) => (
+                                <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <span className="font-bold text-lg text-gray-900">{med.drug}</span>
+                                        <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-bold">{med.form}</span>
+                                    </div>
+                                    <p className="text-sm text-gray-600 mb-1">Dose: {med.dosage} • Quantidade: {med.amount}</p>
+                                    {med.observations && (
+                                        <p className="text-sm text-gray-800 italic mt-2">"{med.observations}"</p>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
 

@@ -1,22 +1,27 @@
 import { create } from 'zustand';
 
+type Medication = {
+    id?: string;
+    codigo?: string;
+    drug: string;
+    dosage: string;
+    form: string;
+    amount: string;
+    observations: string;
+};
+
 interface PrescriptionState {
     step: number;
     tutor: { id?: string; name: string; cpf: string; phone: string; nome?: string; telefone?: string } | null;
     animal: { id?: string; name: string; weight: number; species?: string; breed?: string; nome?: string; peso?: number; especie?: string; raca?: string } | null;
-    medication: {
-        disease: string;
-        drug: string;
-        dosage: string;
-        form: string;
-        amount: string;
-        observations: string;
-    } | null;
+    medications: Medication[];
 
     setStep: (step: number) => void;
     setTutor: (tutor: PrescriptionState['tutor']) => void;
     setAnimal: (animal: PrescriptionState['animal']) => void;
-    setMedication: (medication: PrescriptionState['medication']) => void;
+    addMedication: (medication: Medication) => void;
+    removeMedication: (index: number) => void;
+    setMedications: (medications: Medication[]) => void;
     reset: () => void;
 }
 
@@ -24,11 +29,13 @@ export const usePrescriptionStore = create<PrescriptionState>((set) => ({
     step: 1,
     tutor: null,
     animal: null,
-    medication: null,
+    medications: [],
 
     setStep: (step) => set({ step }),
     setTutor: (tutor) => set({ tutor }),
     setAnimal: (animal) => set({ animal }),
-    setMedication: (medication) => set({ medication }),
-    reset: () => set({ step: 1, tutor: null, animal: null, medication: null }),
+    addMedication: (medication) => set((state) => ({ medications: [...state.medications, medication] })),
+    removeMedication: (index) => set((state) => ({ medications: state.medications.filter((_, i) => i !== index) })),
+    setMedications: (medications) => set({ medications }),
+    reset: () => set({ step: 1, tutor: null, animal: null, medications: [] }),
 }));

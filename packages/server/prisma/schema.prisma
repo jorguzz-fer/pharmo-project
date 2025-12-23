@@ -124,21 +124,39 @@ model Prescricao {
   tutor_id           String
   animal_id          String
   doenca             String?
-  medicamento        String
-  dosagem            String
-  forma_farmaceutica String
-  quantidade         String
+  medicamento        String           // DEPRECATED: mantido para compatibilidade
+  dosagem            String           // DEPRECATED: mantido para compatibilidade
+  forma_farmaceutica String           // DEPRECATED: mantido para compatibilidade
+  quantidade         String           // DEPRECATED: mantido para compatibilidade
   observacoes        String?
   status             PrescricaoStatus @default(DRAFT)
   created_at         DateTime         @default(now())
   updated_at         DateTime         @updatedAt
 
-  veterinario Veterinario @relation(fields: [veterinario_id], references: [id])
-  tutor       Tutor       @relation(fields: [tutor_id], references: [id])
-  animal      Animal      @relation(fields: [animal_id], references: [id])
-  orcamento   Orcamento?
+  veterinario  Veterinario              @relation(fields: [veterinario_id], references: [id])
+  tutor        Tutor                    @relation(fields: [tutor_id], references: [id])
+  animal       Animal                   @relation(fields: [animal_id], references: [id])
+  orcamento    Orcamento?
+  medicamentos PrescricaoMedicamento[]
 
   @@map("prescricoes")
+}
+
+// 5.1. Prescricao Medicamentos (Novo - Suporta múltiplos medicamentos)
+model PrescricaoMedicamento {
+  id                 String   @id @default(uuid())
+  prescricao_id      String
+  codigo_medicamento String?  // Código do bulário
+  medicamento        String   // Nome do medicamento
+  dosagem            String   // Ex: "10mg/kg"
+  forma_farmaceutica String   // Ex: "Comprimido", "Líquido"
+  quantidade         String   // Ex: "1 caixa", "30 comprimidos"
+  observacoes        String?  // Posologia detalhada
+  created_at         DateTime @default(now())
+
+  prescricao Prescricao @relation(fields: [prescricao_id], references: [id], onDelete: Cascade)
+
+  @@map("prescricao_medicamentos")
 }
 
 // 6. Orcamentos
