@@ -1,8 +1,11 @@
 # Frontend Dockerfile
 # Note: Easypanel uses repository root as build context
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
+
+# Copy tsconfig.base.json from root (required by client tsconfig)
+COPY tsconfig.base.json ./
 
 # Copy package files from packages/client
 COPY packages/client/package*.json ./
