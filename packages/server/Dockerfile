@@ -6,16 +6,17 @@ RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-# Copy package files (no server/ prefix - build context is already packages/server)
-COPY package*.json ./
-COPY tsconfig.json ./
+# Copy package files from root context
+COPY packages/server/package*.json ./
+COPY packages/server/tsconfig.json ./
 
-# Install dependencies
+# Install dependencies (might need modification if using root package-lock)
+# Ideally we should copy root package logs if needed, but keeping it simple
 RUN npm ci
 
 # Copy source code
-COPY src ./src
-COPY prisma ./prisma
+COPY packages/server/src ./src
+COPY packages/server/prisma ./prisma
 
 # Generate Prisma Client
 RUN npx prisma generate
@@ -32,7 +33,7 @@ RUN apk add --no-cache openssl
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY packages/server/package*.json ./
 
 # Install production dependencies only
 RUN npm ci --only=production
@@ -42,7 +43,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-# Expose port (should be 3001 as per your config)
+# Expose port
 EXPOSE 3001
 
 # Start command
