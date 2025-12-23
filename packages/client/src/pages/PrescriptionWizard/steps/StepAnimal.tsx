@@ -78,11 +78,11 @@ export function StepAnimal() {
                             className="cursor-pointer bg-white p-4 rounded-xl border border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all flex items-center gap-4 group"
                         >
                             <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-green-200 text-gray-500 group-hover:text-green-700">
-                                {a.species === 'Cão' ? <Dog className="w-6 h-6" /> : <Cat className="w-6 h-6" />}
+                                {(a.species || a.especie) === 'Cão' ? <Dog className="w-6 h-6" /> : <Cat className="w-6 h-6" />}
                             </div>
                             <div>
-                                <p className="font-bold text-gray-900">{a.name}</p>
-                                <p className="text-sm text-gray-500">{a.breed} • {a.weight}kg</p>
+                                <p className="font-bold text-gray-900">{a.name || a.nome}</p>
+                                <p className="text-sm text-gray-500">{a.breed || a.raca} • {a.weight || a.peso}kg</p>
                             </div>
                         </div>
                     ))}
