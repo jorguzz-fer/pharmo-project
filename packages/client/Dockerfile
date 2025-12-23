@@ -4,9 +4,6 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy tsconfig.base.json from root (required by client tsconfig)
-COPY tsconfig.base.json ./
-
 # Copy package files from packages/client
 COPY packages/client/package*.json ./
 
@@ -15,6 +12,9 @@ RUN npm ci
 
 # Copy source code from packages/client
 COPY packages/client/ ./
+
+# Copy tsconfig.base.json to parent directory (as expected by tsconfig.app.json)
+COPY tsconfig.base.json ../
 
 # Build production bundle
 RUN npm run build
