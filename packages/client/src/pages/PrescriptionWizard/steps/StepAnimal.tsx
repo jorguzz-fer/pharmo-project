@@ -38,10 +38,15 @@ export function StepAnimal() {
         try {
             if (!tutor?.id) throw new Error("Tutor not selected");
 
-            const newAnimal = await api.post('/animais', {
-                ...data,
-                tutor_id: tutor.id
-            });
+            const animalData = {
+                tutor_id: tutor.id,
+                nome: data.name,
+                especie: data.species,
+                peso: Number(data.weight), // Convert to number
+                raca: data.breed || undefined,
+            };
+
+            const newAnimal = await api.post('/animais', animalData);
 
             setAnimal(newAnimal);
             setStep(3);
