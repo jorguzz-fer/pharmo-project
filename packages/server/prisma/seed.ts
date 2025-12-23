@@ -9,16 +9,18 @@ async function main() {
     // Create Admin User
     const adminPassword = await bcrypt.hash('admin123', 10);
     const admin = await prisma.usuarioAdmin.upsert({
-        where: { email: 'admin@pharmo.com' },
-        update: {},
+        where: { email: 'admin@teste.com' },
+        update: {
+            senha_hash: adminPassword, // Update password if exists
+        },
         create: {
             nome: 'Administrador',
-            email: 'admin@pharmo.com',
+            email: 'admin@teste.com',
             senha_hash: adminPassword,
             role: 'ADMIN',
         },
     });
-    console.log('✅ Admin user created:', admin.email);
+    console.log('✅ Admin user created/updated:', admin.email);
 
     // Create Test Veterinarian
     const vetPassword = await bcrypt.hash('vet123', 10);

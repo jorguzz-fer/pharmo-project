@@ -22,9 +22,9 @@ export function AdminLogin() {
         try {
             await loginAdmin(data.email, data.password || 'password');
             navigate('/admin/dashboard');
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            setError('Falha no login. Verifique suas credenciais.');
+            setError(error.message || 'Falha no login. Verifique suas credenciais.');
         } finally {
             setIsLoading(false);
         }
