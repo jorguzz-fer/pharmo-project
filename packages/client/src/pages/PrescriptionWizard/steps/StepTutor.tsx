@@ -56,9 +56,9 @@ export function StepTutor() {
             if (!cpf) return alert('Digite um CPF');
 
             const response = await api.get(`/tutores/buscar?cpf=${cpf}`);
-            const found = response.data;
+            const found = response;
 
-            if (found) {
+            if (found && found.id) {
                 setValue('cpf', found.cpf);
                 setValue('name', found.nome);
                 setValue('phone', found.telefone);
@@ -67,9 +67,15 @@ export function StepTutor() {
                 alert('Tutor não encontrado. Preencha os dados para cadastrar.');
                 setTutor(null); // Clear previous selection
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Erro ao buscar tutor');
+            // Check if it's a 404 (not found) error
+            if (error.message?.includes('não encontrado') || error.message?.includes('404')) {
+                alert('Tutor não encontrado. Preencha os dados para cadastrar.');
+                setTutor(null);
+            } else {
+                alert('Erro ao buscar tutor: ' + (error.message || 'Erro desconhecido'));
+            }
         } finally {
             setSearchLoading(false);
         }
