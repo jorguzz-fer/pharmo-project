@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth';
 
 type LoginAdminForm = {
@@ -31,13 +31,15 @@ export function AdminLogin() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-            <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-8">
+        <div className="min-h-screen bg-gradient-to-br from-primary-900 to-secondary-900 flex items-center justify-center p-4">
+            <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8">
                 <div className="flex flex-col items-center mb-8">
-                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-4">
-                        <ShieldCheck className="text-white w-7 h-7" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900">PharmoPet Admin</h2>
+                    <img
+                        src="/logo.png"
+                        alt="PharmoPet Logo"
+                        className="w-20 h-20 mb-4"
+                    />
+                    <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">PharmoPet Admin</h2>
                     <p className="text-gray-500">Acesso Administrativo</p>
                 </div>
 
@@ -56,7 +58,7 @@ export function AdminLogin() {
                             {...register('email', { required: true })}
                             type="email"
                             placeholder="seu.nome@pharmo.com"
-                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                         />
                     </div>
 
@@ -74,7 +76,7 @@ export function AdminLogin() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                        className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold py-3 rounded-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                         {isLoading ? (
                             <>

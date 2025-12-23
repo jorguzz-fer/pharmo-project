@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { Pill, LayoutDashboard, FileText, LogOut, Menu, X, Phone, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, FileText, LogOut, Menu, X, Phone, TrendingUp } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
 
 export function MainLayout() {
@@ -25,14 +25,11 @@ export function MainLayout() {
     return (
         <div className="flex h-screen bg-gray-50">
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-30 flex items-center justify-between px-4">
+            <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-30 flex items-center justify-between px-4 shadow-sm">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                        <Pill className="text-white w-5 h-5" />
-                    </div>
-                    <span className="text-xl font-bold text-gray-900">PharmoPet</span>
+                    <img src="/logo-horizontal.png" alt="PharmoPet" className="h-8" />
                 </div>
-                <button onClick={toggleSidebar} className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                <button onClick={toggleSidebar} className="p-2 text-gray-600 hover:bg-primary-50 rounded-lg transition-colors">
                     {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
             </div>
@@ -50,11 +47,8 @@ export function MainLayout() {
                 fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-auto
                 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
             `}>
-                <div className="hidden lg:flex p-6 border-b border-gray-200 items-center gap-2">
-                    <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                        <Pill className="text-white w-5 h-5" />
-                    </div>
-                    <span className="text-xl font-bold text-gray-900">PharmoPet</span>
+                <div className="hidden lg:flex p-6 border-b border-gray-200 items-center justify-center">
+                    <img src="/logo-horizontal.png" alt="PharmoPet" className="h-10" />
                 </div>
 
                 <div className="lg:hidden p-6 border-b border-gray-200">
@@ -70,8 +64,8 @@ export function MainLayout() {
                                 onClick={closeSidebar}
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-green-50 text-green-700 font-medium'
-                                        : 'text-gray-600 hover:bg-gray-50'
+                                        ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700 font-medium'
+                                        : 'text-gray-600 hover:bg-primary-50'
                                     }`
                                 }
                             >
@@ -84,8 +78,8 @@ export function MainLayout() {
                                 onClick={closeSidebar}
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-green-50 text-green-700 font-medium'
-                                        : 'text-gray-600 hover:bg-gray-50'
+                                        ? 'bg-gradient-to-r from-primary-100 to-secondary-100 text-secondary-700 font-medium'
+                                        : 'text-gray-600 hover:bg-secondary-50'
                                     }`
                                 }
                             >
@@ -103,8 +97,8 @@ export function MainLayout() {
                                 onClick={closeSidebar}
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-gray-800 text-white font-medium'
-                                        : 'text-gray-600 hover:bg-gray-50'
+                                        ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-medium'
+                                        : 'text-gray-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50'
                                     }`
                                 }
                             >
