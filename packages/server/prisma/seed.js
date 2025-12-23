@@ -1,0 +1,52 @@
+const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcryptjs');
+
+const prisma = new PrismaClient();
+
+async function main() {
+    console.log('🌱 Starting seed...');
+
+    // Create Admin User
+    const adminPassword = await bcrypt.hash('admin123', 10);
+    const admin = await prisma.usuarioAdmin.upsert({
+        where: { email: 'admin@teste.com' },
+        update: {
+            senha_hash: adminPassword, // Update password if exists
+        },
+        create: {
+            nome: 'Administrador',
+            email: 'admin@teste.com',
+            senha_hash: adminPassword,
+            role: 'ADMIN',
+        },
+    });
+    console.log('✅ Admin user created/updated:', admin.email);
+
+    // Create Test Veterinarian
+    const vetPassword = await bcrypt.hash('vet123', 10);
+    const vet = await prisma.veterinario.upsert({
+        where: { crv: 'SP-12345' },
+        update: {
+            senha_hash: vetPassword,
+        },
+        create: {
+            nome: 'Dr. Fernando Jorge',
+            crv: 'SP-12345',
+            email: 'vet@pharmo.com',
+            telefone: '(11) 98765-4321',
+            senha_hash: vetPassword,
+        },
+    });
+    console.log('✅ Veterinarian created/updated:', vet.crv);
+
+    console.log('🎉 Seed completed!');
+}
+
+main()
+    .catch((e) => {
+        console.error('❌ Seed failed:', e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
