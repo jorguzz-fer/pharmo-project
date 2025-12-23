@@ -14,14 +14,17 @@ export function Login() {
     const { login } = useAuthStore();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const onSubmit = async (data: LoginForm) => {
         setIsLoading(true);
+        setError('');
         try {
-            await login(data.crv);
+            await login(data.crv, data.password || 'vet123');
             navigate('/dashboard');
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
+            setError(error.message || 'Falha no login. Verifique suas credenciais.');
         } finally {
             setIsLoading(false);
         }
@@ -39,6 +42,12 @@ export function Login() {
                     <h1 className="text-xl font-semibold text-gray-900">Acesso Veterinário</h1>
                     <p className="text-gray-500">Entre com seu CRV para acessar</p>
                 </div>
+
+                {error && (
+                    <div className="mb-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg text-center">
+                        {error}
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>
@@ -67,7 +76,7 @@ export function Login() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 rounded-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-70"
                     >
                         {isLoading ? (
                             <>
