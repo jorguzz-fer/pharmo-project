@@ -52,10 +52,13 @@ export class TutorController {
         }
 
         try {
+            // Clean CPF before searching (same as in create method)
+            const cleanCpf = cpf ? String(cpf).replace(/\D/g, '') : undefined;
+
             const tutor = await prisma.tutor.findFirst({
                 where: {
                     OR: [
-                        { cpf: cpf ? String(cpf) : undefined },
+                        { cpf: cleanCpf },
                         { telefone: telefone ? String(telefone) : undefined },
                     ],
                 },
