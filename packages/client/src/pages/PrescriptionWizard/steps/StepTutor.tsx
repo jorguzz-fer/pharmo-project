@@ -41,9 +41,10 @@ export function StepTutor() {
             const newTutor = await api.post('/tutores', tutorData);
             setTutor(newTutor);
             setStep(2);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Erro ao salvar tutor. Verifique os dados.');
+            const errorMessage = error.message || 'Erro desconhecido';
+            alert(`Erro ao salvar tutor: ${errorMessage}`);
         } finally {
             setIsLoading(false);
         }
