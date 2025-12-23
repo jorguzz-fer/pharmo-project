@@ -80,12 +80,12 @@ export function Dashboard() {
                                 <tr><td colSpan={5} className="text-center py-6">Nenhuma prescrição encontrada.</td></tr>
                             ) : prescriptions.map((p) => (
                                 <tr key={p.id} className="hover:bg-gray-50">
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{p.tutor?.name || '-'}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{p.animal?.name || '-'} ({p.animal?.species || 'Pet'})</td>
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{p.tutor?.nome || '-'}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{p.animal?.nome || '-'} ({p.animal?.especie || 'Pet'})</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{p.medicamento}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${p.orcamento?.status_pagamento === 'PAID' ? 'bg-green-100 text-green-700' :
-                                                p.status === 'SENT' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
+                                            p.status === 'SENT' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
                                             }`}>
                                             {p.orcamento?.status_pagamento === 'PAID' ? 'Pago' :
                                                 p.status === 'SENT' ? 'Enviado' : 'Rascunho'}

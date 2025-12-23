@@ -52,9 +52,9 @@ export function StepReview() {
                 navigate('/dashboard');
             }, 3000);
 
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Erro ao criar prescrição: ' + error.message);
+            alert('Erro ao criar prescrição: ' + (error?.message || 'Erro desconhecido'));
             setIsSending(false);
         }
     };
@@ -66,7 +66,7 @@ export function StepReview() {
                     <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Prescrição Enviada!</h2>
-                <p className="text-gray-500 mb-8">O link de pagamento e a receita foram enviados para o WhatsApp do tutor ({tutor?.phone}).</p>
+                <p className="text-gray-500 mb-8">O link de pagamento e a receita foram enviados para o WhatsApp do tutor ({tutor?.phone || tutor?.telefone}).</p>
                 <div className="animate-pulse text-sm text-gray-400">Redirecionando para o dashboard...</div>
             </div>
         )
@@ -90,13 +90,13 @@ export function StepReview() {
                     <div className="grid grid-cols-2 gap-8 mb-8">
                         <div>
                             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Tutor</span>
-                            <p className="font-semibold text-gray-900 text-lg">{tutor?.name}</p>
-                            <p className="text-gray-500">{tutor?.cpf} • {tutor?.phone}</p>
+                            <p className="font-semibold text-gray-900 text-lg">{tutor?.name || tutor?.nome}</p>
+                            <p className="text-gray-500">{tutor?.cpf} • {tutor?.phone || tutor?.telefone}</p>
                         </div>
                         <div>
                             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Paciente</span>
-                            <p className="font-semibold text-gray-900 text-lg">{animal?.name}</p>
-                            <p className="text-gray-500">{animal?.species} • {animal?.weight}kg</p>
+                            <p className="font-semibold text-gray-900 text-lg">{animal?.name || animal?.nome}</p>
+                            <p className="text-gray-500">{animal?.species || animal?.especie} • {animal?.weight || animal?.peso}kg</p>
                         </div>
                     </div>
 

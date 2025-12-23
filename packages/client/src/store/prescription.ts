@@ -2,8 +2,8 @@ import { create } from 'zustand';
 
 interface PrescriptionState {
     step: number;
-    tutor: { id?: string; name: string; cpf: string; phone: string } | null;
-    animal: { id?: string; name: string; weight: number; species?: string; breed?: string } | null;
+    tutor: { id?: string; name: string; cpf: string; phone: string; nome?: string; telefone?: string } | null;
+    animal: { id?: string; name: string; weight: number; species?: string; breed?: string; nome?: string; peso?: number; especie?: string; raca?: string } | null;
     medication: {
         disease: string;
         drug: string;

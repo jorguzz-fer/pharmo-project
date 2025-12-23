@@ -12,13 +12,12 @@ type TutorForm = {
 
 export function StepTutor() {
     const { setTutor, setStep, tutor } = usePrescriptionStore();
-    const { register, handleSubmit, setValue, watch } = useForm<TutorForm>({
+    const { register, handleSubmit, setValue } = useForm<TutorForm>({
         defaultValues: tutor || {}
     });
     const [isLoading, setIsLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
-
-    const cpfValue = watch('cpf');
+    const [searchCpf, setSearchCpf] = useState('');
 
     const onSubmit = async (data: TutorForm) => {
         setIsLoading(true);
@@ -51,15 +50,19 @@ export function StepTutor() {
     };
 
     const handleSearch = async () => {
-        if (!cpfValue) return;
         setSearchLoading(true);
         try {
-            const results = await api.get(`/tutores/buscar?cpf=${cpfValue}`);
-            if (results && results.length > 0) {
-                const found = results[0];
-                setValue('name', found.name);
-                setValue('phone', found.phone);
-                setTutor(found); // Save text status with ID
+            const cpf = searchCpf?.replace(/\D/g, '');
+            if (!cpf) return alert('Digite um CPF');
+
+            const response = await api.get(`/tutores/buscar?cpf=${cpf}`);
+            const found = response.data;
+
+            if (found) {
+                setValue('cpf', found.cpf);
+                setValue('name', found.nome);
+                setValue('phone', found.telefone);
+                setTutor({ ...found, name: found.nome, phone: found.telefone }); // Map to frontend format
             } else {
                 alert('Tutor não encontrado. Preencha os dados para cadastrar.');
                 setTutor(null); // Clear previous selection
@@ -81,7 +84,8 @@ export function StepTutor() {
                     <div className="flex-1 relative">
                         <input
                             type="text"
-                            {...register('cpf')}
+                            value={searchCpf}
+                            onChange={(e) => setSearchCpf(e.target.value)}
                             placeholder="Buscar por CPF"
                             className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 outline-none"
                         />

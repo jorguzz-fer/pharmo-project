@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { usePrescriptionStore } from '../../store/prescription';
 import { StepTutor } from './steps/StepTutor';
 import { StepAnimal } from './steps/StepAnimal';
@@ -6,7 +7,12 @@ import { StepReview } from './steps/StepReview';
 import { Check } from 'lucide-react';
 
 export function PrescriptionWizard() {
-    const { step } = usePrescriptionStore();
+    const { step, reset } = usePrescriptionStore();
+
+    // Reset prescription state when entering the wizard
+    useEffect(() => {
+        reset();
+    }, [reset]);
 
     const steps = [
         { num: 1, label: 'Tutor' },
