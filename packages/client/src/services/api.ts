@@ -21,6 +21,12 @@ export const api = {
             }
         });
         if (!res.ok) {
+            if (res.status === 401) {
+                // Token invalid or expired - logout user
+                useAuthStore.getState().logout();
+                window.location.href = '/login';
+                throw new Error('Sessão expirada. Faça login novamente.');
+            }
             const error = await res.json().catch(() => ({ message: res.statusText }));
             throw new Error(error.error || error.message || 'Erro na requisição');
         }
@@ -38,6 +44,12 @@ export const api = {
             body: JSON.stringify(data)
         });
         if (!res.ok) {
+            if (res.status === 401) {
+                // Token invalid or expired - logout user
+                useAuthStore.getState().logout();
+                window.location.href = '/login';
+                throw new Error('Sessão expirada. Faça login novamente.');
+            }
             const error = await res.json().catch(() => ({ message: res.statusText }));
             throw new Error(error.error || error.message || 'Erro na requisição');
         }
