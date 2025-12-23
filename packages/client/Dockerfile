@@ -1,28 +1,34 @@
-# Estágio de Build
-FROM node:20-alpine AS builder
+# Frontend Dockerfile
+FROM node:18-alpine AS builder
+
 WORKDIR /app
 
-# Instalar dependências de sistema
-RUN apk add --no-cache openssl libc6-compat
-
-# Copiar arquivos de configuração da RAIZ e de TODOS os pacotes
+# Copy package files (build context is packages/client)
 COPY package*.json ./
-COPY tsconfig.base.json ./
-COPY packages/client/package*.json ./packages/client/
-COPY packages/server/package*.json ./packages/server/
 
-# Instalação correta para Workspaces (isso instalará o Vite)
-RUN npm install --include=dev
+# Install dependencies
+RUN npm ci
 
-# Copiar o restante do código
+# Copy source code
 COPY . .
 
-# Executar o build usando o sistema de workspaces do NPM
-# O nome 'client' deve bater com o "name" no package.json da pasta client
-RUN npm run build --workspace=client
+# Build production bundle
+RUN npm run build
 
-# Estágio de Produção com Nginx
+# Production stage with nginx
 FROM nginx:alpine
-COPY --from=builder /app/packages/client/dist /usr/share/nginx/html
+
+# Remove default nginx config
+RUN rm -f /etc/nginx/conf.d/default.conf
+
+# Copy built files to nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port
 EXPOSE 80
+
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
