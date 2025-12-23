@@ -29,7 +29,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* Vet Routes */}
         <Route path="/" element={

@@ -76,7 +76,8 @@ export function AdminLogin() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-[#8177a6] to-[#1a908e] hover:from-[#615991] hover:to-[#146c6b] text-white font-semibold py-3 rounded-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                        style={{ background: isLoading ? undefined : 'linear-gradient(to right, #8177a6, #1a908e)' }}
+                        className="w-full bg-gradient-to-r from-[#8177a6] to-[#1a908e] hover:from-[#615991] hover:to-[#146c6b] text-white font-semibold py-3 rounded-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-70"
                     >
                         {isLoading ? (
                             <>
