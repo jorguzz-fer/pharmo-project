@@ -6,17 +6,16 @@ RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-# Copy package files from root context
-COPY packages/server/package*.json ./
-COPY packages/server/tsconfig.json ./
+# Copy package files from 'packages' context
+COPY server/package*.json ./
+COPY server/tsconfig.json ./
 
-# Install dependencies (might need modification if using root package-lock)
-# Ideally we should copy root package logs if needed, but keeping it simple
+# Install dependencies
 RUN npm ci
 
 # Copy source code
-COPY packages/server/src ./src
-COPY packages/server/prisma ./prisma
+COPY server/src ./src
+COPY server/prisma ./prisma
 
 # Generate Prisma Client
 RUN npx prisma generate
@@ -33,7 +32,7 @@ RUN apk add --no-cache openssl
 WORKDIR /app
 
 # Copy package files
-COPY packages/server/package*.json ./
+COPY server/package*.json ./
 
 # Install production dependencies only
 RUN npm ci --only=production
