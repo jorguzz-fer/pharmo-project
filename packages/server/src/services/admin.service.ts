@@ -7,7 +7,7 @@ export class AdminService {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        const [revenueData, pipelineData, topVets] = await Promise.all([
+        const [revenueData, pipelineData, topPrescriptions] = await Promise.all([
             // 1. Revenue
             prisma.orcamento.aggregate({
                 where: {
@@ -23,7 +23,7 @@ export class AdminService {
                 _count: { id: true }
             }),
 
-            // 3. Top Performers (Vets)
+            // 3. Top Performers (Vets) - Get prescription counts
             prisma.prescricao.groupBy({
                 by: ['veterinario_id'],
                 _count: { id: true },
@@ -35,6 +35,24 @@ export class AdminService {
                 take: 5
             })
         ]);
+
+        // Fetch veterinarian details for top performers
+        const vetIds = topPrescriptions.map(p => p.veterinario_id);
+        const vets = await prisma.veterinario.findMany({
+            where: { id: { in: vetIds } },
+            select: { id: true, nome: true, crv: true }
+        });
+
+        // Combine prescription counts with vet details
+        const topPerformers = topPrescriptions.map(p => {
+            const vet = vets.find(v => v.id === p.veterinario_id);
+            return {
+                veterinario_id: p.veterinario_id,
+                nome: vet?.nome || 'Desconhecido',
+                crv: vet?.crv || '-',
+                prescricoes_count: p._count.id
+            };
+        });
 
         // Transform pipeline data to map
         const pipelineMap: Record<string, number> = {};
@@ -48,7 +66,7 @@ export class AdminService {
                 count: revenueData._count.id
             },
             production_pipeline: pipelineMap,
-            top_performers: topVets
+            top_performers: topPerformers
         };
     }
 

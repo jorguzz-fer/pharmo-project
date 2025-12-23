@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { TrendingUp, Users, ShoppingBag, AlertCircle } from 'lucide-react';
-import { useAuthStore } from '../../store/auth';
+import { TrendingUp, ShoppingBag, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { api } from '../../services/api';
 
 type DashboardMetrics = {
     revenue: {
@@ -16,34 +16,49 @@ type DashboardMetrics = {
     };
     top_performers: Array<{
         veterinario_id: string;
-        _count: { id: number };
+        nome: string;
+        crv: string;
+        prescricoes_count: number;
     }>;
 };
 
+type FollowUp = {
+    id: string;
+    data_contato: string;
+    observacoes: string;
+    pedido: {
+        orcamento: {
+            prescricao: {
+                tutor: { nome: string };
+                animal: { nome: string };
+            };
+        };
+    };
+};
+
 export function AdminDashboard() {
-    const { token } = useAuthStore();
     const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
+    const [followUps, setFollowUps] = useState<FollowUp[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchMetrics = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/admin/dashboard', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setMetrics(data);
-                }
+                const [metricsData, followUpsData] = await Promise.all([
+                    api.get('/admin/dashboard'),
+                    api.get('/admin/follow-ups')
+                ]);
+                setMetrics(metricsData);
+                setFollowUps(followUpsData);
             } catch (error) {
-                console.error('Failed to fetch metrics', error);
+                console.error('Failed to fetch data', error);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchMetrics();
-    }, [token]);
+        fetchData();
+    }, []);
 
     if (isLoading) return <div className="p-8">Carregando métricas...</div>;
 
@@ -98,7 +113,7 @@ export function AdminDashboard() {
                     <div className="space-y-4">
                         {Object.entries(metrics?.production_pipeline || {}).map(([status, count]) => (
                             <div key={status} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span className="font-medium text-gray-700">{status.replace('_', ' ')}</span>
+                                <span className="font-medium text-gray-700">{status.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</span>
                                 <span className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-bold">{count}</span>
                             </div>
                         ))}
@@ -112,15 +127,15 @@ export function AdminDashboard() {
                 <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                     <h2 className="text-lg font-bold text-gray-900 mb-6">Top Veterinários</h2>
                     <div className="space-y-4">
-                        {metrics?.top_performers.map((vet) => (
+                        {metrics?.top_performers.map((vet, index) => (
                             <div key={vet.veterinario_id} className="flex justify-between items-center p-3 hover:bg-gray-50 rounded-lg transition-colors">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold">
-                                        V
+                                    <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        #{index + 1}
                                     </div>
                                     <div>
-                                        <p className="font-medium text-gray-900">Vet ID: {vet.veterinario_id.substring(0, 8)}...</p>
-                                        <p className="text-xs text-gray-500">{vet._count.id} prescrições</p>
+                                        <p className="font-medium text-gray-900">{vet.nome}</p>
+                                        <p className="text-xs text-gray-500">CRV: {vet.crv} • {vet.prescricoes_count} prescrições</p>
                                     </div>
                                 </div>
                             </div>
@@ -129,6 +144,36 @@ export function AdminDashboard() {
                             <p className="text-gray-500 text-center py-4">Nenhum dado disponível.</p>
                         )}
                     </div>
+                </div>
+            </div>
+
+            {/* Follow-ups Section */}
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <h2 className="text-lg font-bold text-gray-900 mb-6">Follow-ups Pendentes</h2>
+                <div className="space-y-3">
+                    {followUps.map((followUp) => (
+                        <div key={followUp.id} className="flex items-start gap-3 p-4 bg-orange-50 border border-orange-100 rounded-lg hover:bg-orange-100 transition-colors">
+                            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <Clock className="w-5 h-5 text-white" />
+                            </div>
+                            <div className="flex-1">
+                                <p className="font-medium text-gray-900">
+                                    {followUp.pedido.orcamento.prescricao.tutor.nome} - {followUp.pedido.orcamento.prescricao.animal.nome}
+                                </p>
+                                <p className="text-sm text-gray-600 mt-1">{followUp.observacoes}</p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    Contato: {new Date(followUp.data_contato).toLocaleDateString('pt-BR')}
+                                </p>
+                            </div>
+                            <button className="px-3 py-1 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors flex items-center gap-1">
+                                <CheckCircle className="w-4 h-4" />
+                                Concluir
+                            </button>
+                        </div>
+                    ))}
+                    {followUps.length === 0 && (
+                        <p className="text-gray-500 text-center py-4">Nenhum follow-up pendente.</p>
+                    )}
                 </div>
             </div>
         </div>
