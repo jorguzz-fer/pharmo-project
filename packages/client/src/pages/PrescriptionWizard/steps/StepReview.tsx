@@ -1,26 +1,62 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, Printer, CheckCircle, FileText } from 'lucide-react';
+import { ArrowLeft, Send, Printer, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePrescriptionStore } from '../../../store/prescription';
+import { useAuthStore } from '../../../store/auth';
+import { api } from '../../../services/api';
 
 export function StepReview() {
     const { tutor, animal, medication, setStep, reset } = usePrescriptionStore();
+    const { user } = useAuthStore();
     const navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
     const handleFinish = async () => {
         setIsSending(true);
-        // Mock API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        setIsSending(false);
-        setIsSuccess(true);
+        try {
+            // Validate required data
+            if (!tutor?.id || !animal?.id || !user?.id || !medication) {
+                console.error("Missing data", { tutor, animal, user, medication });
+                alert('Erro: Dados incompletos');
+                setIsSending(false);
+                return;
+            }
 
-        // Redirect after success
-        setTimeout(() => {
-            reset();
-            navigate('/dashboard');
-        }, 3000);
+            // Create Prescription
+            const data = {
+                veterinario_id: user.id,
+                tutor_id: tutor.id,
+                animal_id: animal.id,
+                medicamento: medication.drug,
+                dosagem: medication.dosage,
+                forma_farmaceutica: medication.form,
+                quantidade: medication.amount,
+                observacoes: medication.observations,
+                doenca: medication.disease
+            };
+
+            const response = await api.post('/prescricoes', data);
+
+            // Optionally send (mock)
+            if (response.prescricao?.id) {
+                await api.post(`/prescricoes/${response.prescricao.id}/enviar`, {});
+            }
+
+            setIsSending(false);
+            setIsSuccess(true);
+
+            // Redirect after success
+            setTimeout(() => {
+                reset();
+                navigate('/dashboard');
+            }, 3000);
+
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao criar prescrição: ' + error.message);
+            setIsSending(false);
+        }
     };
 
     if (isSuccess) {
@@ -41,11 +77,11 @@ export function StepReview() {
             <h2 className="text-xl font-bold text-gray-900 mb-6">4. Revisão Final</h2>
 
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-8">
-                {/* Prescription Header Mock */}
+                {/* Prescription Header */}
                 <div className="bg-green-600 text-white p-6 flex justify-between items-start">
                     <div>
-                        <h3 className="text-xl font-bold mb-1">Dr. Fernando Jorge</h3>
-                        <p className="text-green-100 text-sm">CRMV-SP 123456</p>
+                        <h3 className="text-xl font-bold mb-1">{user?.name}</h3>
+                        <p className="text-green-100 text-sm">CRMV {user?.crv}</p>
                     </div>
                     <FileText className="w-8 h-8 opacity-50" />
                 </div>
@@ -80,7 +116,7 @@ export function StepReview() {
                     <div className="flex justify-between items-center text-sm text-gray-500">
                         <p>Data: {new Date().toLocaleDateString()}</p>
                         <div className="text-right">
-                            <p className="font-bold text-gray-900 text-lg">Orçamento: R$ 250,00</p>
+                            <p className="font-bold text-gray-900 text-lg">Orçamento: Calculado...</p>
                             <p className="text-xs">Válido por 24h</p>
                         </div>
                     </div>
@@ -109,10 +145,15 @@ export function StepReview() {
                     </button>
                     <button
                         onClick={handleFinish}
-                        className="flex items-center gap-2 px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 shadow-md transform transition hover:-translate-y-0.5"
+                        className="flex items-center gap-2 px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 shadow-md transform transition hover:-translate-y-0.5 disabled:opacity-50"
                         disabled={isSending}
                     >
-                        {isSending ? 'Processando...' : (
+                        {isSending ? (
+                            <>
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                Processando...
+                            </>
+                        ) : (
                             <>
                                 Assinar e Enviar
                                 <Send className="w-4 h-4" />

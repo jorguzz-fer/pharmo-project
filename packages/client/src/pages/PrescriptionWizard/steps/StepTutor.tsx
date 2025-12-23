@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ArrowRight, Search } from 'lucide-react';
+import { ArrowRight, Search, Loader2 } from 'lucide-react';
 import { usePrescriptionStore } from '../../../store/prescription';
+import { api } from '../../../services/api';
 
 type TutorForm = {
     cpf: string;
@@ -10,22 +12,56 @@ type TutorForm = {
 
 export function StepTutor() {
     const { setTutor, setStep, tutor } = usePrescriptionStore();
-    const { register, handleSubmit, setValue } = useForm<TutorForm>({
+    const { register, handleSubmit, setValue, watch } = useForm<TutorForm>({
         defaultValues: tutor || {}
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false);
 
-    const onSubmit = (data: TutorForm) => {
-        // Mock simulation of API response with ID
-        setTutor({ ...data, id: 'mock-tutor-id' });
-        setStep(2);
+    const cpfValue = watch('cpf');
+
+    const onSubmit = async (data: TutorForm) => {
+        setIsLoading(true);
+        try {
+            // Check if we already have an ID (from search)
+            if (tutor?.id && tutor.cpf === data.cpf) {
+                setTutor({ ...tutor, ...data });
+                setStep(2);
+                return;
+            }
+
+            // Otherwise create new tutor
+            const newTutor = await api.post('/tutores', data);
+            setTutor(newTutor);
+            setStep(2);
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao salvar tutor. Verifique os dados.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const handleSearch = () => {
-        // Mock search logic
-        console.log('Searching for CPF...');
-        // Simulate finding a user
-        setValue('name', 'Maria Silva');
-        setValue('phone', '(11) 99999-9999');
+    const handleSearch = async () => {
+        if (!cpfValue) return;
+        setSearchLoading(true);
+        try {
+            const results = await api.get(`/tutores/buscar?cpf=${cpfValue}`);
+            if (results && results.length > 0) {
+                const found = results[0];
+                setValue('name', found.name);
+                setValue('phone', found.phone);
+                setTutor(found); // Save text status with ID
+            } else {
+                alert('Tutor não encontrado. Preencha os dados para cadastrar.');
+                setTutor(null); // Clear previous selection
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao buscar tutor');
+        } finally {
+            setSearchLoading(false);
+        }
     };
 
     return (
@@ -37,6 +73,7 @@ export function StepTutor() {
                     <div className="flex-1 relative">
                         <input
                             type="text"
+                            {...register('cpf')}
                             placeholder="Buscar por CPF"
                             className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 outline-none"
                         />
@@ -45,8 +82,10 @@ export function StepTutor() {
                     <button
                         type="button"
                         onClick={handleSearch}
-                        className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200"
+                        disabled={searchLoading}
+                        className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2"
                     >
+                        {searchLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                         Buscar
                     </button>
                 </div>
@@ -70,7 +109,7 @@ export function StepTutor() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">CPF (Confirmar)</label>
                             <input
                                 {...register('cpf', { required: true })}
                                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 outline-none"
@@ -88,8 +127,10 @@ export function StepTutor() {
                     <div className="flex justify-end pt-4">
                         <button
                             type="submit"
-                            className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700"
+                            disabled={isLoading}
+                            className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50"
                         >
+                            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                             Próximo: Animal
                             <ArrowRight className="w-4 h-4" />
                         </button>
