@@ -27,7 +27,7 @@ export function MainLayout() {
             {/* Mobile Header */}
             <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-30 flex items-center justify-between px-4 shadow-sm">
                 <div className="flex items-center gap-2">
-                    <img src="/logo-horizontal.png" alt="PharmoPet" className="h-8" />
+                    <img src="/logo-horizontal.png" alt="PharmoPet" className="h-10" />
                 </div>
                 <button onClick={toggleSidebar} className="p-2 text-gray-600 hover:bg-primary-50 rounded-lg transition-colors">
                     {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -48,7 +48,7 @@ export function MainLayout() {
                 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
             `}>
                 <div className="hidden lg:flex p-6 border-b border-gray-200 items-center justify-center">
-                    <img src="/logo-horizontal.png" alt="PharmoPet" className="h-10" />
+                    <img src="/logo-horizontal.png" alt="PharmoPet" className="h-14" />
                 </div>
 
                 <div className="lg:hidden p-6 border-b border-gray-200">
