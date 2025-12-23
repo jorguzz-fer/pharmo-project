@@ -8,8 +8,8 @@ export class TutorController {
     async create(req: Request, res: Response) {
         const schema = z.object({
             nome: z.string().min(3),
-            cpf: z.string().length(14), // XXX.XXX.XXX-XX
-            email: z.string().email().optional(),
+            cpf: z.string().min(11).max(14), // Accept unformatted (11) or formatted (14)
+            email: z.string().email().optional().or(z.literal('')),
             telefone: z.string().optional(),
             endereco: z.string().optional(),
         });
@@ -17,15 +17,24 @@ export class TutorController {
         try {
             const data = schema.parse(req.body);
 
+            // Clean CPF (remove non-digits)
+            const cleanCpf = data.cpf.replace(/\D/g, '');
+
             const existingTutor = await prisma.tutor.findUnique({
-                where: { cpf: data.cpf },
+                where: { cpf: cleanCpf }, // Check against clean CPF
             });
 
             if (existingTutor) {
                 return res.status(400).json({ error: 'Tutor já cadastrado com este CPF' });
             }
 
-            const tutor = await prisma.tutor.create({ data });
+            // Save with cleaned CPF
+            const tutor = await prisma.tutor.create({
+                data: {
+                    ...data,
+                    cpf: cleanCpf
+                }
+            });
             return res.status(201).json(tutor);
         } catch (error) {
             if (error instanceof z.ZodError) {

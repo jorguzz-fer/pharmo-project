@@ -31,7 +31,14 @@ export function StepTutor() {
             }
 
             // Otherwise create new tutor
-            const newTutor = await api.post('/tutores', data);
+            const tutorData = {
+                nome: data.name,
+                cpf: data.cpf,
+                telefone: data.phone,
+                // email is optional
+            };
+
+            const newTutor = await api.post('/tutores', tutorData);
             setTutor(newTutor);
             setStep(2);
         } catch (error) {
