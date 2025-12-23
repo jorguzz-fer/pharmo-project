@@ -1,16 +1,17 @@
 # Frontend Dockerfile
+# Note: Easypanel uses repository root as build context
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files (build context is packages/client)
-COPY package*.json ./
+# Copy package files from packages/client
+COPY packages/client/package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy source code
-COPY . .
+# Copy source code from packages/client
+COPY packages/client/ ./
 
 # Build production bundle
 RUN npm run build
