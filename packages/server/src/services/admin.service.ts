@@ -7,19 +7,23 @@ export class AdminService {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
+        // Get current month start/end
+        const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+        const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59);
+
         const [revenueData, pipelineData, topPrescriptions] = await Promise.all([
-            // 1. Revenue
+            // 1. Revenue - ALL budgets from current month (not just PAID)
             prisma.orcamento.aggregate({
                 where: {
-                    status_pagamento: 'PAID',
+                    created_at: { gte: monthStart, lte: monthEnd }
                 },
                 _sum: { valor_total: true },
                 _count: { id: true }
             }),
 
-            // 2. Production Pipeline
-            prisma.pedido.groupBy({
-                by: ['status_producao'],
+            // 2. Production Pipeline - group by prescription status instead
+            prisma.prescricao.groupBy({
+                by: ['status'],
                 _count: { id: true }
             }),
 
@@ -54,10 +58,10 @@ export class AdminService {
             };
         });
 
-        // Transform pipeline data to map
+        // Transform pipeline data to map (by prescription status)
         const pipelineMap: Record<string, number> = {};
         pipelineData.forEach(item => {
-            pipelineMap[item.status_producao] = item._count.id;
+            pipelineMap[item.status] = item._count.id;
         });
 
         return {
@@ -67,6 +71,69 @@ export class AdminService {
             },
             production_pipeline: pipelineMap,
             top_performers: topPerformers
+        };
+    }
+
+    async getFinancialReport(mes?: string) {
+        // mes formato: "2025-12" ou usa mês atual
+        const now = new Date();
+        const [year, month] = mes ? mes.split('-').map(Number) : [now.getFullYear(), now.getMonth() + 1];
+
+        const startDate = new Date(year, month - 1, 1);
+        const endDate = new Date(year, month, 0, 23, 59, 59);
+
+        const prescricoes = await prisma.prescricao.findMany({
+            where: {
+                created_at: { gte: startDate, lte: endDate }
+            },
+            include: {
+                veterinario: true,
+                tutor: true,
+                animal: true,
+                orcamento: true
+            },
+            orderBy: {
+                created_at: 'desc'
+            }
+        });
+
+        // Agrupar por veterinário
+        const porVetMap: Record<string, any> = {};
+
+        prescricoes.forEach(p => {
+            if (!porVetMap[p.veterinario_id]) {
+                porVetMap[p.veterinario_id] = {
+                    veterinario_id: p.veterinario_id,
+                    nome: p.veterinario.nome,
+                    crv: p.veterinario.crv,
+                    email: p.veterinario.email,
+                    prescricoes_count: 0,
+                    valor_total: 0,
+                    prescricoes: []
+                };
+            }
+
+            porVetMap[p.veterinario_id].prescricoes_count++;
+            porVetMap[p.veterinario_id].valor_total += Number(p.orcamento?.valor_total || 0);
+            porVetMap[p.veterinario_id].prescricoes.push({
+                id: p.id,
+                data: p.created_at,
+                tutor: p.tutor.nome,
+                animal: p.animal.nome,
+                medicamento: p.medicamento,
+                valor: Number(p.orcamento?.valor_total || 0),
+                status: p.status
+            });
+        });
+
+        const porVeterinario = Object.values(porVetMap);
+        const totalFaturamento = porVeterinario.reduce((sum, v) => sum + v.valor_total, 0);
+
+        return {
+            periodo: `${year}-${String(month).padStart(2, '0')}`,
+            total_prescricoes: prescricoes.length,
+            total_faturamento: totalFaturamento,
+            por_veterinario: porVeterinario
         };
     }
 

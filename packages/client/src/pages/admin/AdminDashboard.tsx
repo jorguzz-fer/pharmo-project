@@ -8,11 +8,9 @@ type DashboardMetrics = {
         count: number;
     };
     production_pipeline: {
-        AGUARDANDO_PAGAMENTO?: number;
-        PAGAMENTO_CONFIRMADO?: number;
-        EM_PRODUCAO?: number;
-        PRONTO_ENTREGA?: number;
-        ENTREGUE?: number;
+        DRAFT?: number;
+        SIGNED?: number;
+        SENT?: number;
     };
     top_performers: Array<{
         veterinario_id: string;
@@ -76,7 +74,7 @@ export function AdminDashboard() {
                         <TrendingUp className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500 font-medium">Receita Total</p>
+                        <p className="text-sm text-gray-500 font-medium">Faturamento (Mês)</p>
                         <h3 className="text-2xl font-bold text-gray-900">
                             R$ {metrics?.revenue.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                         </h3>
@@ -88,7 +86,7 @@ export function AdminDashboard() {
                         <ShoppingBag className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500 font-medium">Vendas Confirmadas</p>
+                        <p className="text-sm text-gray-500 font-medium">Prescrições (Mês)</p>
                         <h3 className="text-2xl font-bold text-gray-900">{metrics?.revenue.count || 0}</h3>
                     </div>
                 </div>
@@ -98,9 +96,9 @@ export function AdminDashboard() {
                         <AlertCircle className="w-6 h-6 text-purple-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-gray-500 font-medium">Em Produção</p>
+                        <p className="text-sm text-gray-500 font-medium">Enviadas</p>
                         <h3 className="text-2xl font-bold text-gray-900">
-                            {(metrics?.production_pipeline?.EM_PRODUCAO || 0) + (metrics?.production_pipeline?.PAGAMENTO_CONFIRMADO || 0)}
+                            {metrics?.production_pipeline?.SENT || 0}
                         </h3>
                     </div>
                 </div>
@@ -109,7 +107,7 @@ export function AdminDashboard() {
             {/* Production Pipeline */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <h2 className="text-lg font-bold text-gray-900 mb-6">Status dos Pedidos</h2>
+                    <h2 className="text-lg font-bold text-gray-900 mb-6">Status das Prescrições</h2>
                     <div className="space-y-4">
                         {Object.entries(metrics?.production_pipeline || {}).map(([status, count]) => (
                             <div key={status} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
@@ -118,7 +116,7 @@ export function AdminDashboard() {
                             </div>
                         ))}
                         {Object.keys(metrics?.production_pipeline || {}).length === 0 && (
-                            <p className="text-gray-500 text-center py-4">Nenhum pedido ativo.</p>
+                            <p className="text-gray-500 text-center py-4">Nenhuma prescrição ativa.</p>
                         )}
                     </div>
                 </div>

@@ -26,6 +26,18 @@ export class AdminController {
         }
     }
 
+    // 2.1. Relatório Financeiro Mensal
+    async getFinancialReport(req: Request, res: Response) {
+        try {
+            const { mes } = req.query;
+            const report = await adminService.getFinancialReport(mes as string);
+            return res.json(report);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
     // 3. Follow Ups
     async getFollowUps(_req: Request, res: Response) {
         try {

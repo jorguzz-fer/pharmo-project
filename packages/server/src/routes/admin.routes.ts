@@ -11,6 +11,9 @@ router.get('/admin/dashboard', authMiddleware, adminController.getDashboardMetri
 // Sales Report
 router.get('/admin/relatorios/vendas', authMiddleware, adminController.getSalesReport);
 
+// Financial Report (Monthly)
+router.get('/admin/relatorios/financeiro', authMiddleware, adminController.getFinancialReport);
+
 // Follow Ups
 router.get('/admin/follow-ups', authMiddleware, adminController.getFollowUps);
 router.patch('/admin/follow-ups/:id/done', authMiddleware, adminController.markFollowUp);
