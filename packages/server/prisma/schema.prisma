@@ -20,6 +20,14 @@ enum VetStatus {
   PENDING
 }
 
+enum ClinicaStatus {
+  PENDENTE
+  EM_ANALISE
+  APROVADA
+  SUSPENSA
+  INATIVA
+}
+
 enum PrescricaoStatus {
   DRAFT
   SIGNED
@@ -51,18 +59,23 @@ enum MetodoPagamento {
 
 // 1. Veterinarios
 model Veterinario {
-  id            String        @id @default(uuid())
-  crv           String        @unique
-  nome          String
-  email         String        @unique
-  telefone      String
-  senha_hash    String
-  especialidade String?
-  status        VetStatus     @default(PENDING)
-  created_at    DateTime      @default(now())
-  updated_at    DateTime      @updatedAt
+  id             String    @id @default(uuid())
+  nome           String
+  cpf            String?   @unique
+  crv            String    @unique
+  uf_crmv        String? // Ex: "SP", "RJ"
+  numero_crmv    String? // Ex: "12345"
+  email          String    @unique
+  telefone       String
+  senha_hash     String
+  especialidade  String?
+  especialidades String[] // Array de especialidades
+  status         VetStatus @default(PENDING)
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
 
-  prescricoes   Prescricao[]
+  prescricoes Prescricao[]
+  clinicas    ClinicaVeterinario[]
 
   @@map("veterinarios")
 }
@@ -86,15 +99,15 @@ model Tutor {
 
 // 3. Animais
 model Animal {
-  id              String   @id @default(uuid())
+  id              String    @id @default(uuid())
   tutor_id        String
   nome            String
   especie         String
   raca            String?
   peso            Float?
   data_nascimento DateTime?
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
 
   tutor       Tutor        @relation(fields: [tutor_id], references: [id], onDelete: Cascade)
   prescricoes Prescricao[]
@@ -104,15 +117,15 @@ model Animal {
 
 // 4. Bulario
 model Bulario {
-  id              String   @id @default(uuid())
-  doenca          String
-  principio_ativo String
-  concentracao    String
-  posologia       String
+  id               String   @id @default(uuid())
+  doenca           String
+  principio_ativo  String
+  concentracao     String
+  posologia        String
   contraindicacoes String?
-  controlado       Boolean @default(false)
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
+  controlado       Boolean  @default(false)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
 
   @@map("bulario")
 }
@@ -123,19 +136,21 @@ model Prescricao {
   veterinario_id     String
   tutor_id           String
   animal_id          String
+  clinica_id         String? // NOVO: vincula prescrição à clínica
   doenca             String?
-  medicamento        String           // DEPRECATED: mantido para compatibilidade
-  dosagem            String           // DEPRECATED: mantido para compatibilidade
-  forma_farmaceutica String           // DEPRECATED: mantido para compatibilidade
-  quantidade         String           // DEPRECATED: mantido para compatibilidade
+  medicamento        String // DEPRECATED: mantido para compatibilidade
+  dosagem            String // DEPRECATED: mantido para compatibilidade
+  forma_farmaceutica String // DEPRECATED: mantido para compatibilidade
+  quantidade         String // DEPRECATED: mantido para compatibilidade
   observacoes        String?
   status             PrescricaoStatus @default(DRAFT)
   created_at         DateTime         @default(now())
   updated_at         DateTime         @updatedAt
 
-  veterinario  Veterinario              @relation(fields: [veterinario_id], references: [id])
-  tutor        Tutor                    @relation(fields: [tutor_id], references: [id])
-  animal       Animal                   @relation(fields: [animal_id], references: [id])
+  veterinario  Veterinario             @relation(fields: [veterinario_id], references: [id])
+  tutor        Tutor                   @relation(fields: [tutor_id], references: [id])
+  animal       Animal                  @relation(fields: [animal_id], references: [id])
+  clinica      Clinica?                @relation(fields: [clinica_id], references: [id])
   orcamento    Orcamento?
   medicamentos PrescricaoMedicamento[]
 
@@ -146,12 +161,12 @@ model Prescricao {
 model PrescricaoMedicamento {
   id                 String   @id @default(uuid())
   prescricao_id      String
-  codigo_medicamento String?  // Código do bulário
-  medicamento        String   // Nome do medicamento
-  dosagem            String   // Ex: "10mg/kg"
-  forma_farmaceutica String   // Ex: "Comprimido", "Líquido"
-  quantidade         String   // Ex: "1 caixa", "30 comprimidos"
-  observacoes        String?  // Posologia detalhada
+  codigo_medicamento String? // Código do bulário
+  medicamento        String // Nome do medicamento
+  dosagem            String // Ex: "10mg/kg"
+  forma_farmaceutica String // Ex: "Comprimido", "Líquido"
+  quantidade         String // Ex: "1 caixa", "30 comprimidos"
+  observacoes        String? // Posologia detalhada
   created_at         DateTime @default(now())
 
   prescricao Prescricao @relation(fields: [prescricao_id], references: [id], onDelete: Cascade)
@@ -161,15 +176,15 @@ model PrescricaoMedicamento {
 
 // 6. Orcamentos
 model Orcamento {
-  id               String            @id @default(uuid())
-  prescricao_id    String            @unique
-  valor_total      Decimal           @db.Decimal(10, 2)
-  status_pagamento PagamentoStatus   @default(PENDING)
+  id               String           @id @default(uuid())
+  prescricao_id    String           @unique
+  valor_total      Decimal          @db.Decimal(10, 2)
+  status_pagamento PagamentoStatus  @default(PENDING)
   link_pagamento   String?
   data_pagamento   DateTime?
   metodo_pagamento MetodoPagamento?
-  created_at       DateTime          @default(now())
-  updated_at       DateTime          @updatedAt
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @updatedAt
 
   prescricao Prescricao @relation(fields: [prescricao_id], references: [id])
   pedido     Pedido?
@@ -183,7 +198,7 @@ model ConversaIA {
   telefone   String
   mensagem   String
   resposta   String
-  tipo       String?  // Ex: "duvida_tecnica", "orcamento"
+  tipo       String? // Ex: "duvida_tecnica", "orcamento"
   created_at DateTime @default(now())
 
   @@map("conversas_ia")
@@ -232,4 +247,93 @@ model FollowUp {
   pedido Pedido @relation(fields: [pedido_id], references: [id])
 
   @@map("follow_ups")
+}
+
+// 11. Clínicas
+model Clinica {
+  id                 String  @id @default(uuid())
+  nome_fantasia      String
+  razao_social       String
+  cnpj               String  @unique
+  inscricao_estadual String?
+  email              String
+  telefone           String?
+  whatsapp           String?
+
+  // Endereço
+  cep         String?
+  logradouro  String?
+  numero      String?
+  complemento String?
+  bairro      String?
+  cidade      String?
+  estado      String?
+
+  // Responsável
+  responsavel_legal String
+  cpf_responsavel   String
+
+  // Status e controle
+  status               ClinicaStatus @default(PENDENTE)
+  observacoes_internas String?
+
+  // Auditoria
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  approved_at DateTime?
+  approved_by String?
+
+  // Relações
+  documentos   ClinicaDocumento[]
+  veterinarios ClinicaVeterinario[]
+  prescricoes  Prescricao[]
+
+  @@map("clinicas")
+}
+
+// 12. Documentos de Clínicas
+model ClinicaDocumento {
+  id             String   @id @default(uuid())
+  clinica_id     String
+  tipo_documento String // 'contrato_social', 'cartao_cnpj', 'comprovante_endereco', 'contrato_assinado'
+  nome_arquivo   String
+  url_arquivo    String
+  mime_type      String?
+  tamanho_bytes  Int?
+  uploaded_by    String?
+  created_at     DateTime @default(now())
+
+  clinica Clinica @relation(fields: [clinica_id], references: [id], onDelete: Cascade)
+
+  @@map("clinica_documentos")
+}
+
+// 13. Relação Clínica-Veterinário (Many-to-Many)
+model ClinicaVeterinario {
+  id             String   @id @default(uuid())
+  clinica_id     String
+  veterinario_id String
+  cargo          String?  @default("Veterinário")
+  status         String   @default("ativo") // 'ativo', 'inativo'
+  created_at     DateTime @default(now())
+
+  clinica     Clinica     @relation(fields: [clinica_id], references: [id], onDelete: Cascade)
+  veterinario Veterinario @relation(fields: [veterinario_id], references: [id], onDelete: Cascade)
+
+  @@unique([clinica_id, veterinario_id])
+  @@map("clinica_veterinario")
+}
+
+// 14. Logs de Email
+model EmailLog {
+  id            String   @id @default(uuid())
+  destinatario  String
+  assunto       String?
+  template      String?
+  status        String // 'sent', 'failed', 'bounced'
+  error_message String?
+  metadata      Json?
+  created_at    DateTime @default(now())
+
+  @@map("email_logs")
 }
