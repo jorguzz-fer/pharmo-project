@@ -16,6 +16,10 @@ COPY packages/client/ ./
 # Copy tsconfig.base.json to parent directory (as expected by tsconfig.app.json)
 COPY tsconfig.base.json ../
 
+# Accept build argument for API URL
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Build production bundle
 RUN npm run build
 
