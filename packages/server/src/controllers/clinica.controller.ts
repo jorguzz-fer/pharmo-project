@@ -119,4 +119,55 @@ export class ClinicaController {
             return res.status(500).json({ error: 'Internal server error' });
         }
     }
+
+    // Vinculação de Veterinários
+    async vincularVeterinario(req: Request, res: Response) {
+        try {
+            const { id: clinicaId } = req.params;
+            const { veterinario_id, cargo } = req.body;
+
+            if (!veterinario_id) {
+                return res.status(400).json({ error: 'veterinario_id é obrigatório' });
+            }
+
+            const { ClinicaVeterinarioService } = await import('../services/clinica-veterinario.service');
+            const service = new ClinicaVeterinarioService();
+
+            const vinculacao = await service.vincular(clinicaId, veterinario_id, cargo);
+            return res.status(201).json(vinculacao);
+        } catch (error: any) {
+            console.error('Error vinculando veterinario:', error);
+            return res.status(400).json({ error: error.message || 'Erro ao vincular veterinário' });
+        }
+    }
+
+    async desvincularVeterinario(req: Request, res: Response) {
+        try {
+            const { id: clinicaId, vetId } = req.params;
+
+            const { ClinicaVeterinarioService } = await import('../services/clinica-veterinario.service');
+            const service = new ClinicaVeterinarioService();
+
+            const vinculacao = await service.desvincular(clinicaId, vetId);
+            return res.json(vinculacao);
+        } catch (error: any) {
+            console.error('Error desvinculando veterinario:', error);
+            return res.status(400).json({ error: error.message || 'Erro ao desvincular veterinário' });
+        }
+    }
+
+    async listarVeterinarios(req: Request, res: Response) {
+        try {
+            const { id: clinicaId } = req.params;
+
+            const { ClinicaVeterinarioService } = await import('../services/clinica-veterinario.service');
+            const service = new ClinicaVeterinarioService();
+
+            const veterinarios = await service.listarVeterinarios(clinicaId);
+            return res.json(veterinarios);
+        } catch (error) {
+            console.error('Error listing veterinarios:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
 }
