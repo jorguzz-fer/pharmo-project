@@ -337,3 +337,19 @@ model EmailLog {
 
   @@map("email_logs")
 }
+
+// 15. Tokens de Recuperação de Senha
+model PasswordResetToken {
+  id         String   @id @default(uuid())
+  email      String
+  token      String   @unique
+  user_type  String   // 'veterinario' ou 'admin'
+  expires_at DateTime
+  used       Boolean  @default(false)
+  used_at    DateTime?
+  created_at DateTime @default(now())
+  
+  @@index([email])
+  @@index([token])
+  @@map("password_reset_tokens")
+}

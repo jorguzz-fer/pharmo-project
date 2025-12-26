@@ -123,10 +123,15 @@ export class ClinicaService {
             data: updateData
         });
 
-        // TODO: Enviar email (Fase 7)
-        // if (status === ClinicaStatus.APROVADA) {
-        //   await emailService.sendClinicaAprovada(clinica);
-        // }
+        // Enviar email
+        const { EmailService } = await import('./email.service');
+        const emailService = new EmailService();
+
+        if (status === ClinicaStatus.APROVADA) {
+            await emailService.sendClinicaAprovada(clinica);
+        } else if (status === ClinicaStatus.SUSPENSA) {
+            await emailService.sendClinicaSuspensa(clinica);
+        }
 
         return clinica;
     }

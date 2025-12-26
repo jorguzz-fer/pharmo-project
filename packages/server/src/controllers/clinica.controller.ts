@@ -30,7 +30,10 @@ export class ClinicaController {
             const data = schema.parse(req.body);
             const clinica = await clinicaService.create(data);
 
-            // TODO: Enviar email de cadastro (Fase 7)
+            // Enviar email de cadastro
+            const { EmailService } = await import('../services/email.service');
+            const emailService = new EmailService();
+            await emailService.sendClinicaCadastrada(clinica);
 
             return res.status(201).json(clinica);
         } catch (error) {

@@ -71,8 +71,10 @@ export class ClinicaVeterinarioService {
             }
         });
 
-        // TODO: Enviar email (Fase 7)
-        // await emailService.sendVeterinarioVinculado(vinculacao);
+        // Enviar email
+        const { EmailService } = await import('./email.service');
+        const emailService = new EmailService();
+        await emailService.sendVeterinarioVinculado(vinculacao);
 
         return vinculacao;
     }
@@ -105,8 +107,10 @@ export class ClinicaVeterinarioService {
             }
         });
 
-        // TODO: Enviar email (Fase 7)
-        // await emailService.sendVeterinarioDesvinculado(updated);
+        // Enviar email
+        const { EmailService } = await import('./email.service');
+        const emailService = new EmailService();
+        await emailService.sendVeterinarioDesvinculado(updated);
 
         return updated;
     }
