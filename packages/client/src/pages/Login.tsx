@@ -87,6 +87,15 @@ export function Login() {
                             'Acessar Sistema'
                         )}
                     </button>
+
+                    <div className="text-center mt-4">
+                        <a
+                            href="/forgot-password"
+                            className="text-sm text-gray-600 hover:text-teal-600 transition-colors"
+                        >
+                            Esqueci minha senha
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

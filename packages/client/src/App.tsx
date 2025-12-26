@@ -6,11 +6,12 @@ import { PrescriptionWizard } from './pages/PrescriptionWizard';
 import { MainLayout } from './layouts/MainLayout';
 import { useAuthStore } from './store/auth';
 import { AdminLogin } from './pages/admin/AdminLogin';
-// We will create this next
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminFollowUps } from './pages/admin/AdminFollowUps';
 import { AdminReports } from './pages/admin/AdminReports';
 import { OrderStatus } from './pages/OrderStatus';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
 
 function ProtectedRoute({ children, role }: { children: React.ReactNode, role?: 'VET' | 'ADMIN' }) {
   const { isAuthenticated, user } = useAuthStore();
@@ -28,8 +29,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* Vet Routes */}
         <Route path="/" element={
