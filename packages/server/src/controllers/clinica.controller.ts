@@ -38,7 +38,7 @@ export class ClinicaController {
             return res.status(201).json(clinica);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: error.errors });
+                return res.status(400).json({ error: error.issues });
             }
             console.error('Error creating clinica:', error);
             return res.status(500).json({ error: 'Internal server error' });

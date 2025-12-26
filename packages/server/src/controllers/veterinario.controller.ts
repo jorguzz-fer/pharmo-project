@@ -24,7 +24,7 @@ export class VeterinarioController {
             return res.status(201).json(veterinario);
         } catch (error: any) {
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: error.errors });
+                return res.status(400).json({ error: error.issues });
             }
             console.error('Error creating veterinario:', error);
             return res.status(400).json({ error: error.message || 'Erro ao criar veterinário' });

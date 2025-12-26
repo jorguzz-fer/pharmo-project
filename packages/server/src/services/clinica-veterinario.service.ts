@@ -127,7 +127,7 @@ export class ClinicaVeterinarioService {
                         id: true,
                         nome: true,
                         cpf: true,
-                        crmv: true,
+                        crv: true,
                         email: true,
                         telefone: true,
                         especialidades: true,

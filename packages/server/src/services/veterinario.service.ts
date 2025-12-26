@@ -14,7 +14,7 @@ export class VeterinarioService {
             where: {
                 OR: [
                     { cpf: data.cpf },
-                    { crmv: data.crmv }
+                    { crv: data.crmv }
                 ]
             }
         });
@@ -23,7 +23,7 @@ export class VeterinarioService {
             if (existente.cpf === data.cpf) {
                 throw new Error('CPF já cadastrado');
             }
-            if (existente.crmv === data.crmv) {
+            if (existente.crv === data.crmv) {
                 throw new Error('CRMV já cadastrado');
             }
         }
@@ -95,7 +95,7 @@ export class VeterinarioService {
         return prisma.veterinario.findFirst({
             where: {
                 OR: [
-                    { crmv: { contains: query, mode: 'insensitive' } },
+                    { crv: { contains: query, mode: 'insensitive' } },
                     { cpf: cpfLimpo }
                 ]
             },

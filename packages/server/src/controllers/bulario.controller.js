@@ -36,69 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BularioController = void 0;
 var client_1 = require("@prisma/client");
-var bcryptjs_1 = require("bcryptjs");
 var prisma = new client_1.PrismaClient();
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        var adminPassword, admin, vetPassword, vet;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.log('🌱 Starting seed...');
-                    return [4 /*yield*/, bcryptjs_1.default.hash('admin123', 10)];
-                case 1:
-                    adminPassword = _a.sent();
-                    return [4 /*yield*/, prisma.usuarioAdmin.upsert({
-                            where: { email: 'admin@teste.com' },
-                            update: {
-                                senha_hash: adminPassword, // Update password if exists
-                            },
-                            create: {
-                                nome: 'Administrador',
-                                email: 'admin@teste.com',
-                                senha_hash: adminPassword,
-                                role: 'ADMIN',
-                            },
-                        })];
-                case 2:
-                    admin = _a.sent();
-                    console.log('✅ Admin user created/updated:', admin.email);
-                    return [4 /*yield*/, bcryptjs_1.default.hash('vet123', 10)];
-                case 3:
-                    vetPassword = _a.sent();
-                    return [4 /*yield*/, prisma.veterinario.upsert({
-                            where: { crv: 'SP-12345' },
-                            update: {},
-                            create: {
-                                nome: 'Dr. Fernando Jorge',
-                                crv: 'SP-12345',
-                                email: 'vet@pharmo.com',
-                                telefone: '(11) 98765-4321',
-                                senha_hash: vetPassword,
-                            },
-                        })];
-                case 4:
-                    vet = _a.sent();
-                    console.log('✅ Veterinarian created:', vet.crv);
-                    console.log('🎉 Seed completed!');
-                    return [2 /*return*/];
-            }
+var BularioController = /** @class */ (function () {
+    function BularioController() {
+    }
+    BularioController.prototype.search = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var term, results, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        term = req.query.term;
+                        if (!term || typeof term !== 'string') {
+                            return [2 /*return*/, res.status(400).json({ error: 'Termo de busca obrigatório' })];
+                        }
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, prisma.bulario.findMany({
+                                where: {
+                                    OR: [
+                                        { doenca: { contains: term, mode: 'insensitive' } },
+                                        { principio_ativo: { contains: term, mode: 'insensitive' } },
+                                    ],
+                                },
+                                take: 10,
+                            })];
+                    case 2:
+                        results = _a.sent();
+                        return [2 /*return*/, res.json(results)];
+                    case 3:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, res.status(500).json({ error: 'Internal server error' })];
+                    case 4: return [2 /*return*/];
+                }
+            });
         });
-    });
-}
-main()
-    .catch(function (e) {
-    console.error('❌ Seed failed:', e);
-    process.exit(1);
-})
-    .finally(function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.$disconnect()];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
-    });
-}); });
+    };
+    return BularioController;
+}());
+exports.BularioController = BularioController;

@@ -18,7 +18,7 @@ export class PasswordResetController {
             return res.json(result);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: 'Dados inválidos', details: error.errors });
+                return res.status(400).json({ error: 'Dados inválidos', details: error.issues });
             }
             console.error('Error requesting password reset:', error);
             return res.status(500).json({ error: 'Erro ao solicitar recuperação de senha' });
@@ -55,7 +55,7 @@ export class PasswordResetController {
             return res.json(result);
         } catch (error: any) {
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: 'Dados inválidos', details: error.errors });
+                return res.status(400).json({ error: 'Dados inválidos', details: error.issues });
             }
             console.error('Error resetting password:', error);
             return res.status(400).json({ error: error.message || 'Erro ao redefinir senha' });
