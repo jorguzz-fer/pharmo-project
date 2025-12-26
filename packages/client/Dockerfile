@@ -16,8 +16,8 @@ COPY packages/client/ ./
 # Copy tsconfig.base.json to parent directory (as expected by tsconfig.app.json)
 COPY tsconfig.base.json ../
 
-# Accept build argument for API URL
-ARG VITE_API_URL
+# Accept build argument for API URL with default value
+ARG VITE_API_URL=https://api.pharmopet.com.br
 ENV VITE_API_URL=$VITE_API_URL
 
 # Build production bundle
