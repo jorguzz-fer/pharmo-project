@@ -21,4 +21,9 @@ router.post('/admin/clinicas/:id/documentos', authMiddleware, upload.single('fil
 router.get('/admin/clinicas/:id/documentos', authMiddleware, documentoController.listDocumentos);
 router.delete('/admin/clinicas/:id/documentos/:docId', authMiddleware, documentoController.deleteDocumento);
 
+// Rotas de Vinculação Clínica-Veterinário
+router.get('/admin/clinicas/:id/veterinarios', authMiddleware, clinicaController.listarVeterinarios);
+router.post('/admin/clinicas/:id/veterinarios', authMiddleware, clinicaController.vincularVeterinario);
+router.delete('/admin/clinicas/:id/veterinarios/:vetId', authMiddleware, clinicaController.desvincularVeterinario);
+
 export { router as clinicaRoutes };
