@@ -7,6 +7,7 @@ import { vetRoutes } from './routes/vet.routes';
 import { prescricaoRoutes } from './routes/prescricao.routes';
 import { paymentRoutes } from './routes/payment.routes';
 import { adminRoutes } from './routes/admin.routes';
+import { clinicaRoutes } from './routes/clinica.routes';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api', vetRoutes);
 app.use('/api', prescricaoRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', adminRoutes);
+app.use('/api', clinicaRoutes);
 
 app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
