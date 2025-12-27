@@ -9,7 +9,7 @@ export class ClinicaController {
         const schema = z.object({
             nome_fantasia: z.string().min(3),
             razao_social: z.string().min(3),
-            cnpj: z.string().regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/),
+            cnpj: z.string().min(14), // Accept CNPJ with or without formatting
             inscricao_estadual: z.string().optional(),
             email: z.string().email(),
             telefone: z.string().optional(),
@@ -38,7 +38,8 @@ export class ClinicaController {
             return res.status(201).json(clinica);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: error.issues });
+                const errorMessages = error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`).join(', ');
+                return res.status(400).json({ error: errorMessages });
             }
             console.error('Error creating clinica:', error);
             return res.status(500).json({ error: 'Internal server error' });
