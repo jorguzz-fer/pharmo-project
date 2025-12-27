@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 export class VeterinarioService {
     async create(data: any) {
-        // Validar CRMV
-        if (!this.validarCRMV(data.crmv)) {
-            throw new Error('CRMV inválido. Formato esperado: CRMV-UF 12345');
+        // Validar CRMV (apenas verificar se não está vazio)
+        if (!data.crv || data.crv.trim().length < 5) {
+            throw new Error('CRMV inválido. Mínimo 5 caracteres.');
         }
 
         // Verificar duplicidade
@@ -14,7 +14,7 @@ export class VeterinarioService {
             where: {
                 OR: [
                     { cpf: data.cpf },
-                    { crv: data.crmv }
+                    { crv: data.crv }
                 ]
             }
         });
@@ -23,7 +23,7 @@ export class VeterinarioService {
             if (existente.cpf === data.cpf) {
                 throw new Error('CPF já cadastrado');
             }
-            if (existente.crv === data.crmv) {
+            if (existente.crv === data.crv) {
                 throw new Error('CRMV já cadastrado');
             }
         }
@@ -156,12 +156,5 @@ export class VeterinarioService {
             cargo: v.cargo,
             data_vinculacao: v.created_at
         }));
-    }
-
-    // Validação de CRMV
-    private validarCRMV(crmv: string): boolean {
-        // Formato: CRMV-UF 12345 ou CRMV-UF 123456
-        const regex = /^CRMV-[A-Z]{2}\s\d{4,6}$/;
-        return regex.test(crmv);
     }
 }
