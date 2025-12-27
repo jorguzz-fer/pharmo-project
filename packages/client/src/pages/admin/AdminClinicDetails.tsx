@@ -134,6 +134,24 @@ export function AdminClinicDetails() {
         }
     };
 
+    const handleCopyDashboardLink = () => {
+        const link = `${window.location.origin}/clinica/login`;
+        navigator.clipboard.writeText(link);
+        alert('Link copiado! Compartilhe com a clínica para que façam login.');
+    };
+
+    const handleSendCredentials = async () => {
+        if (!confirm('Enviar email com link de acesso para a clínica?')) return;
+
+        try {
+            // TODO: Implementar endpoint para enviar email
+            alert('Funcionalidade em desenvolvimento. Por enquanto, copie o link e envie manualmente.');
+            handleCopyDashboardLink();
+        } catch (error: any) {
+            alert(error.message || 'Erro ao enviar credenciais');
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center py-12">
