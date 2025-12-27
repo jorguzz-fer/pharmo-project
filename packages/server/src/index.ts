@@ -10,6 +10,7 @@ import { adminRoutes } from './routes/admin.routes';
 import { clinicaRoutes } from './routes/clinica.routes';
 import { veterinarioRoutes } from './routes/veterinario.routes';
 import { passwordResetRoutes } from './routes/password-reset.routes';
+import clinicaAuthRoutes from './routes/clinica-auth.routes';
 
 // Try to load .env file (optional - Easypanel uses system env vars)
 dotenv.config();
@@ -52,6 +53,7 @@ app.use('/api', adminRoutes);
 app.use('/api', clinicaRoutes);
 app.use('/api', veterinarioRoutes);
 app.use('/api', passwordResetRoutes);
+app.use('/api/auth', clinicaAuthRoutes);
 
 app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });

@@ -273,6 +273,11 @@ model Clinica {
   responsavel_legal String
   cpf_responsavel   String
 
+  // Autenticação
+  senha_hash           String?
+  reset_token          String?
+  reset_token_expires  DateTime?
+
   // Status e controle
   status               ClinicaStatus @default(PENDENTE)
   observacoes_internas String?
