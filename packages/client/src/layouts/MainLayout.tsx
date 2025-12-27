@@ -10,8 +10,9 @@ export function MainLayout() {
     const location = useLocation();
 
     const handleLogout = () => {
+        const isAdmin = user?.role === 'ADMIN';
         logout();
-        navigate('/login');
+        navigate(isAdmin ? '/admin/login' : '/login');
     };
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
