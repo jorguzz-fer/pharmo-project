@@ -114,6 +114,11 @@ export const clinicService = {
         formData.append('tipo_documento', tipo);
 
         const token = localStorage.getItem('token');
+        console.log('📤 Uploading document...');
+        console.log('Token exists:', !!token);
+        console.log('File:', file.name, file.size, 'bytes');
+        console.log('Tipo:', tipo);
+
         const response = await fetch(
             `${import.meta.env.VITE_API_URL || 'https://api.pharmopet.com.br'}/api/admin/clinicas/${clinicaId}/documentos`,
             {
@@ -125,8 +130,17 @@ export const clinicService = {
             }
         );
 
+        console.log('Response status:', response.status);
+
         if (!response.ok) {
-            throw new Error('Erro ao fazer upload do documento');
+            const errorText = await response.text();
+            console.error('Upload error:', response.status, errorText);
+
+            if (response.status === 403) {
+                throw new Error('Acesso negado. Faça login novamente.');
+            }
+
+            throw new Error(errorText || 'Erro ao fazer upload do documento');
         }
 
         return response.json();
