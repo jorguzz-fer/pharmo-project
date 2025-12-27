@@ -3,10 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { PrismaClient } from '@prisma/client';
-import { EmailService } from '../services/email.service';
+import { sendEmail } from '../utils/email';
 
 const prisma = new PrismaClient();
-const emailService = new EmailService();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://app.pharmopet.com.br';
 
