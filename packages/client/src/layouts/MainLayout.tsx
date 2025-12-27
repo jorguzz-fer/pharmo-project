@@ -11,6 +11,7 @@ export function MainLayout() {
 
     const handleLogout = () => {
         const isAdmin = user?.role === 'ADMIN';
+        console.log('🔍 Logout Debug:', { userRole: user?.role, isAdmin, redirectTo: isAdmin ? '/admin/login' : '/login' });
         logout();
         navigate(isAdmin ? '/admin/login' : '/login');
     };

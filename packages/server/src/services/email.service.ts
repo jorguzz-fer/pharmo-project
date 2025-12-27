@@ -119,6 +119,69 @@ export class EmailService {
     }
   }
 
+  // Enviar Credenciais de Acesso ao Dashboard
+  async sendClinicaCredenciais(clinica: any, senhaTemporaria: string) {
+    const assunto = '🔐 Suas credenciais de acesso - PharmoPet Dashboard';
+    const loginUrl = `${process.env.FRONTEND_URL || 'https://app.pharmopet.com.br'}/clinica/login`;
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #7c3aed;">🎉 Bem-vindo ao PharmoPet Dashboard!</h2>
+        <p>Olá <strong>${clinica.responsavel_legal}</strong>,</p>
+        <p>Sua clínica <strong>${clinica.nome_fantasia}</strong> foi aprovada! Agora você tem acesso ao dashboard exclusivo para acompanhar suas métricas e prescrições.</p>
+        
+        <div style="background: #f3e8ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #7c3aed;">
+          <h3 style="margin-top: 0; color: #7c3aed;">🔑 Suas Credenciais de Acesso:</h3>
+          <p><strong>Email:</strong> ${clinica.email}</p>
+          <p><strong>Senha Temporária:</strong> <code style="background: #fff; padding: 4px 8px; border-radius: 4px; font-size: 16px;">${senhaTemporaria}</code></p>
+          <p style="margin-top: 15px;">
+            <a href="${loginUrl}" style="display: inline-block; background: linear-gradient(to right, #7c3aed, #6366f1); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+              Acessar Dashboard
+            </a>
+          </p>
+        </div>
+
+        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <p style="margin: 0;"><strong>⚠️ Importante:</strong></p>
+          <ul style="margin: 10px 0;">
+            <li>Esta é uma senha temporária</li>
+            <li>Recomendamos alterar sua senha no primeiro acesso</li>
+            <li>Use a opção "Esqueci minha senha" para redefinir quando quiser</li>
+          </ul>
+        </div>
+
+        <p><strong>O que você pode fazer no dashboard:</strong></p>
+        <ul>
+          <li>📊 Visualizar métricas em tempo real</li>
+          <li>💊 Acompanhar prescrições dos seus veterinários</li>
+          <li>💰 Monitorar receita e pagamentos</li>
+          <li>👥 Gerenciar veterinários vinculados</li>
+        </ul>
+
+        <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+          Precisa de ajuda? Responda este email ou acesse nosso suporte.<br><br>
+          Equipe PharmoPet<br>
+          <a href="mailto:suporte@pharmopet.com.br">suporte@pharmopet.com.br</a>
+        </p>
+      </div>
+    `;
+
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: clinica.email,
+        subject: assunto,
+        html
+      });
+      await this.logEmail(clinica.email, assunto, 'clinica_credenciais', 'sent');
+      console.log(`✅ Credenciais enviadas para ${clinica.email}`);
+    } catch (error: any) {
+      console.error('Error sending credentials email:', error);
+      await this.logEmail(clinica.email, assunto, 'clinica_credenciais', 'failed', error.message);
+      throw error; // Re-throw para que o controller saiba que falhou
+    }
+  }
+
   // Clínica Suspensa
   async sendClinicaSuspensa(clinica: any, motivo?: string) {
     const assunto = '⚠️ Aviso importante sobre sua clínica';

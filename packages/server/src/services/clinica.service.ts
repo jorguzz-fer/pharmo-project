@@ -132,6 +132,13 @@ export class ClinicaService {
         if (status === ClinicaStatus.APROVADA) {
             updateData.approved_at = new Date();
             updateData.approved_by = userId;
+
+            // Gerar senha aleatória segura
+            const senhaTemporaria = this.generateRandomPassword();
+            const bcrypt = await import('bcryptjs');
+            updateData.senha_hash = await bcrypt.hash(senhaTemporaria, 10);
+
+            console.log(`🔐 Gerando senha para clínica ${id}: ${senhaTemporaria}`);
         }
 
         const clinica = await prisma.clinica.update({
@@ -139,17 +146,49 @@ export class ClinicaService {
             data: updateData
         });
 
-        // Enviar email
+        // Enviar emails
         const { EmailService } = await import('./email.service');
         const emailService = new EmailService();
 
         if (status === ClinicaStatus.APROVADA) {
+            // Enviar email de aprovação
             await emailService.sendClinicaAprovada(clinica);
+
+            // Enviar credenciais de acesso
+            const senhaTemporaria = this.generateRandomPassword();
+            await emailService.sendClinicaCredenciais(clinica, senhaTemporaria);
+
+            console.log(`✅ Clínica aprovada e credenciais enviadas para ${clinica.email}`);
         } else if (status === ClinicaStatus.SUSPENSA) {
             await emailService.sendClinicaSuspensa(clinica);
         }
 
         return clinica;
+    }
+
+    // Gerar senha aleatória segura
+    private generateRandomPassword(): string {
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const numbers = '0123456789';
+        const symbols = '!@#$%&*';
+
+        const all = uppercase + lowercase + numbers + symbols;
+
+        let password = '';
+        // Garantir pelo menos um de cada tipo
+        password += uppercase[Math.floor(Math.random() * uppercase.length)];
+        password += lowercase[Math.floor(Math.random() * lowercase.length)];
+        password += numbers[Math.floor(Math.random() * numbers.length)];
+        password += symbols[Math.floor(Math.random() * symbols.length)];
+
+        // Completar com caracteres aleatórios até 12 caracteres
+        for (let i = password.length; i < 12; i++) {
+            password += all[Math.floor(Math.random() * all.length)];
+        }
+
+        // Embaralhar a senha
+        return password.split('').sort(() => Math.random() - 0.5).join('');
     }
 
     async softDelete(id: string) {

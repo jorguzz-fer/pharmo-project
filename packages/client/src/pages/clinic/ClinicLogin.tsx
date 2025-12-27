@@ -39,9 +39,6 @@ export function ClinicLogin() {
                         alt="PharmoPet"
                         className="h-16 mb-4"
                     />
-                    <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                        PharmoPet Clínica
-                    </h2>
                     <p className="text-gray-500">Acesso ao Dashboard</p>
                 </div>
 
