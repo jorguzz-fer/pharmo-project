@@ -427,13 +427,13 @@ export function AdminClinicDetails() {
                                     <li key={vet.id} className="px-6 py-4 hover:bg-gray-50">
                                         <div className="flex justify-between items-center">
                                             <div>
-                                                <p className="font-medium">{vet.nome}</p>
-                                                <p className="text-sm text-gray-600">CRV: {vet.crv}</p>
-                                                <p className="text-sm text-gray-500">{vet.email}</p>
+                                                <p className="font-medium">{vet.veterinario?.nome || 'Nome não disponível'}</p>
+                                                <p className="text-sm text-gray-600">CRV: {vet.veterinario?.crv || 'N/A'}</p>
+                                                <p className="text-sm text-gray-500">{vet.veterinario?.email || 'Email não disponível'}</p>
                                                 {vet.cargo && <p className="text-sm text-gray-500 mt-1">Cargo: {vet.cargo}</p>}
                                             </div>
                                             <button
-                                                onClick={() => handleUnlinkVeterinarian(vet.id)}
+                                                onClick={() => handleUnlinkVeterinarian(vet.veterinario?.id || vet.id)}
                                                 className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                             >
                                                 Desvincular
