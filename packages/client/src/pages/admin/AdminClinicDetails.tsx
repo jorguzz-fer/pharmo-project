@@ -116,12 +116,20 @@ export function AdminClinicDetails() {
     };
 
     const handleUnlinkVeterinarian = async (vetId: string) => {
+        console.log('Unlinking veterinarian with ID:', vetId);
+
+        if (!vetId) {
+            alert('ID do veterinário não encontrado');
+            return;
+        }
+
         if (!confirm('Desvincular veterinário desta clínica?')) return;
 
         try {
             await clinicService.unlinkVeterinarian(id!, vetId);
             loadVeterinarians();
         } catch (error: any) {
+            console.error('Error unlinking veterinarian:', error);
             alert(error.message || 'Erro ao desvincular veterinário');
         }
     };
