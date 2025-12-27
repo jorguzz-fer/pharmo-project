@@ -57,7 +57,7 @@ export class ClinicaDashboardController {
                     p.orcamento?.status_pagamento === 'PAID' &&
                     new Date(p.created_at) >= trintaDiasAtras
                 )
-                .reduce((sum, p) => sum + (p.orcamento?.valor || 0), 0);
+                .reduce((sum, p) => sum + Number(p.orcamento?.valor_total || 0), 0);
 
             const aguardandoPagamento = prescricoes.filter(p =>
                 p.orcamento?.status_pagamento === 'PENDING'
