@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -28,10 +29,14 @@ export class VeterinarioService {
             }
         }
 
+        // Gerar senha padrão se não fornecida (para cadastro pelo admin)
+        const senhaHash = data.senha_hash || await bcrypt.hash('senha123', 10);
+
         return prisma.veterinario.create({
             data: {
                 ...data,
                 cpf: data.cpf?.replace(/\D/g, ''),
+                senha_hash: senhaHash,
                 status: 'ACTIVE'
             }
         });
