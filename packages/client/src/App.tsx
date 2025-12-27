@@ -10,7 +10,11 @@ import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminFollowUps } from './pages/admin/AdminFollowUps';
 import { AdminReports } from './pages/admin/AdminReports';
 import { AdminClinics } from './pages/admin/AdminClinics';
+import { AdminClinicDetails } from './pages/admin/AdminClinicDetails';
+import { AdminClinicForm } from './pages/admin/AdminClinicForm';
 import { AdminVeterinarians } from './pages/admin/AdminVeterinarians';
+import { AdminVeterinarianDetails } from './pages/admin/AdminVeterinarianDetails';
+import { AdminVeterinarianForm } from './pages/admin/AdminVeterinarianForm';
 import { OrderStatus } from './pages/OrderStatus';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
@@ -59,7 +63,13 @@ export default function App() {
           <Route path="follow-ups" element={<AdminFollowUps />} />
           <Route path="relatorios" element={<AdminReports />} />
           <Route path="clinicas" element={<AdminClinics />} />
+          <Route path="clinicas/nova" element={<AdminClinicForm />} />
+          <Route path="clinicas/:id" element={<AdminClinicDetails />} />
+          <Route path="clinicas/:id/editar" element={<AdminClinicForm />} />
           <Route path="veterinarios" element={<AdminVeterinarians />} />
+          <Route path="veterinarios/novo" element={<AdminVeterinarianForm />} />
+          <Route path="veterinarios/:id" element={<AdminVeterinarianDetails />} />
+          <Route path="veterinarios/:id/editar" element={<AdminVeterinarianForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
