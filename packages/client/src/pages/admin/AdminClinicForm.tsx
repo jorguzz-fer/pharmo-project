@@ -72,7 +72,17 @@ export function AdminClinicForm() {
             }
             navigate('/admin/clinicas');
         } catch (error: any) {
-            alert(error.message || 'Erro ao salvar clínica');
+            console.error('Error saving clinic:', error);
+            // Extract error message properly
+            let errorMessage = 'Erro ao salvar clínica';
+            if (error?.message) {
+                errorMessage = error.message;
+            } else if (typeof error === 'string') {
+                errorMessage = error;
+            } else if (error?.error) {
+                errorMessage = error.error;
+            }
+            alert(errorMessage);
         } finally {
             setLoading(false);
         }

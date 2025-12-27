@@ -55,7 +55,17 @@ export function AdminVeterinarianForm() {
             }
             navigate('/admin/veterinarios');
         } catch (error: any) {
-            alert(error.message || 'Erro ao salvar veterinário');
+            console.error('Error saving veterinarian:', error);
+            // Extract error message properly
+            let errorMessage = 'Erro ao salvar veterinário';
+            if (error?.message) {
+                errorMessage = error.message;
+            } else if (typeof error === 'string') {
+                errorMessage = error;
+            } else if (error?.error) {
+                errorMessage = error.error;
+            }
+            alert(errorMessage);
         } finally {
             setLoading(false);
         }
