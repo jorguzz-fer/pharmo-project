@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X } from 'lucide-react';
+import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X, Link2, Send } from 'lucide-react';
 import { clinicService, type Clinica } from '../../services/clinicService';
 import { veterinarianService } from '../../services/veterinarianService';
 import { StatusBadge } from '../../components/StatusBadge';
@@ -168,6 +168,22 @@ export function AdminClinicDetails() {
                 </div>
                 <div className="flex items-center space-x-3">
                     <StatusBadge status={clinic.status} type="clinic" />
+                    <button
+                        onClick={handleCopyDashboardLink}
+                        className="flex items-center space-x-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg transition-colors"
+                        title="Copiar link do dashboard"
+                    >
+                        <Link2 className="w-4 h-4" />
+                        <span>Copiar Link</span>
+                    </button>
+                    <button
+                        onClick={handleSendCredentials}
+                        className="flex items-center space-x-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors"
+                        title="Enviar credenciais por email"
+                    >
+                        <Send className="w-4 h-4" />
+                        <span>Enviar Acesso</span>
+                    </button>
                     <button
                         onClick={() => navigate(`/admin/clinicas/${id}/editar`)}
                         className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
