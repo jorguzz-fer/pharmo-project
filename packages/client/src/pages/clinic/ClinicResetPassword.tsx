@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Loader2, CheckCircle } from 'lucide-react';
+import { Loader2, CheckCircle, Eye, EyeOff } from 'lucide-react';
 
 type ResetPasswordForm = {
     password: string;
@@ -15,6 +15,8 @@ export function ClinicResetPassword() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const token = searchParams.get('token');
     const password = watch('password');
@@ -116,27 +118,45 @@ export function ClinicResetPassword() {
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Nova Senha
                             </label>
-                            <input
-                                {...register('password', { required: true, minLength: 6 })}
-                                type="password"
-                                placeholder="Mínimo 6 caracteres"
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all"
-                            />
+                            <div className="relative">
+                                <input
+                                    {...register('password', { required: true, minLength: 6 })}
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Mínimo 6 caracteres"
+                                    className="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                >
+                                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                </button>
+                            </div>
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Confirmar Nova Senha
                             </label>
-                            <input
-                                {...register('confirmPassword', {
-                                    required: true,
-                                    validate: value => value === password || 'As senhas não coincidem'
-                                })}
-                                type="password"
-                                placeholder="Digite a senha novamente"
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all"
-                            />
+                            <div className="relative">
+                                <input
+                                    {...register('confirmPassword', {
+                                        required: true,
+                                        validate: value => value === password || 'As senhas não coincidem'
+                                    })}
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    placeholder="Digite a senha novamente"
+                                    className="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                >
+                                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                </button>
+                            </div>
                         </div>
 
                         <button
