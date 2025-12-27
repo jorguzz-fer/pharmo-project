@@ -5,8 +5,8 @@ export interface Veterinarian {
     nome: string;
     cpf: string;
     crv: string;
-    uf_crmv: string;
-    numero_crmv: string;
+    uf_crmv?: string; // Keep for backward compatibility with existing data
+    numero_crmv?: string; // Keep for backward compatibility with existing data
     email: string;
     telefone: string;
     especialidades?: string[];
@@ -19,8 +19,6 @@ export interface VeterinarianFormData {
     nome: string;
     cpf: string;
     crv: string;
-    uf_crmv: string;
-    numero_crmv: string;
     email: string;
     telefone: string;
     especialidades?: string[];

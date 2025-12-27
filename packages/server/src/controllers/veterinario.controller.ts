@@ -10,8 +10,8 @@ export class VeterinarioController {
             nome: z.string().min(3),
             cpf: z.string().min(11), // Accept CPF with or without formatting
             crv: z.string().min(5), // Accept flexible CRV format (e.g., SP-43210 or SP43210)
-            uf_crmv: z.string().length(2),
-            numero_crmv: z.string(),
+            uf_crmv: z.string().length(2).optional(), // Optional for backward compatibility
+            numero_crmv: z.string().optional(), // Optional for backward compatibility
             email: z.string().email(),
             telefone: z.string(),
             especialidades: z.array(z.string()).optional()

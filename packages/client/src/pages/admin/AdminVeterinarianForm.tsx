@@ -11,8 +11,6 @@ export function AdminVeterinarianForm() {
         nome: '',
         cpf: '',
         crv: '',
-        uf_crmv: '',
-        numero_crmv: '',
         email: '',
         telefone: '',
         especialidades: []
@@ -32,8 +30,6 @@ export function AdminVeterinarianForm() {
                 nome: vet.nome,
                 cpf: vet.cpf,
                 crv: vet.crv,
-                uf_crmv: vet.uf_crmv,
-                numero_crmv: vet.numero_crmv,
                 email: vet.email,
                 telefone: vet.telefone,
                 especialidades: vet.especialidades || []
