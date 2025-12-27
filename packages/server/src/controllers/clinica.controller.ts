@@ -27,8 +27,12 @@ export class ClinicaController {
         });
 
         try {
+            console.log('📝 Creating clinic with data:', JSON.stringify(req.body, null, 2));
             const data = schema.parse(req.body);
+            console.log('✅ Validation passed, creating clinic...');
+
             const clinica = await clinicaService.create(data);
+            console.log('✅ Clinic created successfully:', clinica.id);
 
             // Enviar email de cadastro (não bloquear se falhar)
             try {
@@ -43,11 +47,16 @@ export class ClinicaController {
             return res.status(201).json(clinica);
         } catch (error) {
             if (error instanceof z.ZodError) {
+                console.error('❌ Validation error:', error.issues);
                 const errorMessages = error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`).join(', ');
                 return res.status(400).json({ error: errorMessages });
             }
-            console.error('Error creating clinica:', error);
-            return res.status(500).json({ error: 'Internal server error' });
+            console.error('❌ Error creating clinica:', error);
+            console.error('Error stack:', (error as Error).stack);
+            return res.status(500).json({
+                error: 'Internal server error',
+                details: process.env.NODE_ENV === 'development' ? (error as Error).message : undefined
+            });
         }
     }
 
