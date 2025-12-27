@@ -15,6 +15,8 @@ export class ClinicaAuthController {
         try {
             const { email, password } = req.body;
 
+            console.log('🔍 Clinic Login Attempt:', { email, passwordLength: password?.length });
+
             if (!email || !password) {
                 return res.status(400).json({ error: 'Email e senha são obrigatórios' });
             }
@@ -24,12 +26,22 @@ export class ClinicaAuthController {
                 where: { email: email.toLowerCase() }
             });
 
+            console.log('🔍 Clinic Found:', {
+                found: !!clinica,
+                id: clinica?.id,
+                email: clinica?.email,
+                hasSenhaHash: !!clinica?.senha_hash,
+                status: clinica?.status
+            });
+
             if (!clinica) {
+                console.log('❌ Clinic not found for email:', email);
                 return res.status(401).json({ error: 'Email ou senha inválidos' });
             }
 
             // Verificar se a clínica tem senha cadastrada
             if (!clinica.senha_hash) {
+                console.log('❌ Clinic has no password hash');
                 return res.status(401).json({
                     error: 'Senha não cadastrada. Entre em contato com o administrador.'
                 });
@@ -37,16 +49,22 @@ export class ClinicaAuthController {
 
             // Verificar senha
             const isPasswordValid = await bcrypt.compare(password, clinica.senha_hash);
+            console.log('🔍 Password validation:', { isPasswordValid });
+
             if (!isPasswordValid) {
+                console.log('❌ Invalid password for clinic:', clinica.email);
                 return res.status(401).json({ error: 'Email ou senha inválidos' });
             }
 
             // Verificar se a clínica está aprovada
             if (clinica.status !== 'APROVADA') {
+                console.log('❌ Clinic not approved:', clinica.status);
                 return res.status(403).json({
                     error: 'Clínica ainda não aprovada. Aguarde a aprovação do administrador.'
                 });
             }
+
+            console.log('✅ Login successful for clinic:', clinica.email);
 
             // Gerar token JWT
             const token = jwt.sign(
@@ -146,6 +164,12 @@ export class ClinicaAuthController {
         try {
             const { token, newPassword } = req.body;
 
+            console.log('🔍 Reset Password Attempt:', {
+                hasToken: !!token,
+                tokenLength: token?.length,
+                passwordLength: newPassword?.length
+            });
+
             if (!token || !newPassword) {
                 return res.status(400).json({ error: 'Token e nova senha são obrigatórios' });
             }
@@ -164,12 +188,21 @@ export class ClinicaAuthController {
                 }
             });
 
+            console.log('🔍 Clinic found by token:', {
+                found: !!clinica,
+                id: clinica?.id,
+                email: clinica?.email,
+                tokenExpires: clinica?.reset_token_expires
+            });
+
             if (!clinica) {
+                console.log('❌ Token invalid or expired');
                 return res.status(400).json({ error: 'Token inválido ou expirado' });
             }
 
             // Hash da nova senha
             const senha_hash = await bcrypt.hash(newPassword, 10);
+            console.log('🔐 Password hashed, updating database...');
 
             // Atualizar senha e limpar token
             await prisma.clinica.update({
@@ -180,6 +213,9 @@ export class ClinicaAuthController {
                     reset_token_expires: null
                 }
             });
+
+            console.log('✅ Password reset successful for clinic:', clinica.email);
+            console.log('📝 Hash saved (first 20 chars):', senha_hash.substring(0, 20) + '...');
 
             res.json({ message: 'Senha redefinida com sucesso!' });
         } catch (error) {
