@@ -8,13 +8,12 @@ export class VeterinarioController {
     async create(req: Request, res: Response) {
         const schema = z.object({
             nome: z.string().min(3),
-            cpf: z.string().optional(),
-            crmv: z.string().regex(/^CRMV-[A-Z]{2}\s\d{4,6}$/),
+            cpf: z.string().min(11), // Accept CPF with or without formatting
+            crv: z.string().min(5), // Accept flexible CRV format (e.g., SP-43210 or SP43210)
             uf_crmv: z.string().length(2),
             numero_crmv: z.string(),
             email: z.string().email(),
             telefone: z.string(),
-            senha_hash: z.string().min(6),
             especialidades: z.array(z.string()).optional()
         });
 
@@ -24,7 +23,8 @@ export class VeterinarioController {
             return res.status(201).json(veterinario);
         } catch (error: any) {
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: error.issues });
+                const errorMessages = error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`).join(', ');
+                return res.status(400).json({ error: errorMessages });
             }
             console.error('Error creating veterinario:', error);
             return res.status(400).json({ error: error.message || 'Erro ao criar veterinário' });
