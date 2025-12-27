@@ -8,6 +8,8 @@ const prisma = new PrismaClient();
 
 export class AuthController {
     async loginVet(req: Request, res: Response) {
+        console.log('🔵 Login attempt received:', { body: req.body });
+
         const schema = z.object({
             crv: z.string(),
             password: z.string(),
@@ -15,19 +17,25 @@ export class AuthController {
 
         try {
             const { crv, password } = schema.parse(req.body);
+            console.log('✅ Validation passed:', { crv });
 
             // Find vet
             const vet = await prisma.veterinario.findUnique({
                 where: { crv },
             });
+            console.log('🔍 Vet found:', vet ? 'YES' : 'NO');
 
             if (!vet) {
+                console.log('❌ Vet not found');
                 return res.status(401).json({ error: 'Veterinário não encontrado' });
             }
 
             // Check password
             const isValidPassword = await bcrypt.compare(password, vet.senha_hash);
+            console.log('🔑 Password valid:', isValidPassword);
+
             if (!isValidPassword) {
+                console.log('❌ Invalid password');
                 return res.status(401).json({ error: 'Senha incorreta' });
             }
 
@@ -37,6 +45,7 @@ export class AuthController {
                 process.env.JWT_SECRET || 'default_secret',
                 { expiresIn: '1d' }
             );
+            console.log('✅ Login successful');
 
             return res.json({
                 user: {
@@ -50,8 +59,9 @@ export class AuthController {
             });
 
         } catch (error) {
+            console.error('❌ Login error:', error);
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: (error as any).errors });
+                return res.status(400).json({ error: error.issues });
             }
             return res.status(500).json({ error: 'Internal server error' });
         }
