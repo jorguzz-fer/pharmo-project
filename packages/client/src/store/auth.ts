@@ -72,7 +72,15 @@ export const useAuthStore = create<AuthState>()(
                     throw e; // Don't fall back to mock in production
                 }
             },
-            logout: () => set({ user: null, token: null, isAuthenticated: false }),
+            logout: () => {
+                // Get current user before clearing
+                const currentUser = useAuthStore.getState().user;
+                // Save role to localStorage for redirect logic
+                if (currentUser?.role) {
+                    localStorage.setItem('pharmo-logout-role', currentUser.role);
+                }
+                set({ user: null, token: null, isAuthenticated: false });
+            },
         }),
         {
             name: 'pharmo-auth-storage',

@@ -10,10 +10,18 @@ export function MainLayout() {
     const location = useLocation();
 
     const handleLogout = () => {
-        const isAdmin = user?.role === 'ADMIN';
-        console.log('🔍 Logout Debug:', { userRole: user?.role, isAdmin, redirectTo: isAdmin ? '/admin/login' : '/login' });
-        logout();
-        navigate(isAdmin ? '/admin/login' : '/login');
+        logout(); // This saves role to localStorage before clearing
+
+        // Read role from localStorage (saved by logout function)
+        const savedRole = localStorage.getItem('pharmo-logout-role');
+        const redirectPath = savedRole === 'ADMIN' ? '/admin/login' : '/login';
+
+        console.log('🔍 Logout Debug:', { savedRole, redirectPath });
+
+        // Clean up localStorage
+        localStorage.removeItem('pharmo-logout-role');
+
+        navigate(redirectPath);
     };
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);

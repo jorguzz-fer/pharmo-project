@@ -26,7 +26,11 @@ import { ClinicDashboard } from './pages/clinic/ClinicDashboard';
 function ProtectedRoute({ children, role }: { children: React.ReactNode, role?: 'VET' | 'ADMIN' }) {
   const { isAuthenticated, user } = useAuthStore();
 
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    // Redirect to appropriate login page based on required role
+    return <Navigate to={role === 'ADMIN' ? '/admin/login' : '/login'} />;
+  }
+
   if (role && user?.role !== role) {
     // Redirect based on role if trying to access unauthorized area
     return user?.role === 'ADMIN' ? <Navigate to="/admin/dashboard" /> : <Navigate to="/dashboard" />;
