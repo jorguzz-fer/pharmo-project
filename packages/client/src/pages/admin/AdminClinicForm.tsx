@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { clinicService, type ClinicaFormData } from '../../services/clinicService';
 
 export function AdminClinicForm() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [loadingCep, setLoadingCep] = useState(false);
     const [formData, setFormData] = useState<ClinicaFormData>({
         nome_fantasia: '',
         razao_social: '',
@@ -93,6 +94,36 @@ export function AdminClinicForm() {
             ...formData,
             [e.target.name]: e.target.value
         });
+    };
+
+    const handleCepBlur = async () => {
+        const cep = formData.cep.replace(/\D/g, '');
+
+        if (cep.length !== 8) return;
+
+        setLoadingCep(true);
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
+
+            if (data.erro) {
+                alert('CEP não encontrado');
+                return;
+            }
+
+            setFormData({
+                ...formData,
+                logradouro: data.logradouro || '',
+                bairro: data.bairro || '',
+                cidade: data.localidade || '',
+                estado: data.uf || ''
+            });
+        } catch (error) {
+            console.error('Error fetching CEP:', error);
+            alert('Erro ao buscar CEP');
+        } finally {
+            setLoadingCep(false);
+        }
     };
 
     return (
@@ -226,14 +257,23 @@ export function AdminClinicForm() {
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 CEP
                             </label>
-                            <input
-                                type="text"
-                                name="cep"
-                                value={formData.cep}
-                                onChange={handleChange}
-                                placeholder="00000-000"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                            />
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    name="cep"
+                                    value={formData.cep}
+                                    onChange={handleChange}
+                                    onBlur={handleCepBlur}
+                                    placeholder="00000-000"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                />
+                                {loadingCep && (
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                        <Loader2 className="w-5 h-5 animate-spin text-teal-600" />
+                                    </div>
+                                )}
+                            </div>
+                            <p className="mt-1 text-xs text-gray-500">Digite o CEP e pressione Tab para buscar o endereço</p>
                         </div>
 
                         <div className="md:col-span-2">
