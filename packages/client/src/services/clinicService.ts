@@ -113,7 +113,19 @@ export const clinicService = {
         formData.append('file', file);
         formData.append('tipo_documento', tipo);
 
-        const token = localStorage.getItem('token');
+        // Get token from Zustand persist storage
+        const authStorage = localStorage.getItem('pharmo-auth-storage');
+        let token = null;
+
+        if (authStorage) {
+            try {
+                const parsed = JSON.parse(authStorage);
+                token = parsed.state?.token;
+            } catch (e) {
+                console.error('Failed to parse auth storage:', e);
+            }
+        }
+
         console.log('📤 Uploading document...');
         console.log('Token exists:', !!token);
         console.log('File:', file.name, file.size, 'bytes');
@@ -136,7 +148,7 @@ export const clinicService = {
             const errorText = await response.text();
             console.error('Upload error:', response.status, errorText);
 
-            if (response.status === 403) {
+            if (response.status === 403 || response.status === 401) {
                 throw new Error('Acesso negado. Faça login novamente.');
             }
 
