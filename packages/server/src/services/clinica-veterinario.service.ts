@@ -71,10 +71,14 @@ export class ClinicaVeterinarioService {
             }
         });
 
-        // Enviar email
-        const { EmailService } = await import('./email.service');
-        const emailService = new EmailService();
-        await emailService.sendVeterinarioVinculado(vinculacao);
+        // Enviar email (não bloquear se falhar)
+        try {
+            const { EmailService } = await import('./email.service');
+            const emailService = new EmailService();
+            await emailService.sendVeterinarioVinculado(vinculacao);
+        } catch (emailError) {
+            console.error('Error sending email (non-blocking):', emailError);
+        }
 
         return vinculacao;
     }
@@ -107,10 +111,14 @@ export class ClinicaVeterinarioService {
             }
         });
 
-        // Enviar email
-        const { EmailService } = await import('./email.service');
-        const emailService = new EmailService();
-        await emailService.sendVeterinarioDesvinculado(updated);
+        // Enviar email (não bloquear se falhar)
+        try {
+            const { EmailService } = await import('./email.service');
+            const emailService = new EmailService();
+            await emailService.sendVeterinarioDesvinculado(updated);
+        } catch (emailError) {
+            console.error('Error sending email (non-blocking):', emailError);
+        }
 
         return updated;
     }
