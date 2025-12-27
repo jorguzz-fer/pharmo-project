@@ -10,13 +10,29 @@ type ClinicaFilters = {
 
 export class ClinicaService {
     async create(data: any) {
-        // Validar CNPJ (será implementado depois)
+        // Validar e limpar CNPJ
         const cnpjLimpo = data.cnpj.replace(/\D/g, '');
 
         return prisma.clinica.create({
             data: {
-                ...data,
-                cnpj: cnpjLimpo
+                nome_fantasia: data.nome_fantasia,
+                razao_social: data.razao_social,
+                cnpj: cnpjLimpo,
+                inscricao_estadual: data.inscricao_estadual || null,
+                email: data.email,
+                telefone: data.telefone || null,
+                whatsapp: data.whatsapp || null,
+                cep: data.cep || null,
+                logradouro: data.logradouro || null,
+                numero: data.numero || null,
+                complemento: data.complemento || null,
+                bairro: data.bairro || null,
+                cidade: data.cidade || null,
+                estado: data.estado || null,
+                responsavel_legal: data.responsavel_legal,
+                cpf_responsavel: data.cpf_responsavel,
+                observacoes_internas: data.observacoes_internas || null,
+                status: data.status || 'PENDENTE'
             }
         });
     }
