@@ -11,7 +11,15 @@ import { clinicaRoutes } from './routes/clinica.routes';
 import { veterinarioRoutes } from './routes/veterinario.routes';
 import { passwordResetRoutes } from './routes/password-reset.routes';
 
+// Try to load .env file (optional - Easypanel uses system env vars)
 dotenv.config();
+
+// Log environment variables for debugging
+console.log('🔧 Environment Variables Check:');
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? '✅ Set' : '❌ Missing');
+console.log('SUPABASE_KEY:', process.env.SUPABASE_KEY ? '✅ Set' : '❌ Missing');
+console.log('DATABASE_URL:', process.env.DATABASE_URL ? '✅ Set' : '❌ Missing');
+console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
