@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, LogOut, Menu, X, Phone, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, FileText, LogOut, Menu, X, Phone, TrendingUp, Building2, Users } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
 
 export function MainLayout() {
@@ -132,6 +132,34 @@ export function MainLayout() {
                             >
                                 <TrendingUp className="w-5 h-5" />
                                 Relatórios
+                            </NavLink>
+
+                            <NavLink
+                                to="/admin/clinicas"
+                                onClick={closeSidebar}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                                        ? 'bg-gray-800 text-white font-medium'
+                                        : 'text-gray-600 hover:bg-gray-50'
+                                    }`
+                                }
+                            >
+                                <Building2 className="w-5 h-5" />
+                                Clínicas
+                            </NavLink>
+
+                            <NavLink
+                                to="/admin/veterinarios"
+                                onClick={closeSidebar}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                                        ? 'bg-gray-800 text-white font-medium'
+                                        : 'text-gray-600 hover:bg-gray-50'
+                                    }`
+                                }
+                            >
+                                <Users className="w-5 h-5" />
+                                Veterinários
                             </NavLink>
                         </>
                     )}

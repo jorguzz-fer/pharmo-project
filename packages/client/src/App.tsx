@@ -9,6 +9,8 @@ import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminFollowUps } from './pages/admin/AdminFollowUps';
 import { AdminReports } from './pages/admin/AdminReports';
+import { AdminClinics } from './pages/admin/AdminClinics';
+import { AdminVeterinarians } from './pages/admin/AdminVeterinarians';
 import { OrderStatus } from './pages/OrderStatus';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
@@ -56,6 +58,8 @@ export default function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="follow-ups" element={<AdminFollowUps />} />
           <Route path="relatorios" element={<AdminReports />} />
+          <Route path="clinicas" element={<AdminClinics />} />
+          <Route path="veterinarios" element={<AdminVeterinarians />} />
         </Route>
       </Routes>
     </BrowserRouter>

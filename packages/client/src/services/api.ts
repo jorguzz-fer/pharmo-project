@@ -54,5 +54,70 @@ export const api = {
             throw new Error(error.error || error.message || 'Erro na requisição');
         }
         return res.json();
+    },
+
+    async put(endpoint: string, data: any) {
+        const token = useAuthStore.getState().token;
+        const res = await fetch(`${API_URL}${endpoint}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok) {
+            if (res.status === 401) {
+                useAuthStore.getState().logout();
+                window.location.href = '/login';
+                throw new Error('Sessão expirada. Faça login novamente.');
+            }
+            const error = await res.json().catch(() => ({ message: res.statusText }));
+            throw new Error(error.error || error.message || 'Erro na requisição');
+        }
+        return res.json();
+    },
+
+    async patch(endpoint: string, data: any) {
+        const token = useAuthStore.getState().token;
+        const res = await fetch(`${API_URL}${endpoint}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok) {
+            if (res.status === 401) {
+                useAuthStore.getState().logout();
+                window.location.href = '/login';
+                throw new Error('Sessão expirada. Faça login novamente.');
+            }
+            const error = await res.json().catch(() => ({ message: res.statusText }));
+            throw new Error(error.error || error.message || 'Erro na requisição');
+        }
+        return res.json();
+    },
+
+    async delete(endpoint: string) {
+        const token = useAuthStore.getState().token;
+        const res = await fetch(`${API_URL}${endpoint}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        if (!res.ok) {
+            if (res.status === 401) {
+                useAuthStore.getState().logout();
+                window.location.href = '/login';
+                throw new Error('Sessão expirada. Faça login novamente.');
+            }
+            const error = await res.json().catch(() => ({ message: res.statusText }));
+            throw new Error(error.error || error.message || 'Erro na requisição');
+        }
+        return res.json();
     }
 };
