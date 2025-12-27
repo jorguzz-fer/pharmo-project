@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { Upload, X, FileText, Image as ImageIcon } from 'lucide-react';
 
 interface DocumentUploadProps {
-    onUpload: (file: File) => Promise<void>;
+    onUpload: (file: File, tipo: string) => Promise<void>;
     acceptedTypes?: string;
     maxSizeMB?: number;
     tipoDocumento: string;
@@ -55,7 +55,7 @@ export function DocumentUpload({
 
         setUploading(true);
         try {
-            await onUpload(file);
+            await onUpload(file, tipoDocumento);
         } catch (err: any) {
             setError(err.message || 'Erro ao fazer upload');
         } finally {

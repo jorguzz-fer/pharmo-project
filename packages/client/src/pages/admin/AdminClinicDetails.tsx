@@ -354,13 +354,13 @@ export function AdminClinicDetails() {
                         <h3 className="font-semibold text-lg mb-4">Upload de Documentos</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <DocumentUpload
-                                onUpload={(file) => handleDocumentUpload(file, 'contrato_social')}
+                                onUpload={(file, tipo) => handleDocumentUpload(file, tipo)}
                                 tipoDocumento="contrato_social"
                                 label="Contrato Social"
                                 acceptedTypes=".pdf"
                             />
                             <DocumentUpload
-                                onUpload={(file) => handleDocumentUpload(file, 'cartao_cnpj')}
+                                onUpload={(file, tipo) => handleDocumentUpload(file, tipo)}
                                 tipoDocumento="cartao_cnpj"
                                 label="Cartão CNPJ"
                                 acceptedTypes=".pdf,.png,.jpg,.jpeg"
