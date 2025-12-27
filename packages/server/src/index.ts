@@ -24,8 +24,23 @@ console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(helmet());
-app.use(cors());
+// Configure CORS to allow frontend
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'https://pharmopet.com.br',
+        'https://www.pharmopet.com.br',
+        'https://app.pharmopet.com.br'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(express.json());
 
 // Routes
