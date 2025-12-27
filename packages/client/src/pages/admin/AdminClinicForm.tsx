@@ -97,7 +97,7 @@ export function AdminClinicForm() {
     };
 
     const handleCepBlur = async () => {
-        const cep = formData.cep.replace(/\D/g, '');
+        const cep = (formData.cep || '').replace(/\D/g, '');
 
         if (cep.length !== 8) return;
 
