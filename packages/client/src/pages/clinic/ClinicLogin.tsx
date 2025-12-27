@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import { Loader2, Building2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useClinicAuthStore } from '../../store/clinicAuth';
 
 type LoginForm = {
@@ -34,9 +34,11 @@ export function ClinicLogin() {
         <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center p-4">
             <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8">
                 <div className="flex flex-col items-center mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mb-4">
-                        <Building2 className="w-10 h-10 text-white" />
-                    </div>
+                    <img
+                        src="/logo-horizontal.png"
+                        alt="PharmoPet"
+                        className="h-16 mb-4"
+                    />
                     <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
                         PharmoPet Clínica
                     </h2>
