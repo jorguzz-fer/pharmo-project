@@ -15,6 +15,13 @@ export async function uploadFile(
     path: string
 ): Promise<{ url: string; error?: string }> {
     try {
+        console.log('📤 Starting file upload to Supabase...');
+        console.log('Bucket:', bucket);
+        console.log('Path:', path);
+        console.log('File:', file.originalname);
+        console.log('Supabase URL:', supabaseUrl);
+        console.log('Supabase Key configured:', !!supabaseKey);
+
         const fileName = `${path}/${Date.now()}_${file.originalname}`;
 
         const { data, error } = await supabase.storage
@@ -25,17 +32,23 @@ export async function uploadFile(
             });
 
         if (error) {
-            console.error('Supabase upload error:', error);
+            console.error('❌ Supabase upload error:', error);
+            console.error('Error details:', JSON.stringify(error, null, 2));
             return { url: '', error: error.message };
         }
+
+        console.log('✅ Upload successful, getting public URL...');
 
         const { data: { publicUrl } } = supabase.storage
             .from(bucket)
             .getPublicUrl(fileName);
 
+        console.log('✅ Public URL:', publicUrl);
+
         return { url: publicUrl };
     } catch (error: any) {
-        console.error('Upload error:', error);
+        console.error('❌ Upload error:', error);
+        console.error('Error stack:', error.stack);
         return { url: '', error: error.message };
     }
 }
