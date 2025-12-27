@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X } from 'lucide-react';
 import { clinicService, type Clinica } from '../../services/clinicService';
+import { veterinarianService } from '../../services/veterinarianService';
 import { StatusBadge } from '../../components/StatusBadge';
 import { DocumentUpload } from '../../components/DocumentUpload';
 
@@ -13,6 +14,10 @@ export function AdminClinicDetails() {
     const [documents, setDocuments] = useState<any[]>([]);
     const [veterinarians, setVeterinarians] = useState<any[]>([]);
     const [activeTab, setActiveTab] = useState<'info' | 'docs' | 'vets'>('info');
+    const [showLinkModal, setShowLinkModal] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [searching, setSearching] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -83,6 +88,44 @@ export function AdminClinicDetails() {
         }
     };
 
+    const handleSearchVeterinarian = async () => {
+        if (!searchQuery.trim()) return;
+
+        try {
+            setSearching(true);
+            const results = await veterinarianService.search(searchQuery);
+            setSearchResults(Array.isArray(results) ? results : [results]);
+        } catch (error) {
+            console.error('Error searching veterinarian:', error);
+            setSearchResults([]);
+        } finally {
+            setSearching(false);
+        }
+    };
+
+    const handleLinkVeterinarian = async (vetId: string) => {
+        try {
+            await clinicService.linkVeterinarian(id!, vetId);
+            setShowLinkModal(false);
+            setSearchQuery('');
+            setSearchResults([]);
+            loadVeterinarians();
+        } catch (error: any) {
+            alert(error.message || 'Erro ao vincular veterinário');
+        }
+    };
+
+    const handleUnlinkVeterinarian = async (vetId: string) => {
+        if (!confirm('Desvincular veterinário desta clínica?')) return;
+
+        try {
+            await clinicService.unlinkVeterinarian(id!, vetId);
+            loadVeterinarians();
+        } catch (error: any) {
+            alert(error.message || 'Erro ao desvincular veterinário');
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center py-12">
@@ -133,8 +176,8 @@ export function AdminClinicDetails() {
                     <button
                         onClick={() => setActiveTab('info')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'info'
-                                ? 'border-teal-600 text-teal-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-teal-600 text-teal-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         <Building2 className="w-4 h-4 inline mr-2" />
@@ -143,8 +186,8 @@ export function AdminClinicDetails() {
                     <button
                         onClick={() => setActiveTab('docs')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'docs'
-                                ? 'border-teal-600 text-teal-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-teal-600 text-teal-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         <FileText className="w-4 h-4 inline mr-2" />
@@ -153,8 +196,8 @@ export function AdminClinicDetails() {
                     <button
                         onClick={() => setActiveTab('vets')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'vets'
-                                ? 'border-teal-600 text-teal-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-teal-600 text-teal-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         <Users className="w-4 h-4 inline mr-2" />
@@ -362,36 +405,129 @@ export function AdminClinicDetails() {
             )}
 
             {activeTab === 'vets' && (
-                <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <div className="px-6 py-4 border-b flex justify-between items-center">
-                        <h3 className="font-semibold text-lg">Veterinários Vinculados</h3>
-                        <button className="text-teal-600 hover:text-teal-700 text-sm font-medium">
-                            + Vincular Veterinário
-                        </button>
-                    </div>
-                    {veterinarians.length === 0 ? (
-                        <div className="p-12 text-center text-gray-500">
-                            Nenhum veterinário vinculado
+                <>
+                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <div className="px-6 py-4 border-b flex justify-between items-center">
+                            <h3 className="font-semibold text-lg">Veterinários Vinculados</h3>
+                            <button
+                                onClick={() => setShowLinkModal(true)}
+                                className="flex items-center space-x-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                            >
+                                <Users className="w-4 h-4" />
+                                <span>Vincular Veterinário</span>
+                            </button>
                         </div>
-                    ) : (
-                        <ul className="divide-y">
-                            {veterinarians.map((vet) => (
-                                <li key={vet.id} className="px-6 py-4 hover:bg-gray-50">
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            <p className="font-medium">{vet.nome}</p>
-                                            <p className="text-sm text-gray-600">CRV: {vet.crv}</p>
-                                            {vet.cargo && <p className="text-sm text-gray-500">{vet.cargo}</p>}
+                        {veterinarians.length === 0 ? (
+                            <div className="p-12 text-center text-gray-500">
+                                Nenhum veterinário vinculado
+                            </div>
+                        ) : (
+                            <ul className="divide-y">
+                                {veterinarians.map((vet) => (
+                                    <li key={vet.id} className="px-6 py-4 hover:bg-gray-50">
+                                        <div className="flex justify-between items-center">
+                                            <div>
+                                                <p className="font-medium">{vet.nome}</p>
+                                                <p className="text-sm text-gray-600">CRV: {vet.crv}</p>
+                                                <p className="text-sm text-gray-500">{vet.email}</p>
+                                                {vet.cargo && <p className="text-sm text-gray-500 mt-1">Cargo: {vet.cargo}</p>}
+                                            </div>
+                                            <button
+                                                onClick={() => handleUnlinkVeterinarian(vet.id)}
+                                                className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                            >
+                                                Desvincular
+                                            </button>
                                         </div>
-                                        <button className="text-red-600 hover:text-red-700 text-sm">
-                                            Desvincular
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    {/* Link Veterinarian Modal */}
+                    {showLinkModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] flex flex-col">
+                                <div className="px-6 py-4 border-b flex justify-between items-center">
+                                    <h3 className="text-lg font-semibold">Vincular Veterinário</h3>
+                                    <button onClick={() => setShowLinkModal(false)}>
+                                        <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                                    </button>
+                                </div>
+
+                                <div className="p-6">
+                                    <div className="flex space-x-2 mb-4">
+                                        <input
+                                            type="text"
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleSearchVeterinarian()}
+                                            placeholder="Buscar por nome, CRV ou CPF..."
+                                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                        />
+                                        <button
+                                            onClick={handleSearchVeterinarian}
+                                            disabled={searching}
+                                            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
+                                        >
+                                            <Search className="w-5 h-5" />
                                         </button>
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
+
+                                    {searching && (
+                                        <div className="text-center py-8">
+                                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
+                                        </div>
+                                    )}
+
+                                    {!searching && searchResults.length > 0 && (
+                                        <div className="space-y-2 max-h-96 overflow-y-auto">
+                                            {searchResults.map((vet) => (
+                                                <div key={vet.id} className="p-4 border rounded-lg hover:bg-gray-50">
+                                                    <div className="flex justify-between items-start">
+                                                        <div>
+                                                            <p className="font-medium">{vet.nome}</p>
+                                                            <p className="text-sm text-gray-600">CRV: {vet.crv}</p>
+                                                            <p className="text-sm text-gray-600">{vet.email}</p>
+                                                            {vet.especialidades && vet.especialidades.length > 0 && (
+                                                                <div className="flex flex-wrap gap-1 mt-2">
+                                                                    {vet.especialidades.map((esp: string, idx: number) => (
+                                                                        <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                                                                            {esp}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <button
+                                                            onClick={() => handleLinkVeterinarian(vet.id)}
+                                                            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm"
+                                                        >
+                                                            Vincular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {!searching && searchQuery && searchResults.length === 0 && (
+                                        <div className="text-center py-8 text-gray-500">
+                                            Nenhum veterinário encontrado
+                                        </div>
+                                    )}
+
+                                    {!searching && !searchQuery && (
+                                        <div className="text-center py-8 text-gray-500">
+                                            Digite o nome, CRV ou CPF do veterinário para buscar
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     )}
-                </div>
+                </>
             )}
         </div>
     );
