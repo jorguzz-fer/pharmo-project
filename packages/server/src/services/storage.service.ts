@@ -18,16 +18,6 @@ export async function uploadFile(
         console.log('📤 Starting file upload to Supabase...');
         console.log('Bucket:', bucket);
         console.log('Path:', path);
-        console.log('Supabase URL:', supabaseUrl);
-
-        // Debug credential details
-        const keyStart = supabaseKey ? supabaseKey.substring(0, 15) : 'MISSING';
-        const keyEnd = supabaseKey ? supabaseKey.substring(supabaseKey.length - 10) : 'MISSING';
-        console.log(`Supabase Key: ${keyStart}...${keyEnd} (Len: ${supabaseKey?.length})`);
-
-        // Check for common key issues
-        if (supabaseKey?.includes(' ')) console.warn('⚠️ Key contains spaces!');
-        if (supabaseKey?.includes('"')) console.warn('⚠️ Key contains quotes!');
 
         const fileName = `${path}/${Date.now()}_${file.originalname}`;
 
