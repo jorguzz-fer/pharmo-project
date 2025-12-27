@@ -30,10 +30,15 @@ export class ClinicaController {
             const data = schema.parse(req.body);
             const clinica = await clinicaService.create(data);
 
-            // Enviar email de cadastro
-            const { EmailService } = await import('../services/email.service');
-            const emailService = new EmailService();
-            await emailService.sendClinicaCadastrada(clinica);
+            // Enviar email de cadastro (não bloquear se falhar)
+            try {
+                const { EmailService } = await import('../services/email.service');
+                const emailService = new EmailService();
+                await emailService.sendClinicaCadastrada(clinica);
+            } catch (emailError) {
+                console.error('Error sending email (non-blocking):', emailError);
+                // Não falhar a criação da clínica se o email falhar
+            }
 
             return res.status(201).json(clinica);
         } catch (error) {
