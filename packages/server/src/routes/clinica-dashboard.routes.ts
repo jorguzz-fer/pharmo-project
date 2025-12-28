@@ -9,4 +9,12 @@ router.get('/dashboard', clinicAuthMiddleware, (req, res) =>
     clinicaDashboardController.getDashboard(req, res)
 );
 
+router.get('/prescricoes', clinicAuthMiddleware, (req, res) =>
+    clinicaDashboardController.getPrescricoes(req, res)
+);
+
+router.get('/veterinarios', clinicAuthMiddleware, (req, res) =>
+    clinicaDashboardController.getVeterinarios(req, res)
+);
+
 export default router;

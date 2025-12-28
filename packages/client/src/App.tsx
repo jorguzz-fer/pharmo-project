@@ -22,6 +22,9 @@ import { ClinicLogin } from './pages/clinic/ClinicLogin';
 import { ClinicForgotPassword } from './pages/clinic/ClinicForgotPassword';
 import { ClinicResetPassword } from './pages/clinic/ClinicResetPassword';
 import { ClinicDashboard } from './pages/clinic/ClinicDashboard';
+import { ClinicPrescriptions } from './pages/clinic/ClinicPrescriptions';
+import { ClinicVeterinarians } from './pages/clinic/ClinicVeterinarians';
+import { ClinicLayout } from './layouts/ClinicLayout';
 
 function ProtectedRoute({ children, role }: { children: React.ReactNode, role?: 'VET' | 'ADMIN' }) {
   const { isAuthenticated, user } = useAuthStore();
@@ -53,7 +56,13 @@ export default function App() {
         <Route path="/clinica/login" element={<ClinicLogin />} />
         <Route path="/clinica/forgot-password" element={<ClinicForgotPassword />} />
         <Route path="/clinica/reset-password" element={<ClinicResetPassword />} />
-        <Route path="/clinica/dashboard" element={<ClinicDashboard />} />
+
+        {/* Clinic Dashboard Routes */}
+        <Route path="/clinica" element={<ClinicLayout />}>
+          <Route path="dashboard" element={<ClinicDashboard />} />
+          <Route path="prescricoes" element={<ClinicPrescriptions />} />
+          <Route path="veterinarios" element={<ClinicVeterinarians />} />
+        </Route>
 
         {/* Vet Routes */}
         <Route path="/" element={

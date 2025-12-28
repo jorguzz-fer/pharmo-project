@@ -76,6 +76,90 @@ export class ClinicaDashboardController {
             res.status(500).json({ error: 'Erro ao carregar dashboard' });
         }
     }
+
+    async getPrescricoes(req: Request, res: Response) {
+        try {
+            const clinicaId = (req as any).user?.id;
+
+            if (!clinicaId) {
+                return res.status(401).json({ error: 'Não autenticado' });
+            }
+
+            // Buscar todas as prescrições dos veterinários da clínica
+            const prescricoes = await prisma.prescricao.findMany({
+                where: {
+                    veterinario: {
+                        clinicas: {
+                            some: { clinica_id: clinicaId }
+                        }
+                    }
+                },
+                include: {
+                    veterinario: {
+                        select: { nome: true, crv: true, email: true }
+                    },
+                    animal: {
+                        select: { nome: true, especie: true },
+                        include: {
+                            tutor: {
+                                select: { nome: true, telefone: true }
+                            }
+                        }
+                    },
+                    orcamento: true
+                },
+                orderBy: { created_at: 'desc' }
+            });
+
+            res.json({ prescricoes });
+        } catch (error) {
+            console.error('Get prescricoes error:', error);
+            res.status(500).json({ error: 'Erro ao carregar prescrições' });
+        }
+    }
+
+    async getVeterinarios(req: Request, res: Response) {
+        try {
+            const clinicaId = (req as any).user?.id;
+
+            if (!clinicaId) {
+                return res.status(401).json({ error: 'Não autenticado' });
+            }
+
+            // Buscar veterinários vinculados à clínica
+            const vinculos = await prisma.clinicaVeterinario.findMany({
+                where: { clinica_id: clinicaId },
+                include: {
+                    veterinario: {
+                        select: {
+                            id: true,
+                            nome: true,
+                            crv: true,
+                            email: true,
+                            telefone: true,
+                            _count: {
+                                select: {
+                                    prescricoes: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Mapear para formato mais limpo
+            const veterinarios = vinculos.map(v => ({
+                ...v.veterinario,
+                totalPrescricoes: v.veterinario._count.prescricoes,
+                vinculadoEm: v.created_at
+            }));
+
+            res.json({ veterinarios });
+        } catch (error) {
+            console.error('Get veterinarios error:', error);
+            res.status(500).json({ error: 'Erro ao carregar veterinários' });
+        }
+    }
 }
 
 export const clinicaDashboardController = new ClinicaDashboardController();
