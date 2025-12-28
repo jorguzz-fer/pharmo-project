@@ -81,11 +81,15 @@ export class ClinicaDashboardController {
         try {
             const clinicaId = (req as any).user?.id;
 
+            console.log('🔍 Get Prescricoes - Clinica ID:', clinicaId);
+
             if (!clinicaId) {
                 return res.status(401).json({ error: 'Não autenticado' });
             }
 
             // Buscar todas as prescrições dos veterinários da clínica
+            console.log('🔍 Buscando prescrições para clínica:', clinicaId);
+
             const prescricoes = await prisma.prescricao.findMany({
                 where: {
                     veterinario: {
@@ -99,21 +103,38 @@ export class ClinicaDashboardController {
                         select: { nome: true, crv: true, email: true }
                     },
                     animal: {
-                        select: { nome: true, especie: true },
-                        include: {
-                            tutor: {
-                                select: { nome: true, telefone: true }
-                            }
-                        }
+                        select: { nome: true, especie: true, tutor_id: true }
                     },
                     orcamento: true
                 },
                 orderBy: { created_at: 'desc' }
             });
 
-            res.json({ prescricoes });
+            console.log(`✅ Encontradas ${prescricoes.length} prescrições`);
+
+            // Buscar tutores separadamente para evitar erro de include aninhado
+            const prescricoesComTutor = await Promise.all(
+                prescricoes.map(async (p) => {
+                    const tutor = p.animal?.tutor_id
+                        ? await prisma.tutor.findUnique({
+                            where: { id: p.animal.tutor_id },
+                            select: { nome: true, telefone: true }
+                        })
+                        : null;
+
+                    return {
+                        ...p,
+                        animal: {
+                            ...p.animal,
+                            tutor: tutor || { nome: '-', telefone: '-' }
+                        }
+                    };
+                })
+            );
+
+            res.json({ prescricoes: prescricoesComTutor });
         } catch (error) {
-            console.error('Get prescricoes error:', error);
+            console.error('❌ Get prescricoes error:', error);
             res.status(500).json({ error: 'Erro ao carregar prescrições' });
         }
     }
