@@ -138,7 +138,8 @@ export class AdminService {
     }
 
     async getFollowUps() {
-        return prisma.followUp.findMany({
+        // 1. Follow-ups de pagamentos pendentes (existentes)
+        const paymentFollowUps = await prisma.followUp.findMany({
             where: { realizado: false },
             include: {
                 pedido: {
@@ -155,6 +156,44 @@ export class AdminService {
             },
             orderBy: { data_contato: 'asc' }
         });
+
+        // 2. Clínicas com aprovação pendente
+        const pendingClinics = await prisma.clinica.findMany({
+            where: { status: 'PENDENTE' },
+            select: {
+                id: true,
+                nome_fantasia: true,
+                razao_social: true,
+                email: true,
+                telefone: true,
+                created_at: true,
+                cnpj: true,
+                responsavel_legal: true
+            },
+            orderBy: { created_at: 'asc' }
+        });
+
+        // 3. Retornar dados combinados
+        return {
+            paymentFollowUps,
+            pendingApprovals: pendingClinics.map(clinic => ({
+                id: clinic.id,
+                type: 'PENDING_APPROVAL',
+                clinic_name: clinic.nome_fantasia,
+                razao_social: clinic.razao_social,
+                email: clinic.email,
+                telefone: clinic.telefone,
+                cnpj: clinic.cnpj,
+                responsavel_legal: clinic.responsavel_legal,
+                created_at: clinic.created_at,
+                priority: 'high'
+            })),
+            summary: {
+                totalPaymentFollowUps: paymentFollowUps.length,
+                totalPendingApprovals: pendingClinics.length,
+                totalTasks: paymentFollowUps.length + pendingClinics.length
+            }
+        };
     }
 
     async markFollowUp(id: string) {
