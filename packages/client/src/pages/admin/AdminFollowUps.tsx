@@ -58,12 +58,65 @@ export function AdminFollowUps() {
             const response = await fetch(`${API_URL}/admin/follow-ups`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            if (response.ok) {
-                const followUpData = await response.json();
-                setData(followUpData);
+
+            if (!response.ok) {
+                console.error('Failed to fetch follow-ups:', response.status);
+                // Set empty data instead of breaking
+                setData({
+                    paymentFollowUps: [],
+                    pendingApprovals: [],
+                    summary: {
+                        totalPaymentFollowUps: 0,
+                        totalPendingApprovals: 0,
+                        totalTasks: 0
+                    }
+                });
+                setIsLoading(false);
+                return;
+            }
+
+            const responseData = await response.json();
+
+            // Check if it's the new format or old format
+            if (responseData.paymentFollowUps !== undefined) {
+                // New format with structured data
+                setData(responseData);
+            } else if (Array.isArray(responseData)) {
+                // Old format - just an array of follow-ups
+                setData({
+                    paymentFollowUps: responseData,
+                    pendingApprovals: [],
+                    summary: {
+                        totalPaymentFollowUps: responseData.length,
+                        totalPendingApprovals: 0,
+                        totalTasks: responseData.length
+                    }
+                });
+            } else {
+                // Unknown format
+                console.error('Unknown follow-ups format:', responseData);
+                setData({
+                    paymentFollowUps: [],
+                    pendingApprovals: [],
+                    summary: {
+                        totalPaymentFollowUps: 0,
+                        totalPendingApprovals: 0,
+                        totalTasks: 0
+                    }
+                });
             }
         } catch (error) {
             console.error('Failed to fetch follow ups', error);
+            // Set empty data on error
+            setData({
+                paymentFollowUps: [],
+                pendingApprovals: [],
+                summary: {
+                    totalPaymentFollowUps: 0,
+                    totalPendingApprovals: 0,
+                    totalTasks: 0
+                }
+            });
         } finally {
             setIsLoading(false);
         }
@@ -116,8 +169,8 @@ export function AdminFollowUps() {
                     <button
                         onClick={() => setActiveTab('all')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'all'
-                                ? 'border-purple-500 text-purple-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-purple-500 text-purple-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         Todas ({totalTasks})
@@ -125,8 +178,8 @@ export function AdminFollowUps() {
                     <button
                         onClick={() => setActiveTab('approvals')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'approvals'
-                                ? 'border-purple-500 text-purple-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-purple-500 text-purple-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         Aprovações Pendentes ({data.summary.totalPendingApprovals})
@@ -134,8 +187,8 @@ export function AdminFollowUps() {
                     <button
                         onClick={() => setActiveTab('payments')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'payments'
-                                ? 'border-purple-500 text-purple-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-purple-500 text-purple-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         Pagamentos Pendentes ({data.summary.totalPaymentFollowUps})
