@@ -129,16 +129,27 @@ export class ClinicaService {
             updated_at: new Date()
         };
 
+        // Buscar clínica para verificar se já tem senha
+        const clinicaAtual = await prisma.clinica.findUnique({
+            where: { id },
+            select: { senha_hash: true }
+        });
+
+        let senhaTemporaria: string | null = null;
+
         if (status === ClinicaStatus.APROVADA) {
             updateData.approved_at = new Date();
             updateData.approved_by = userId;
 
-            // Gerar senha aleatória segura
-            const senhaTemporaria = this.generateRandomPassword();
-            const bcrypt = await import('bcryptjs');
-            updateData.senha_hash = await bcrypt.hash(senhaTemporaria, 10);
-
-            console.log(`🔐 Gerando senha para clínica ${id}: ${senhaTemporaria}`);
+            // Só gerar senha se a clínica NÃO tiver senha cadastrada
+            if (!clinicaAtual?.senha_hash) {
+                senhaTemporaria = this.generateRandomPassword();
+                const bcrypt = await import('bcryptjs');
+                updateData.senha_hash = await bcrypt.hash(senhaTemporaria, 10);
+                console.log(`🔐 Gerando senha para clínica ${id}: ${senhaTemporaria}`);
+            } else {
+                console.log(`ℹ️ Clínica ${id} já possui senha cadastrada, mantendo a existente`);
+            }
         }
 
         const clinica = await prisma.clinica.update({
@@ -154,11 +165,13 @@ export class ClinicaService {
             // Enviar email de aprovação
             await emailService.sendClinicaAprovada(clinica);
 
-            // Enviar credenciais de acesso
-            const senhaTemporaria = this.generateRandomPassword();
-            await emailService.sendClinicaCredenciais(clinica, senhaTemporaria);
-
-            console.log(`✅ Clínica aprovada e credenciais enviadas para ${clinica.email}`);
+            // Só enviar credenciais se gerou senha nova
+            if (senhaTemporaria) {
+                await emailService.sendClinicaCredenciais(clinica, senhaTemporaria);
+                console.log(`✅ Clínica aprovada e credenciais enviadas para ${clinica.email}`);
+            } else {
+                console.log(`✅ Clínica aprovada (senha já existente) para ${clinica.email}`);
+            }
         } else if (status === ClinicaStatus.SUSPENSA) {
             await emailService.sendClinicaSuspensa(clinica);
         }
