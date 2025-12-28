@@ -82,7 +82,6 @@ export default function App() {
             <MainLayout />
           </ProtectedRoute>
         }>
-          <Route index element={<Navigate to="/admin/dashboard" />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="follow-ups" element={<AdminFollowUps />} />
           <Route path="relatorios" element={<AdminReports />} />
