@@ -28,7 +28,8 @@ export function AdminFollowUps() {
 
     const fetchFollowUps = async () => {
         try {
-            const response = await fetch('http://localhost:3000/admin/follow-ups', {
+            const API_URL = import.meta.env.VITE_API_URL || 'https://api.pharmopet.com.br';
+            const response = await fetch(`${API_URL}/admin/follow-ups`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (response.ok) {
@@ -44,7 +45,8 @@ export function AdminFollowUps() {
 
     const handleMarkDone = async (id: string) => {
         try {
-            const response = await fetch(`http://localhost:3000/admin/follow-ups/${id}/done`, {
+            const API_URL = import.meta.env.VITE_API_URL || 'https://api.pharmopet.com.br';
+            const response = await fetch(`${API_URL}/admin/follow-ups/${id}/done`, {
                 method: 'PATCH',
                 headers: { Authorization: `Bearer ${token}` }
             });
