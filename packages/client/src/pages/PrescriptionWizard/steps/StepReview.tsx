@@ -50,7 +50,7 @@ export function StepReview() {
             // Redirect after success
             setTimeout(() => {
                 reset();
-                navigate('/dashboard');
+                navigate('/veterinario/dashboard');
             }, 3000);
 
         } catch (error: any) {

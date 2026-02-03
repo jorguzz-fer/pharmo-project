@@ -14,7 +14,7 @@ export function MainLayout() {
 
         // Read role from localStorage (saved by logout function)
         const savedRole = localStorage.getItem('pharmo-logout-role');
-        const redirectPath = savedRole === 'ADMIN' ? '/admin/login' : '/login';
+        const redirectPath = savedRole === 'ADMIN' ? '/admin/login' : '/veterinario/login';
 
         console.log('🔍 Logout Debug:', { savedRole, redirectPath });
 
@@ -70,7 +70,7 @@ export function MainLayout() {
                     {(!user?.role || user.role === 'VET') && (
                         <>
                             <NavLink
-                                to="/dashboard"
+                                to="/veterinario/dashboard"
                                 onClick={closeSidebar}
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
@@ -84,7 +84,7 @@ export function MainLayout() {
                             </NavLink>
 
                             <NavLink
-                                to="/prescricoes/nova"
+                                to="/veterinario/prescricoes/nova"
                                 onClick={closeSidebar}
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive

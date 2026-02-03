@@ -95,7 +95,7 @@ export function OrderStatus() {
         <div className="space-y-8">
             <div>
                 <button
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => navigate('/veterinario/dashboard')}
                     className="text-sm text-gray-500 hover:text-gray-700 mb-4"
                 >
                     ← Voltar ao Dashboard

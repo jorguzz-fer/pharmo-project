@@ -22,7 +22,7 @@ export function Login() {
         setError('');
         try {
             await login(data.crv, data.password || 'vet123');
-            navigate('/dashboard');
+            navigate('/veterinario/dashboard');
         } catch (error: any) {
             console.error(error);
             setError(error.message || 'Falha no login. Verifique suas credenciais.');

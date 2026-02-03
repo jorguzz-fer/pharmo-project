@@ -31,12 +31,12 @@ function ProtectedRoute({ children, role }: { children: React.ReactNode, role?: 
 
   if (!isAuthenticated) {
     // Redirect to appropriate login page based on required role
-    return <Navigate to={role === 'ADMIN' ? '/admin/login' : '/login'} />;
+    return <Navigate to={role === 'ADMIN' ? '/admin/login' : '/veterinario/login'} />;
   }
 
   if (role && user?.role !== role) {
     // Redirect based on role if trying to access unauthorized area
-    return user?.role === 'ADMIN' ? <Navigate to="/admin/dashboard" /> : <Navigate to="/dashboard" />;
+    return user?.role === 'ADMIN' ? <Navigate to="/admin/dashboard" /> : <Navigate to="/veterinario/dashboard" />;
   }
 
   return <>{children}</>;
@@ -47,7 +47,10 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/veterinario/login" />} />
+        <Route path="/login" element={<Navigate to="/veterinario/login" />} /> {/* Backward compatibility */}
+
+        <Route path="/veterinario/login" element={<Login />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
@@ -65,12 +68,12 @@ export default function App() {
         </Route>
 
         {/* Vet Routes */}
-        <Route path="/" element={
+        <Route path="/veterinario" element={
           <ProtectedRoute role="VET">
             <MainLayout />
           </ProtectedRoute>
         }>
-          <Route index element={<Navigate to="/dashboard" />} />
+          <Route index element={<Navigate to="/veterinario/dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="prescricoes/nova" element={<PrescriptionWizard />} />
           <Route path="pedidos/:id" element={<OrderStatus />} />
