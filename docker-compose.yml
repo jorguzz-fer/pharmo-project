@@ -3,15 +3,50 @@ version: '3.8'
 services:
   db:
     image: postgres:15-alpine
-    container_name: pharmo_db
+    container_name: pharmopet_db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: pharmo
+      POSTGRES_USER: pharmopet
+      POSTGRES_PASSWORD: pharmopet_dev_2024
+      POSTGRES_DB: pharmopet
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pharmopet -d pharmopet"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./packages/server
+      dockerfile: Dockerfile
+    container_name: pharmopet_api
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://pharmopet:pharmopet_dev_2024@db:5432/pharmopet
+      JWT_SECRET: dev-jwt-secret-pharmopet-change-in-production-min-32
+      PORT: 3001
+      NODE_ENV: development
+      ALLOWED_ORIGINS: http://localhost:5173,http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./packages/server/src:/app/src
+      - ./packages/server/prisma:/app/prisma
+
+  client:
+    build:
+      context: ./packages/client
+      dockerfile: Dockerfile
+    container_name: pharmopet_web
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
 
 volumes:
   postgres_data:
