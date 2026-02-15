@@ -27,17 +27,17 @@ echo ""
 # Run seeds
 echo "🌱 Running database seeds..."
 
-# Main seed (users)
+# Main seed (users) - using tsx to run TypeScript directly
 echo "  → Seeding users..."
-if npx tsx prisma/seed.ts 2>/dev/null; then
+if npx tsx prisma/seed.ts; then
     echo "  ✅ Users seeded"
 else
     echo "  ⚠️  User seed failed or already populated"
 fi
 
-# Principios ativos seed
+# Principios ativos seed - using tsx to run TypeScript directly
 echo "  → Seeding medications..."
-if npx tsx prisma/seeds/principios-ativos.seed.ts 2>/dev/null; then
+if npx tsx prisma/seeds/principios-ativos.seed.ts; then
     echo "  ✅ Medications seeded"
 else
     echo "  ⚠️  Medication seed failed or already populated"
