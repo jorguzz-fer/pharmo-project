@@ -17,9 +17,11 @@ COPY server/prisma ./prisma/
 ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 RUN npx prisma generate
 
-# Copy tsconfig and source code
+# Copy tsconfig, source code, and entrypoint
 COPY server/tsconfig.json ./
 COPY server/src ./src/
+COPY server/docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
 
 # Build TypeScript
 RUN npm run build
@@ -34,5 +36,5 @@ EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
     CMD node -e "require('http').get('http://localhost:3001/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
-# Start the application
-CMD ["node", "dist/index.js"]
+# Start with entrypoint (runs prisma db push + seed + server)
+ENTRYPOINT ["./docker-entrypoint.sh"]
