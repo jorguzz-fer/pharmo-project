@@ -1,89 +1,124 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { api } from '../services/api';
+
+interface Clinica {
+  id: string;
+  nome_fantasia: string;
+  logo_url: string | null;
+  cor_primaria: string | null;
+  cor_secundaria?: string | null;
+}
+
+interface Veterinario {
+  id: string;
+  crmv: string;
+  uf_crmv: string;
+  especialidades?: string[];
+}
 
 interface User {
-    id: string;
-    name: string;
-    crv?: string;
-    email: string;
-    role: 'VET' | 'ADMIN' | 'OPERATOR' | 'FINANCIAL';
+  id: string;
+  nome: string;
+  email: string;
+  role: 'ADMIN_CLINICA' | 'VETERINARIO' | 'RECEPCIONISTA' | 'FARMACEUTICO';
+  clinica: Clinica;
+  veterinario: Veterinario | null;
 }
 
 interface AuthState {
-    user: User | null;
-    token: string | null;
-    isAuthenticated: boolean;
-    login: (crv: string, password?: string) => Promise<void>;
-    loginAdmin: (email: string, password: string) => Promise<void>;
-    logout: () => void;
+  user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+
+  login: (email: string, senha: string) => Promise<void>;
+  logout: () => void;
+  refreshAuth: () => Promise<void>;
+  fetchMe: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
-    persist(
-        (set) => ({
-            user: null,
-            token: null,
-            isAuthenticated: false,
-            login: async (crv: string, password = 'password') => {
-                try {
-                    const API_URL = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
-                    const baseUrl = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
+  persist(
+    (set, get) => ({
+      user: null,
+      accessToken: null,
+      refreshToken: null,
+      isAuthenticated: false,
 
-                    const response = await fetch(`${baseUrl}/auth/veterinario/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ crv, password })
-                    });
+      login: async (email: string, senha: string) => {
+        const res = await api.post<{
+          access_token: string;
+          refresh_token: string;
+          usuario: User;
+        }>('/auth/login', { email, senha });
 
-                    if (!response.ok) throw new Error('Login failed');
+        if (!res.data) throw new Error('Resposta invalida');
 
-                    const data = await response.json();
-                    set({
-                        user: { ...data.user, role: 'VET' },
-                        token: data.token,
-                        isAuthenticated: true
-                    });
-                } catch (e) {
-                    console.error("API Login failed:", e);
-                    throw e; // Don't fall back to mock in production
-                }
-            },
-            loginAdmin: async (email, password) => {
-                try {
-                    const API_URL = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
-                    const baseUrl = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
+        set({
+          user: res.data.usuario as User,
+          accessToken: res.data.access_token,
+          refreshToken: res.data.refresh_token,
+          isAuthenticated: true,
+        });
+      },
 
-                    const response = await fetch(`${baseUrl}/auth/admin/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password })
-                    });
-
-                    if (!response.ok) throw new Error('Login failed');
-
-                    const data = await response.json();
-                    set({
-                        user: data.user,
-                        token: data.token,
-                        isAuthenticated: true
-                    });
-                } catch (e) {
-                    console.error("API Login failed:", e);
-                    throw e; // Don't fall back to mock in production
-                }
-            },
-            logout: () => {
-                // Get current user before clearing
-                const currentUser = useAuthStore.getState().user;
-                // Save role to localStorage for redirect logic
-                if (currentUser?.role) {
-                    localStorage.setItem('pharmo-logout-role', currentUser.role);
-                }
-                set({ user: null, token: null, isAuthenticated: false });
-            },
-        }),
-        {
-            name: 'pharmo-auth-storage',
+      logout: () => {
+        const token = get().accessToken;
+        if (token) {
+          api.post('/auth/logout').catch(() => {});
         }
-    )
+        set({
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+          isAuthenticated: false,
+        });
+      },
+
+      refreshAuth: async () => {
+        const rt = get().refreshToken;
+        if (!rt) {
+          get().logout();
+          return;
+        }
+
+        try {
+          const res = await api.post<{
+            access_token: string;
+            refresh_token: string;
+          }>('/auth/refresh', { refresh_token: rt });
+
+          if (res.data) {
+            set({
+              accessToken: res.data.access_token,
+              refreshToken: res.data.refresh_token,
+            });
+          }
+        } catch {
+          get().logout();
+        }
+      },
+
+      fetchMe: async () => {
+        try {
+          const res = await api.get<User>('/auth/me');
+          if (res.data) {
+            set({ user: res.data });
+          }
+        } catch {
+          get().logout();
+        }
+      },
+    }),
+    {
+      name: 'pharmopet-auth',
+      partialize: (state) => ({
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
+    },
+  ),
 );
