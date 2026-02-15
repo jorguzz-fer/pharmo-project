@@ -17,6 +17,10 @@ RUN npm ci
 # Copy prisma schema
 COPY server/prisma ./prisma/
 
+# Prisma generate only needs the schema, not a real DB connection
+# Set a dummy DATABASE_URL so prisma generate doesn't fail
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+
 # Generate Prisma Client
 RUN npx prisma generate
 
