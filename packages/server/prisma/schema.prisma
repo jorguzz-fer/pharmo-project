@@ -76,6 +76,7 @@ model Veterinario {
 
   prescricoes Prescricao[]
   clinicas    ClinicaVeterinario[]
+  logsCiencia LogCiencia[]
 
   @@map("veterinarios")
 }
@@ -111,6 +112,7 @@ model Animal {
 
   tutor       Tutor        @relation(fields: [tutor_id], references: [id], onDelete: Cascade)
   prescricoes Prescricao[]
+  logsCiencia LogCiencia[]
 
   @@map("animais")
 }
@@ -153,6 +155,7 @@ model Prescricao {
   clinica      Clinica?                @relation(fields: [clinica_id], references: [id])
   orcamento    Orcamento?
   medicamentos PrescricaoMedicamento[]
+  logsCiencia  LogCiencia[]
 
   @@map("prescricoes")
 }
@@ -274,9 +277,9 @@ model Clinica {
   cpf_responsavel   String
 
   // Autenticação
-  senha_hash           String?
-  reset_token          String?
-  reset_token_expires  DateTime?
+  senha_hash          String?
+  reset_token         String?
+  reset_token_expires DateTime?
 
   // Status e controle
   status               ClinicaStatus @default(PENDENTE)
@@ -345,16 +348,149 @@ model EmailLog {
 
 // 15. Tokens de Recuperação de Senha
 model PasswordResetToken {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   email      String
-  token      String   @unique
-  user_type  String   // 'veterinario' ou 'admin'
+  token      String    @unique
+  user_type  String // 'veterinario' ou 'admin'
   expires_at DateTime
-  used       Boolean  @default(false)
+  used       Boolean   @default(false)
   used_at    DateTime?
-  created_at DateTime @default(now())
-  
+  created_at DateTime  @default(now())
+
   @@index([email])
   @@index([token])
   @@map("password_reset_tokens")
+}
+
+// ========================================
+// MOTOR CLÍNICO - VALIDAÇÃO TERAPÊUTICA
+// ========================================
+
+// 16. Princípios Ativos
+model PrincipioAtivo {
+  id                 String   @id @default(uuid())
+  nome               String   @unique
+  nome_cientifico    String?
+  classe_terapeutica String?
+  controlado         Boolean  @default(false)
+  texto_palatavel    String?  @db.Text // Explicação simplificada
+  observacoes        String?  @db.Text
+  ativo              Boolean  @default(true)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  concentracoes  Concentracao[]
+  ranges         RangeTerapeutico[]
+  protocoloItens ProtocoloItem[]
+  logsCiencia    LogCiencia[]
+
+  @@map("principios_ativos")
+}
+
+// 17. Concentrações Válidas
+model Concentracao {
+  id                 String   @id @default(uuid())
+  principio_ativo_id String
+  valor              Decimal  @db.Decimal(10, 4)
+  unidade            String // 'mg', 'g', 'ml', 'UI'
+  forma_farmaceutica String? // 'comprimido', 'cápsula', 'líquido', 'pasta'
+  created_at         DateTime @default(now())
+
+  principioAtivo PrincipioAtivo @relation(fields: [principio_ativo_id], references: [id], onDelete: Cascade)
+
+  @@unique([principio_ativo_id, valor, unidade, forma_farmaceutica])
+  @@map("concentracoes")
+}
+
+// 18. Ranges Terapêuticos
+model RangeTerapeutico {
+  id                 String   @id @default(uuid())
+  principio_ativo_id String
+  especie            String // 'canino', 'felino', 'equino', etc
+  peso_min_kg        Decimal? @db.Decimal(6, 2) // NULL = sem limite mínimo
+  peso_max_kg        Decimal? @db.Decimal(6, 2) // NULL = sem limite máximo
+  dose_min_mg_kg     Decimal  @db.Decimal(10, 4)
+  dose_max_mg_kg     Decimal  @db.Decimal(10, 4)
+  frequencia_horas   Int? // Ex: 8, 12, 24
+  duracao_max_dias   Int?
+  observacoes        String?  @db.Text
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  principioAtivo PrincipioAtivo @relation(fields: [principio_ativo_id], references: [id], onDelete: Cascade)
+
+  @@index([principio_ativo_id, especie])
+  @@map("ranges_terapeuticos")
+}
+
+// 19. Protocolos (Prescrições Prontas)
+model Protocolo {
+  id         String   @id @default(uuid())
+  codigo     String   @unique
+  nome       String
+  descricao  String?  @db.Text
+  indicacao  String?  @db.Text // Para qual doença/condição
+  especie    String? // 'canino', 'felino', etc
+  ativo      Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  itens ProtocoloItem[]
+
+  @@map("protocolos")
+}
+
+// 20. Itens do Protocolo
+model ProtocoloItem {
+  id                 String  @id @default(uuid())
+  protocolo_id       String
+  principio_ativo_id String
+  dosagem_mg_kg      Decimal @db.Decimal(10, 4)
+  frequencia_horas   Int
+  duracao_dias       Int
+  forma_farmaceutica String?
+  observacoes        String? @db.Text
+  ordem              Int     @default(0)
+
+  protocolo      Protocolo      @relation(fields: [protocolo_id], references: [id], onDelete: Cascade)
+  principioAtivo PrincipioAtivo @relation(fields: [principio_ativo_id], references: [id])
+
+  @@map("protocolo_itens")
+}
+
+// 21. Log de Ciência (Auditoria Jurídica)
+model LogCiencia {
+  id                 String @id @default(uuid())
+  prescricao_id      String
+  veterinario_id     String
+  principio_ativo_id String
+  animal_id          String
+
+  // Dados da prescrição
+  dosagem_prescrita_mg_kg Decimal @db.Decimal(10, 4)
+  peso_animal_kg          Decimal @db.Decimal(6, 2)
+  dose_total_mg           Decimal @db.Decimal(10, 2)
+
+  // Range esperado
+  dose_min_esperada_mg_kg Decimal @db.Decimal(10, 4)
+  dose_max_esperada_mg_kg Decimal @db.Decimal(10, 4)
+
+  // Justificativa
+  motivo             String  @db.Text
+  aceite_veterinario Boolean @default(true)
+
+  // Auditoria
+  ip_address String?  @db.VarChar(45)
+  user_agent String?  @db.Text
+  created_at DateTime @default(now())
+
+  prescricao     Prescricao     @relation(fields: [prescricao_id], references: [id], onDelete: Cascade)
+  veterinario    Veterinario    @relation(fields: [veterinario_id], references: [id])
+  principioAtivo PrincipioAtivo @relation(fields: [principio_ativo_id], references: [id])
+  animal         Animal         @relation(fields: [animal_id], references: [id])
+
+  @@index([prescricao_id])
+  @@index([veterinario_id])
+  @@index([created_at])
+  @@map("logs_ciencia")
 }
