@@ -17,7 +17,7 @@ export class ValidacaoController {
   }
 
   async getLogsPorPrescricao(req: Request, res: Response) {
-    const result = await service.getLogsPorPrescricao(req.params.prescricaoId);
+    const result = await service.getLogsPorPrescricao(req.params.prescricaoId as string);
     res.json({ success: true, data: result });
   }
 }

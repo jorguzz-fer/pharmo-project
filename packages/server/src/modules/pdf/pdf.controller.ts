@@ -5,7 +5,7 @@ const service = new PdfService();
 
 export class PdfController {
   async gerarPdf(req: Request, res: Response) {
-    const buffer = await service.gerarPdf(req.clinicaId!, req.params.id);
+    const buffer = await service.gerarPdf(req.clinicaId!, req.params.id as string);
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename=prescricao-${req.params.id}.pdf`);

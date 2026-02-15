@@ -15,17 +15,17 @@ export class UsuarioController {
   }
 
   async findById(req: Request, res: Response) {
-    const result = await service.findById(req.clinicaId!, req.params.id);
+    const result = await service.findById(req.clinicaId!, req.params.id as string);
     res.json({ success: true, data: result });
   }
 
   async update(req: Request, res: Response) {
-    const result = await service.update(req.clinicaId!, req.params.id, req.body);
+    const result = await service.update(req.clinicaId!, req.params.id as string, req.body);
     res.json({ success: true, data: result });
   }
 
   async deactivate(req: Request, res: Response) {
-    await service.deactivate(req.clinicaId!, req.params.id);
+    await service.deactivate(req.clinicaId!, req.params.id as string);
     res.json({ success: true, message: 'Usuario desativado' });
   }
 }

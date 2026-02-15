@@ -16,12 +16,12 @@ export class AnimalController {
   }
 
   async findById(req: Request, res: Response) {
-    const result = await service.findById(req.clinicaId!, req.params.id);
+    const result = await service.findById(req.clinicaId!, req.params.id as string);
     res.json({ success: true, data: result });
   }
 
   async update(req: Request, res: Response) {
-    const result = await service.update(req.clinicaId!, req.params.id, req.body);
+    const result = await service.update(req.clinicaId!, req.params.id as string, req.body);
     res.json({ success: true, data: result });
   }
 }

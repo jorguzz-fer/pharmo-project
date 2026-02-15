@@ -10,25 +10,25 @@ export class TenantController {
   }
 
   async findById(req: Request, res: Response) {
-    const id = req.params.id || req.clinicaId!;
+    const id = req.params.id as string || req.clinicaId!;
     const result = await tenantService.findById(id);
     res.json({ success: true, data: result });
   }
 
   async update(req: Request, res: Response) {
-    const id = req.params.id || req.clinicaId!;
+    const id = req.params.id as string || req.clinicaId!;
     const result = await tenantService.update(id, req.body);
     res.json({ success: true, data: result });
   }
 
   async updateBranding(req: Request, res: Response) {
-    const id = req.params.id || req.clinicaId!;
+    const id = req.params.id as string || req.clinicaId!;
     const result = await tenantService.updateBranding(id, req.body);
     res.json({ success: true, data: result });
   }
 
   async getConfig(req: Request, res: Response) {
-    const id = req.params.id || req.clinicaId!;
+    const id = req.params.id as string || req.clinicaId!;
     const result = await tenantService.getConfig(id);
     res.json({ success: true, data: result });
   }

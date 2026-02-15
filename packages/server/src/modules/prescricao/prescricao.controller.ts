@@ -22,34 +22,34 @@ export class PrescricaoController {
   }
 
   async findById(req: Request, res: Response) {
-    const result = await service.findById(req.clinicaId!, req.params.id);
+    const result = await service.findById(req.clinicaId!, req.params.id as string);
     res.json({ success: true, data: result });
   }
 
   async update(req: Request, res: Response) {
-    const result = await service.update(req.clinicaId!, req.params.id, req.body);
+    const result = await service.update(req.clinicaId!, req.params.id as string, req.body);
     res.json({ success: true, data: result });
   }
 
   async cancelar(req: Request, res: Response) {
-    const result = await service.cancelar(req.clinicaId!, req.params.id);
+    const result = await service.cancelar(req.clinicaId!, req.params.id as string);
     res.json({ success: true, data: result });
   }
 
   async validar(req: Request, res: Response) {
-    const result = await service.validar(req.clinicaId!, req.params.id);
+    const result = await service.validar(req.clinicaId!, req.params.id as string);
     res.json({ success: true, data: result });
   }
 
   async aceite(req: Request, res: Response) {
     const ip = req.ip || req.headers['x-forwarded-for'] as string;
     const ua = req.headers['user-agent'];
-    const result = await service.aceiteForaFaixa(req.user!, req.params.id, req.body, ip, ua);
+    const result = await service.aceiteForaFaixa(req.user!, req.params.id as string, req.body, ip, ua);
     res.json({ success: true, data: result });
   }
 
   async assinar(req: Request, res: Response) {
-    const result = await service.assinar(req.user!, req.params.id);
+    const result = await service.assinar(req.user!, req.params.id as string);
     res.json({ success: true, data: result });
   }
 
