@@ -14,13 +14,13 @@ fi
 echo "✅ DATABASE_URL is configured"
 echo ""
 
-# Run Prisma migrations
-echo "🔄 Running Prisma migrations..."
-if npx prisma db push --accept-data-loss --skip-generate; then
+# Run Prisma migrations with force reset
+echo "🔄 Running Prisma migrations (with force reset)..."
+if npx prisma db push --force-reset --accept-data-loss --skip-generate; then
     echo "✅ Database schema synced successfully"
 else
     echo "❌ Failed to sync database schema"
-    echo "⚠️  Continuing anyway (tables might already exist)"
+    exit 1
 fi
 echo ""
 
