@@ -1,12 +1,50 @@
 #!/bin/sh
 set -e
 
+echo "========================================="
+echo "🚀 PharmoPet Backend Startup"
+echo "========================================="
+
+# Check if DATABASE_URL is set
+if [ -z "$DATABASE_URL" ]; then
+    echo "❌ ERROR: DATABASE_URL is not set!"
+    exit 1
+fi
+
+echo "✅ DATABASE_URL is configured"
+echo ""
+
+# Run Prisma migrations
 echo "🔄 Running Prisma migrations..."
-npx prisma db push --accept-data-loss
+if npx prisma db push --accept-data-loss --skip-generate; then
+    echo "✅ Database schema synced successfully"
+else
+    echo "❌ Failed to sync database schema"
+    echo "⚠️  Continuing anyway (tables might already exist)"
+fi
+echo ""
 
+# Run seeds
 echo "🌱 Running database seeds..."
-npx tsx prisma/seed.ts || echo "⚠️  Seed failed or already populated"
-npx tsx prisma/seeds/principios-ativos.seed.ts || echo "⚠️  Principios ativos seed failed or already populated"
 
-echo "🚀 Starting server..."
+# Main seed (users)
+echo "  → Seeding users..."
+if npx tsx prisma/seed.ts 2>/dev/null; then
+    echo "  ✅ Users seeded"
+else
+    echo "  ⚠️  User seed failed or already populated"
+fi
+
+# Principios ativos seed
+echo "  → Seeding medications..."
+if npx tsx prisma/seeds/principios-ativos.seed.ts 2>/dev/null; then
+    echo "  ✅ Medications seeded"
+else
+    echo "  ⚠️  Medication seed failed or already populated"
+fi
+
+echo ""
+echo "========================================="
+echo "🚀 Starting PharmoPet API Server..."
+echo "========================================="
 exec node dist/index.js
