@@ -17,7 +17,7 @@ COPY packages/client/ ./
 COPY tsconfig.base.json ../
 
 # Accept build argument for API URL with default value
-ARG VITE_API_URL=https://api.pharmopet.com.br
+ARG VITE_API_URL=https://api.pharmopet.com.br/api
 ENV VITE_API_URL=$VITE_API_URL
 
 # Build production bundle
