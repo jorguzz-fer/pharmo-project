@@ -108,12 +108,29 @@ export function StepReview() {
                             {medications.map((med, index) => (
                                 <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-100">
                                     <div className="flex justify-between items-start mb-2">
-                                        <span className="font-bold text-lg text-gray-900">{med.drug}</span>
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-bold text-lg text-gray-900">{med.drug}</span>
+                                            {med.codigo && (
+                                                <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-mono">
+                                                    {med.codigo}
+                                                </span>
+                                            )}
+                                        </div>
                                         <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-bold">{med.form}</span>
                                     </div>
                                     <p className="text-sm text-gray-600 mb-1">Dose: {med.dosage} • Quantidade: {med.amount}</p>
                                     {med.observations && (
                                         <p className="text-sm text-gray-800 italic mt-2">"{med.observations}"</p>
+                                    )}
+                                    {(med.preco_sugestao || med.preco_tabela) && (
+                                        <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200 text-sm">
+                                            <span className="text-green-700 font-medium">
+                                                Venda: R$ {Number(med.preco_sugestao || 0).toFixed(2).replace('.', ',')}
+                                            </span>
+                                            <span className="text-blue-700 font-medium">
+                                                Clínica: R$ {Number(med.preco_tabela || 0).toFixed(2).replace('.', ',')}
+                                            </span>
+                                        </div>
                                     )}
                                 </div>
                             ))}
@@ -123,7 +140,18 @@ export function StepReview() {
                     <div className="flex justify-between items-center text-sm text-gray-500">
                         <p>Data: {new Date().toLocaleDateString()}</p>
                         <div className="text-right">
-                            <p className="font-bold text-gray-900 text-lg">Orçamento: Calculado...</p>
+                            {medications.some(m => m.preco_sugestao) ? (
+                                <>
+                                    <p className="font-bold text-gray-900 text-lg">
+                                        Total Cliente: R$ {medications.reduce((sum, m) => sum + Number(m.preco_sugestao || 0), 0).toFixed(2).replace('.', ',')}
+                                    </p>
+                                    <p className="text-sm text-blue-600 font-medium">
+                                        Total Clínica: R$ {medications.reduce((sum, m) => sum + Number(m.preco_tabela || 0), 0).toFixed(2).replace('.', ',')}
+                                    </p>
+                                </>
+                            ) : (
+                                <p className="font-bold text-gray-900 text-lg">Orçamento: Calculado...</p>
+                            )}
                             <p className="text-xs">Válido por 24h</p>
                         </div>
                     </div>

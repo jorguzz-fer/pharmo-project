@@ -14,6 +14,7 @@ import clinicaAuthRoutes from './routes/clinica-auth.routes';
 import clinicaDashboardRoutes from './routes/clinica-dashboard.routes';
 import principioAtivoRoutes from './routes/principioAtivo.routes';
 import validacaoClinicaRoutes from './routes/validacaoClinica.routes';
+import produtoRoutes from './routes/produto.routes';
 
 // Try to load .env file (optional - Easypanel uses system env vars)
 dotenv.config();
@@ -60,6 +61,7 @@ app.use('/api/auth', clinicaAuthRoutes);
 app.use('/api/clinicas', clinicaDashboardRoutes);
 app.use('/api/principios-ativos', principioAtivoRoutes);
 app.use('/api/validacao', validacaoClinicaRoutes);
+app.use('/api/produtos', produtoRoutes);
 
 app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });

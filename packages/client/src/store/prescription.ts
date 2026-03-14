@@ -3,11 +3,14 @@ import { create } from 'zustand';
 type Medication = {
     id?: string;
     codigo?: string;
+    dosagem_mg_kg?: string;
     drug: string;
     dosage: string;
     form: string;
     amount: string;
     observations: string;
+    preco_sugestao?: number;
+    preco_tabela?: number;
 };
 
 interface PrescriptionState {

@@ -494,3 +494,21 @@ model LogCiencia {
   @@index([created_at])
   @@map("logs_ciencia")
 }
+
+// ========================================
+// CATÁLOGO DE PRODUTOS PHARMOPET
+// ========================================
+
+// 22. Produtos (Catálogo de medicamentos com preço)
+model Produto {
+  id             String   @id @default(uuid())
+  codigo         String   @unique
+  nome           String
+  preco_sugestao Decimal  @db.Decimal(10, 2) // Preço sugerido ao cliente
+  preco_tabela   Decimal  @db.Decimal(10, 2) // Preço para clínica
+  ativo          Boolean  @default(true)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  @@map("produtos")
+}
