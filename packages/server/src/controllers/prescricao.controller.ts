@@ -24,6 +24,39 @@ export class PrescricaoController {
         try {
             const data = schema.parse(req.body);
 
+            // Validate that veterinario exists
+            const vet = await prisma.veterinario.findUnique({
+                where: { id: data.veterinario_id },
+            });
+            if (!vet) {
+                return res.status(401).json({
+                    error: 'Veterinário não encontrado. Faça logout e login novamente.',
+                    code: 'VET_NOT_FOUND',
+                });
+            }
+
+            // Validate that tutor exists
+            const tutorExists = await prisma.tutor.findUnique({
+                where: { id: data.tutor_id },
+            });
+            if (!tutorExists) {
+                return res.status(400).json({
+                    error: 'Tutor não encontrado. Cadastre o tutor novamente.',
+                    code: 'TUTOR_NOT_FOUND',
+                });
+            }
+
+            // Validate that animal exists
+            const animalExists = await prisma.animal.findUnique({
+                where: { id: data.animal_id },
+            });
+            if (!animalExists) {
+                return res.status(400).json({
+                    error: 'Animal não encontrado. Cadastre o animal novamente.',
+                    code: 'ANIMAL_NOT_FOUND',
+                });
+            }
+
             // Validação de Receita Controlada
             const isControlled = CONTROLLED_SUBSTANCES.some(sub =>
                 data.medicamento.toLowerCase().includes(sub.toLowerCase())
@@ -71,6 +104,31 @@ export class PrescricaoController {
             console.error('❌ Prescription create error:', error);
             if (error instanceof z.ZodError) {
                 return res.status(400).json({ error: (error as any).errors });
+            }
+            // Handle Prisma FK constraint errors with clear messages
+            if (error.code === 'P2003') {
+                const field = error.meta?.field_name || '';
+                if (field.includes('veterinario')) {
+                    return res.status(401).json({
+                        error: 'Sessão expirada ou veterinário não encontrado. Faça logout e login novamente.',
+                        code: 'VET_NOT_FOUND',
+                    });
+                }
+                if (field.includes('tutor')) {
+                    return res.status(400).json({
+                        error: 'Tutor não encontrado. Cadastre o tutor novamente.',
+                        code: 'TUTOR_NOT_FOUND',
+                    });
+                }
+                if (field.includes('animal')) {
+                    return res.status(400).json({
+                        error: 'Animal não encontrado. Cadastre o animal novamente.',
+                        code: 'ANIMAL_NOT_FOUND',
+                    });
+                }
+                return res.status(400).json({
+                    error: 'Dados de referência inválidos. Tente novamente.',
+                });
             }
             return res.status(500).json({ error: error.message || 'Internal server error' });
         }
