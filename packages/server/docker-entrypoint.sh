@@ -43,6 +43,14 @@ else
     echo "  ⚠️  Medication seed failed or already populated"
 fi
 
+# Produtos (catálogo PharmoPet) seed
+echo "  → Seeding produtos (catálogo PharmoPet)..."
+if node prisma/seed-produtos.js; then
+    echo "  ✅ Produtos seeded"
+else
+    echo "  ⚠️  Produtos seed failed or already populated"
+fi
+
 echo ""
 echo "========================================="
 echo "🚀 Starting PharmoPet API Server..."
