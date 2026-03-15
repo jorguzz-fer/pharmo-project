@@ -38,6 +38,11 @@ export class PrescricaoController {
                 }
             }
 
+            // Auto-link to vet's active clinic
+            const clinicaVet = await prisma.clinicaVeterinario.findFirst({
+                where: { veterinario_id: data.veterinario_id, status: 'ativo' },
+            });
+
             // Create Prescricao + Orcamento (Mock Logic for price)
             const mockPrice = 150.00 + (Math.random() * 100); // 150 - 250
 
@@ -45,6 +50,7 @@ export class PrescricaoController {
                 const prescricao = await tx.prescricao.create({
                     data: {
                         ...data,
+                        clinica_id: clinicaVet?.clinica_id || null,
                         status: 'DRAFT', // Starts as draft
                     },
                 });

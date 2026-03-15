@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X, Link2, Send } from 'lucide-react';
+import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X, Link2, Send, Upload, Image, Loader2 } from 'lucide-react';
 import { clinicService, type Clinica } from '../../services/clinicService';
 import { veterinarianService } from '../../services/veterinarianService';
 import { StatusBadge } from '../../components/StatusBadge';
@@ -18,6 +18,8 @@ export function AdminClinicDetails() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [searching, setSearching] = useState(false);
+    const [uploadingLogo, setUploadingLogo] = useState(false);
+    const logoInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (id) {
@@ -131,6 +133,41 @@ export function AdminClinicDetails() {
         } catch (error: any) {
             console.error('Error unlinking veterinarian:', error);
             alert(error.message || 'Erro ao desvincular veterinário');
+        }
+    };
+
+    const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file || !id) return;
+
+        if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
+            alert('Use um arquivo PNG, JPEG ou WebP.');
+            return;
+        }
+        if (file.size > 2 * 1024 * 1024) {
+            alert('O logo deve ter no máximo 2MB.');
+            return;
+        }
+
+        setUploadingLogo(true);
+        try {
+            await clinicService.uploadLogo(id, file);
+            await loadClinic();
+        } catch (error: any) {
+            alert(error.message || 'Erro ao fazer upload do logo');
+        } finally {
+            setUploadingLogo(false);
+            if (logoInputRef.current) logoInputRef.current.value = '';
+        }
+    };
+
+    const handleDeleteLogo = async () => {
+        if (!id || !confirm('Remover o logo da clínica?')) return;
+        try {
+            await clinicService.deleteLogo(id);
+            await loadClinic();
+        } catch (error: any) {
+            alert(error.message || 'Erro ao remover logo');
         }
     };
 
@@ -251,6 +288,58 @@ export function AdminClinicDetails() {
             {/* Tab Content */}
             {activeTab === 'info' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Logo */}
+                    <div className="bg-white rounded-lg shadow p-6 space-y-4 md:col-span-2">
+                        <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                            <Image className="w-5 h-5 text-gray-400" />
+                            Logo da Clínica
+                        </h3>
+                        <div className="flex items-center gap-6">
+                            {clinic.logo_url ? (
+                                <img
+                                    src={clinic.logo_url}
+                                    alt="Logo"
+                                    className="w-24 h-24 object-contain rounded-lg border border-gray-200 bg-gray-50"
+                                />
+                            ) : (
+                                <div className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50">
+                                    <Image className="w-8 h-8 text-gray-300" />
+                                </div>
+                            )}
+                            <div className="flex flex-col gap-2">
+                                <input
+                                    ref={logoInputRef}
+                                    type="file"
+                                    accept="image/png,image/jpeg,image/webp"
+                                    onChange={handleLogoUpload}
+                                    className="hidden"
+                                />
+                                <button
+                                    onClick={() => logoInputRef.current?.click()}
+                                    disabled={uploadingLogo}
+                                    className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 text-sm"
+                                >
+                                    {uploadingLogo ? (
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                        <Upload className="w-4 h-4" />
+                                    )}
+                                    {uploadingLogo ? 'Enviando...' : clinic.logo_url ? 'Trocar Logo' : 'Enviar Logo'}
+                                </button>
+                                {clinic.logo_url && (
+                                    <button
+                                        onClick={handleDeleteLogo}
+                                        className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                        Remover Logo
+                                    </button>
+                                )}
+                                <p className="text-xs text-gray-500">PNG, JPEG ou WebP. Max 2MB.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Basic Info */}
                     <div className="bg-white rounded-lg shadow p-6 space-y-4">
                         <h3 className="font-semibold text-lg mb-4">Dados Cadastrais</h3>

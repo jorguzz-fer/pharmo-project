@@ -5,12 +5,80 @@ import { usePrescriptionStore } from '../../../store/prescription';
 import { useAuthStore } from '../../../store/auth';
 import { api } from '../../../services/api';
 
+function getBaseUrl() {
+    let url = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
+    if (url.endsWith('/')) url = url.slice(0, -1);
+    if (!url.endsWith('/api')) url = `${url}/api`;
+    return url;
+}
+
 export function StepReview() {
     const { tutor, animal, medications, setStep, reset } = usePrescriptionStore();
-    const { user } = useAuthStore();
+    const { user, token } = useAuthStore();
     const navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
+    const [isPrinting, setIsPrinting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+
+    const handlePrintDraft = async () => {
+        if (!user || !tutor || !animal || medications.length === 0) {
+            alert('Dados incompletos para gerar o rascunho.');
+            return;
+        }
+
+        setIsPrinting(true);
+        try {
+            const body = {
+                veterinario: {
+                    nome: user.name,
+                    crv: user.crv || '',
+                    email: user.email,
+                    telefone: '',
+                },
+                tutor: {
+                    nome: tutor.name || tutor.nome || '',
+                    cpf: tutor.cpf || '',
+                    telefone: tutor.phone || tutor.telefone || '',
+                },
+                animal: {
+                    nome: animal.name || animal.nome || '',
+                    especie: animal.species || animal.especie || '',
+                    raca: animal.breed || animal.raca || null,
+                    peso: animal.weight || animal.peso || null,
+                },
+                medicamentos: medications.map(m => ({
+                    medicamento: m.drug,
+                    codigo_medicamento: m.codigo || null,
+                    dosagem: m.dosage,
+                    forma_farmaceutica: m.form,
+                    quantidade: m.amount,
+                    observacoes: m.observations || null,
+                })),
+            };
+
+            const response = await fetch(`${getBaseUrl()}/prescricoes/rascunho/pdf`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao gerar PDF');
+            }
+
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
+        } catch (error: any) {
+            console.error('PDF error:', error);
+            alert('Erro ao gerar o rascunho: ' + (error?.message || 'Erro desconhecido'));
+        } finally {
+            setIsPrinting(false);
+        }
+    };
 
     const handleFinish = async () => {
         setIsSending(true);
@@ -172,11 +240,16 @@ export function StepReview() {
                 <div className="flex gap-3">
                     <button
                         type="button"
-                        className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50"
-                        disabled={isSending}
+                        onClick={handlePrintDraft}
+                        className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 disabled:opacity-50"
+                        disabled={isSending || isPrinting}
                     >
-                        <Printer className="w-4 h-4" />
-                        Imprimir Rascunho
+                        {isPrinting ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                            <Printer className="w-4 h-4" />
+                        )}
+                        {isPrinting ? 'Gerando...' : 'Imprimir Rascunho'}
                     </button>
                     <button
                         onClick={handleFinish}

@@ -272,6 +272,9 @@ model Clinica {
   cidade      String?
   estado      String?
 
+  // Branding
+  logo_url String?
+
   // Responsável
   responsavel_legal String
   cpf_responsavel   String
