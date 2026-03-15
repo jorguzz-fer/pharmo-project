@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+function getBaseUrl() {
+    let url = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    if (url.endsWith('/')) url = url.slice(0, -1);
+    if (!url.endsWith('/api')) url = `${url}/api`;
+    return url;
+}
+
+const API_URL = getBaseUrl();
 
 export interface PrincipioAtivo {
     id: string;
