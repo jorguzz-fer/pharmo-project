@@ -123,7 +123,18 @@ export function StepReview() {
 
         } catch (error: any) {
             console.error(error);
-            alert('Erro ao criar prescrição: ' + (error?.message || 'Erro desconhecido'));
+            const msg = error?.message || 'Erro desconhecido';
+
+            // If vet session is invalid, force re-login
+            if (msg.includes('logout') || msg.includes('Sessão expirada') || msg.includes('Veterinário não encontrado')) {
+                alert('Sua sessão expirou ou seus dados mudaram. Você será redirecionado para o login.');
+                const { logout } = useAuthStore.getState();
+                logout();
+                navigate('/login');
+                return;
+            }
+
+            alert('Erro ao criar prescrição: ' + msg);
             setIsSending(false);
         }
     };

@@ -38,11 +38,31 @@ export function StepTutor() {
             };
 
             const newTutor = await api.post('/tutores', tutorData);
-            setTutor(newTutor);
+            // Map backend fields to frontend format
+            setTutor({
+                ...newTutor,
+                name: newTutor.nome || data.name,
+                phone: newTutor.telefone || data.phone,
+                cpf: newTutor.cpf || data.cpf,
+            });
             setStep(2);
         } catch (error: any) {
             console.error(error);
             const errorMessage = error.message || 'Erro desconhecido';
+
+            // If tutor already exists (fallback for old API), search and use existing
+            if (errorMessage.includes('já cadastrado') || errorMessage.includes('CPF')) {
+                try {
+                    const cpf = data.cpf.replace(/\D/g, '');
+                    const existing = await api.get(`/tutores/buscar?cpf=${cpf}`);
+                    if (existing?.id) {
+                        setTutor({ ...existing, name: existing.nome, phone: existing.telefone });
+                        setStep(2);
+                        return;
+                    }
+                } catch { /* fall through to error alert */ }
+            }
+
             alert(`Erro ao salvar tutor: ${errorMessage}`);
         } finally {
             setIsLoading(false);
