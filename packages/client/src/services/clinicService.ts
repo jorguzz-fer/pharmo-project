@@ -16,6 +16,7 @@ export interface Clinica {
     bairro?: string;
     cidade?: string;
     estado?: string;
+    logo_url?: string;
     responsavel_legal: string;
     cpf_responsavel: string;
     status: 'PENDENTE' | 'EM_ANALISE' | 'APROVADA' | 'SUSPENSA' | 'INATIVA';
@@ -160,5 +161,44 @@ export const clinicService = {
 
     async deleteDocument(clinicaId: string, documentoId: string): Promise<void> {
         return api.delete(`/admin/clinicas/${clinicaId}/documentos/${documentoId}`);
+    },
+
+    // Logo
+    async uploadLogo(clinicaId: string, file: File): Promise<{ logo_url: string }> {
+        const formData = new FormData();
+        formData.append('logo', file);
+
+        const authStorage = localStorage.getItem('pharmo-auth-storage');
+        let token = null;
+        if (authStorage) {
+            try {
+                const parsed = JSON.parse(authStorage);
+                token = parsed.state?.token;
+            } catch { /* skip */ }
+        }
+
+        let baseUrl = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
+        if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
+        if (!baseUrl.endsWith('/api')) baseUrl = `${baseUrl}/api`;
+
+        const response = await fetch(
+            `${baseUrl}/admin/clinicas/${clinicaId}/logo`,
+            {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData,
+            }
+        );
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Erro ao fazer upload do logo');
+        }
+
+        return response.json();
+    },
+
+    async deleteLogo(clinicaId: string): Promise<void> {
+        return api.delete(`/admin/clinicas/${clinicaId}/logo`);
     }
 };
