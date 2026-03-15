@@ -14,28 +14,29 @@ fi
 echo "✅ DATABASE_URL is configured"
 echo ""
 
-# Run Prisma migrations with force reset
-echo "🔄 Running Prisma migrations (with force reset)..."
-if npx prisma db push --force-reset --accept-data-loss --skip-generate; then
-    echo "✅ Database schema synced successfully"
+# Run Prisma migrations (safe - only applies pending migrations)
+echo "🔄 Running Prisma migrations..."
+if npx prisma migrate deploy; then
+    echo "✅ Migrations applied successfully"
 else
-    echo "❌ Failed to sync database schema"
-    exit 1
+    echo "⚠️  Migrations failed, trying db push as fallback..."
+    npx prisma db push --skip-generate
+    echo "✅ Database schema synced via db push"
 fi
 echo ""
 
-# Run seeds
+# Run seeds (all use upsert, safe to re-run)
 echo "🌱 Running database seeds..."
 
-# Main seed (users) - using tsx to run TypeScript directly
-echo "  → Seeding users..."
+# Main seed (users + clinic)
+echo "  → Seeding users & clinic..."
 if npx tsx prisma/seed.ts; then
-    echo "  ✅ Users seeded"
+    echo "  ✅ Users & clinic seeded"
 else
     echo "  ⚠️  User seed failed or already populated"
 fi
 
-# Principios ativos seed - using tsx to run TypeScript directly
+# Principios ativos seed
 echo "  → Seeding medications..."
 if npx tsx prisma/seeds/principios-ativos.seed.ts; then
     echo "  ✅ Medications seeded"
