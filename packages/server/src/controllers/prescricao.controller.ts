@@ -67,11 +67,12 @@ export class PrescricaoController {
             });
 
             return res.status(201).json(result);
-        } catch (error) {
+        } catch (error: any) {
+            console.error('❌ Prescription create error:', error);
             if (error instanceof z.ZodError) {
                 return res.status(400).json({ error: (error as any).errors });
             }
-            return res.status(500).json({ error: 'Internal server error' });
+            return res.status(500).json({ error: error.message || 'Internal server error' });
         }
     }
 

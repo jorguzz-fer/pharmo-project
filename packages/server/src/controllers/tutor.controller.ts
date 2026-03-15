@@ -20,20 +20,19 @@ export class TutorController {
             // Clean CPF (remove non-digits)
             const cleanCpf = data.cpf.replace(/\D/g, '');
 
-            const existingTutor = await prisma.tutor.findUnique({
-                where: { cpf: cleanCpf }, // Check against clean CPF
-            });
-
-            if (existingTutor) {
-                return res.status(400).json({ error: 'Tutor já cadastrado com este CPF' });
-            }
-
-            // Save with cleaned CPF
-            const tutor = await prisma.tutor.create({
-                data: {
+            // Upsert: return existing or create new
+            const tutor = await prisma.tutor.upsert({
+                where: { cpf: cleanCpf },
+                update: {
+                    nome: data.nome,
+                    telefone: data.telefone,
+                    ...(data.email ? { email: data.email } : {}),
+                    ...(data.endereco ? { endereco: data.endereco } : {}),
+                },
+                create: {
                     ...data,
-                    cpf: cleanCpf
-                }
+                    cpf: cleanCpf,
+                },
             });
             return res.status(201).json(tutor);
         } catch (error) {
