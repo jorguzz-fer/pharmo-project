@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, Printer, CheckCircle, FileText, Loader2 } from 'lucide-react';
+import { ArrowLeft, Send, Download, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePrescriptionStore } from '../../../store/prescription';
 import { useAuthStore } from '../../../store/auth';
@@ -71,7 +71,14 @@ export function StepReview() {
 
             const blob = await response.blob();
             const url = URL.createObjectURL(blob);
-            window.open(url, '_blank');
+            const a = document.createElement('a');
+            a.href = url;
+            const tutorName = (tutor.name || tutor.nome || 'receita').replace(/\s+/g, '_');
+            a.download = `receita_${tutorName}_${new Date().toISOString().slice(0, 10)}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         } catch (error: any) {
             console.error('PDF error:', error);
             alert('Erro ao gerar o rascunho: ' + (error?.message || 'Erro desconhecido'));
@@ -258,9 +265,9 @@ export function StepReview() {
                         {isPrinting ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
                         ) : (
-                            <Printer className="w-4 h-4" />
+                            <Download className="w-4 h-4" />
                         )}
-                        {isPrinting ? 'Gerando...' : 'Imprimir Rascunho'}
+                        {isPrinting ? 'Gerando...' : 'Salvar em PDF'}
                     </button>
                     <button
                         onClick={handleFinish}
