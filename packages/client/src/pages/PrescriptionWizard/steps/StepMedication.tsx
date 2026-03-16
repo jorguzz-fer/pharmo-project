@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, MessageCircle, Send, X, Loader2, Bot } from 'lucide-react';
 import { usePrescriptionStore } from '../../../store/prescription';
 import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
+import { api } from '../../../services/api';
 
 type MedForm = {
     codigo?: string;
@@ -19,6 +20,19 @@ type MedForm = {
     preco_tabela?: number;
 };
 
+type AiMessage = {
+    role: 'user' | 'assistant';
+    content: string;
+    medicamentos?: Array<{
+        codigo: string;
+        nome: string;
+        linha_terapeutica: string;
+        forma_farmaceutica: string;
+        indicacao: string;
+        modo_uso: string;
+    }>;
+};
+
 export function StepMedication() {
     const { medications, addMedication, removeMedication, setStep, animal } = usePrescriptionStore();
     const { register, handleSubmit, reset, setValue } = useForm<MedForm>();
@@ -30,6 +44,13 @@ export function StepMedication() {
     const [showCatalogDropdown, setShowCatalogDropdown] = useState(false);
     const [selectedProduto, setSelectedProduto] = useState<Produto | null>(null);
     const [isSearchingCatalog, setIsSearchingCatalog] = useState(false);
+
+    // AI Assistant state
+    const [showAssistant, setShowAssistant] = useState(false);
+    const [aiMessages, setAiMessages] = useState<AiMessage[]>([]);
+    const [aiInput, setAiInput] = useState('');
+    const [aiLoading, setAiLoading] = useState(false);
+    const chatEndRef = useRef<HTMLDivElement>(null);
 
     // ============================================================
     // CATALOG SEARCH (PharmoPet products)
@@ -58,6 +79,11 @@ export function StepMedication() {
         return () => clearTimeout(timer);
     }, [catalogSearchTerm]);
 
+    // Auto-scroll chat
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [aiMessages]);
+
     const handleSelectProduto = (produto: Produto) => {
         setSelectedProduto(produto);
         setCatalogSearchTerm(produto.nome);
@@ -66,6 +92,40 @@ export function StepMedication() {
         setValue('preco_sugestao', Number(produto.preco_sugestao));
         setValue('preco_tabela', Number(produto.preco_tabela));
         setShowCatalogDropdown(false);
+    };
+
+    // ============================================================
+    // AI ASSISTANT
+    // ============================================================
+    const handleAiSubmit = async () => {
+        if (!aiInput.trim() || aiLoading) return;
+
+        const pergunta = aiInput.trim();
+        setAiInput('');
+        setAiMessages(prev => [...prev, { role: 'user', content: pergunta }]);
+        setAiLoading(true);
+
+        try {
+            const response = await api.post('/assistente/consultar', { pergunta });
+            setAiMessages(prev => [...prev, {
+                role: 'assistant',
+                content: response.resposta,
+                medicamentos: response.medicamentos,
+            }]);
+        } catch (error: any) {
+            setAiMessages(prev => [...prev, {
+                role: 'assistant',
+                content: error.message || 'Erro ao consultar o assistente. Tente novamente.',
+            }]);
+        } finally {
+            setAiLoading(false);
+        }
+    };
+
+    const handleAiSearchProduct = async (medName: string) => {
+        setCatalogSearchTerm(medName);
+        setShowAssistant(false);
+        setShowForm(true);
     };
 
     // ============================================================
@@ -105,18 +165,140 @@ export function StepMedication() {
 
     return (
         <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">3. Prescrição Médica</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">3. Prescricao Medica</h2>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6 flex gap-3">
-                    <Sparkles className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                {/* AI Assistant Banner */}
+                <button
+                    type="button"
+                    onClick={() => setShowAssistant(!showAssistant)}
+                    className="w-full bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 mb-6 flex gap-3 items-center hover:from-purple-100 hover:to-blue-100 transition-all text-left"
+                >
+                    <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Bot className="w-5 h-5 text-white" />
+                    </div>
                     <div className="flex-1">
-                        <h4 className="font-bold text-blue-900 text-sm">Auxiliar Inteligente</h4>
-                        <p className="text-sm text-blue-700">
-                            Adicione múltiplos medicamentos. Peso do paciente: {animal?.peso || animal?.weight || 0}kg
+                        <h4 className="font-bold text-purple-900 text-sm">Assistente PharmoPet</h4>
+                        <p className="text-sm text-purple-700">
+                            Descreva o caso clinico e receba sugestoes de medicamentos magistrais
                         </p>
                     </div>
-                </div>
+                    <MessageCircle className="w-5 h-5 text-purple-500" />
+                </button>
+
+                {/* AI Assistant Panel */}
+                {showAssistant && (
+                    <div className="mb-6 border border-purple-200 rounded-xl overflow-hidden">
+                        <div className="bg-purple-600 text-white px-4 py-3 flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                                <Bot className="w-5 h-5" />
+                                <span className="font-semibold text-sm">Assistente IA - Bulario Magistral</span>
+                            </div>
+                            <button onClick={() => setShowAssistant(false)} className="hover:bg-purple-700 rounded p-1">
+                                <X className="w-4 h-4" />
+                            </button>
+                        </div>
+
+                        {/* Chat Messages */}
+                        <div className="h-80 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                            {aiMessages.length === 0 && (
+                                <div className="text-center text-gray-500 py-8">
+                                    <Bot className="w-12 h-12 mx-auto mb-3 text-purple-300" />
+                                    <p className="font-medium text-gray-700 mb-2">Como posso ajudar?</p>
+                                    <p className="text-sm">Descreva o caso clinico do paciente.</p>
+                                    <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                                        {[
+                                            `Cachorro ${animal?.peso || animal?.weight || 10}kg com otite`,
+                                            'Gato com alergia cutanea',
+                                            'Cachorro com problema hepatico',
+                                        ].map((suggestion) => (
+                                            <button
+                                                key={suggestion}
+                                                type="button"
+                                                onClick={() => { setAiInput(suggestion); }}
+                                                className="text-xs bg-white border border-purple-200 text-purple-700 px-3 py-1.5 rounded-full hover:bg-purple-50"
+                                            >
+                                                {suggestion}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {aiMessages.map((msg, i) => (
+                                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                    <div className={`max-w-[85%] rounded-xl px-4 py-3 ${
+                                        msg.role === 'user'
+                                            ? 'bg-purple-600 text-white'
+                                            : 'bg-white border border-gray-200 text-gray-800'
+                                    }`}>
+                                        <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+
+                                        {/* Medication suggestions from AI */}
+                                        {msg.medicamentos && msg.medicamentos.length > 0 && (
+                                            <div className="mt-3 space-y-2">
+                                                <p className="text-xs font-semibold text-gray-500 uppercase">Medicamentos sugeridos:</p>
+                                                {msg.medicamentos.map((med, j) => (
+                                                    <div key={j} className="bg-purple-50 border border-purple-100 rounded-lg p-2.5">
+                                                        <div className="flex justify-between items-start">
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-center gap-1.5 mb-1">
+                                                                    <span className="text-xs bg-purple-200 text-purple-800 px-1.5 py-0.5 rounded font-mono">
+                                                                        {med.codigo}
+                                                                    </span>
+                                                                    <span className="font-semibold text-sm text-gray-900 truncate">{med.nome}</span>
+                                                                </div>
+                                                                <p className="text-xs text-gray-600">{med.forma_farmaceutica}</p>
+                                                            </div>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleAiSearchProduct(med.nome)}
+                                                                className="ml-2 text-xs bg-purple-600 text-white px-2.5 py-1 rounded-md hover:bg-purple-700 flex-shrink-0"
+                                                            >
+                                                                Buscar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+
+                            {aiLoading && (
+                                <div className="flex justify-start">
+                                    <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center gap-2">
+                                        <Loader2 className="w-4 h-4 animate-spin text-purple-600" />
+                                        <span className="text-sm text-gray-500">Analisando...</span>
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={chatEndRef} />
+                        </div>
+
+                        {/* Chat Input */}
+                        <div className="border-t border-gray-200 p-3 bg-white flex gap-2">
+                            <input
+                                type="text"
+                                value={aiInput}
+                                onChange={(e) => setAiInput(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleAiSubmit()}
+                                placeholder="Ex: Cachorro 15kg com inflamacao no ouvido..."
+                                className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                                disabled={aiLoading}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleAiSubmit}
+                                disabled={aiLoading || !aiInput.trim()}
+                                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors"
+                            >
+                                <Send className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Medication list */}
                 {medications.length > 0 && (
@@ -152,7 +334,7 @@ export function StepMedication() {
                                             </span>
                                             <span className="text-blue-700 font-medium">
                                                 <DollarSign className="w-3.5 h-3.5 inline -mt-0.5" />
-                                                Clínica: {formatPrice(med.preco_tabela)}
+                                                Clinica: {formatPrice(med.preco_tabela)}
                                             </span>
                                         </div>
                                     )}
@@ -192,7 +374,7 @@ export function StepMedication() {
                         {/* ============ CATALOG SEARCH ============ */}
                         <div className="relative">
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Buscar no Catálogo (nome ou código) *
+                                Buscar no Catalogo (nome ou codigo) *
                             </label>
                             <div className="relative">
                                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -235,7 +417,7 @@ export function StepMedication() {
                                                         {formatPrice(produto.preco_sugestao)}
                                                     </p>
                                                     <p className="text-xs text-gray-500">
-                                                        Clínica: {formatPrice(produto.preco_tabela)}
+                                                        Clinica: {formatPrice(produto.preco_tabela)}
                                                     </p>
                                                 </div>
                                             </div>
@@ -267,7 +449,7 @@ export function StepMedication() {
                                                 {formatPrice(selectedProduto.preco_sugestao)}
                                             </p>
                                             <p className="text-xs text-green-700">
-                                                Clínica: {formatPrice(selectedProduto.preco_tabela)}
+                                                Clinica: {formatPrice(selectedProduto.preco_tabela)}
                                             </p>
                                         </div>
                                     </div>
@@ -300,7 +482,7 @@ export function StepMedication() {
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                                            Frequência (horas) *
+                                            Frequencia (horas) *
                                         </label>
                                         <select
                                             {...register('frequencia_horas', { required: true })}
@@ -315,7 +497,7 @@ export function StepMedication() {
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                                            Duração (dias) *
+                                            Duracao (dias) *
                                         </label>
                                         <input
                                             {...register('duracao_dias', { required: true })}
@@ -334,17 +516,17 @@ export function StepMedication() {
                                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                         >
                                             <option value="Comprimido">Comprimido</option>
-                                            <option value="Cápsula">Cápsula</option>
-                                            <option value="Liquido">Líquido / Xarope</option>
-                                            <option value="Suspensão">Suspensão</option>
+                                            <option value="Capsula">Capsula</option>
+                                            <option value="Liquido">Liquido / Xarope</option>
+                                            <option value="Suspensao">Suspensao</option>
                                             <option value="Pasta">Pasta Oral</option>
                                             <option value="Petisco">Petisco Medicamentoso</option>
                                             <option value="Gel">Gel</option>
                                             <option value="Pomada">Pomada/Creme</option>
-                                            <option value="Sachê">Sachê</option>
+                                            <option value="Sache">Sache</option>
                                             <option value="Xampu">Xampu</option>
-                                            <option value="Solução">Solução</option>
-                                            <option value="Injetável">Injetável</option>
+                                            <option value="Solucao">Solucao</option>
+                                            <option value="Injetavel">Injetavel</option>
                                         </select>
                                     </div>
                                     <div>
@@ -359,7 +541,7 @@ export function StepMedication() {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Observações / Posologia
+                                        Observacoes / Posologia
                                     </label>
                                     <textarea
                                         {...register('observations')}
@@ -406,7 +588,7 @@ export function StepMedication() {
                         onClick={handleNext}
                         className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700"
                     >
-                        Revisar Prescrição
+                        Revisar Prescricao
                         <ArrowRight className="w-4 h-4" />
                     </button>
                 </div>
