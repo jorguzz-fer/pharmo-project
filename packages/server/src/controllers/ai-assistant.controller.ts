@@ -34,7 +34,7 @@ export class AiAssistantController {
             console.error('❌ AI Assistant error:', error);
 
             if (error instanceof z.ZodError) {
-                return res.status(400).json({ error: error.errors });
+                return res.status(400).json({ error: error.issues });
             }
 
             if (error.message?.includes('OPENAI_API_KEY')) {

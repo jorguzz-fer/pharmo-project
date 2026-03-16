@@ -8,37 +8,60 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import mammoth from 'mammoth';
-import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// Only import Prisma if not in export-json mode
+const isExportMode = process.argv.includes('--export-json');
+let prisma: any = null;
+if (!isExportMode) {
+    const { PrismaClient } = require('@prisma/client');
+    prisma = new PrismaClient();
+}
 
 // Map de nomes de arquivo → linha terapêutica
 const LINHA_MAP: Record<string, string> = {
-    'antialérgica': 'Antialérgica Oral',
-    'antifúngica': 'Antifúngica Oral',
+    'antial\u00e9rgica': 'Antial\u00e9rgica Oral',
+    'antialergica': 'Antial\u00e9rgica Oral',
+    'antif\u00fangica': 'Antif\u00fangica Oral',
+    'antifungica': 'Antif\u00fangica Oral',
     'antimicrobiana': 'Antimicrobiana Oral',
-    'dermatológica': 'Dermatológica',
-    'nutracêutica': 'Nutracêutica',
-    'odontológica': 'Odontológica',
-    'otológica': 'Otológica',
-    'antiparasitária': 'Antiparasitária',
-    'reumatológica': 'Reumatológica e Articular',
-    'oncológica': 'Oncológica',
+    'dermatol\u00f3gica': 'Dermatol\u00f3gica',
+    'dermatologica': 'Dermatol\u00f3gica',
+    'nutrac\u00eautica': 'Nutrac\u00eautica',
+    'nutraceutica': 'Nutrac\u00eautica',
+    'odontol\u00f3gica': 'Odontol\u00f3gica',
+    'odontologica': 'Odontol\u00f3gica',
+    'otol\u00f3gica': 'Otol\u00f3gica',
+    'otologica': 'Otol\u00f3gica',
+    'antiparasit\u00e1ria': 'Antiparasit\u00e1ria',
+    'antiparasitaria': 'Antiparasit\u00e1ria',
+    'reumatol\u00f3gica': 'Reumatol\u00f3gica e Articular',
+    'reumatologica': 'Reumatol\u00f3gica e Articular',
+    'oncol\u00f3gica': 'Oncol\u00f3gica',
+    'oncologica': 'Oncol\u00f3gica',
     'cardiovascular': 'Cardiovascular',
-    'transdérmica': 'Transdérmica',
-    'endócrina': 'Endócrina',
+    'transd\u00e9rmica': 'Transd\u00e9rmica',
+    'transdermica': 'Transd\u00e9rmica',
+    'end\u00f3crina': 'End\u00f3crina',
+    'endocrina': 'End\u00f3crina',
     'gastrointestinal': 'Gastrointestinal',
-    'genito-urinária': 'Genito-Urinária',
+    'genito-urin\u00e1ria': 'Genito-Urin\u00e1ria',
+    'genito-urinaria': 'Genito-Urin\u00e1ria',
     'hepatoprotetora': 'Hepatoprotetora',
-    'imunológica': 'Imunológica',
+    'imunol\u00f3gica': 'Imunol\u00f3gica',
+    'imunologica': 'Imunol\u00f3gica',
     'nervosa': 'Nervosa',
-    'respiratória': 'Respiratória',
+    'respirat\u00f3ria': 'Respirat\u00f3ria',
+    'respiratoria': 'Respirat\u00f3ria',
 };
 
+function stripDiacritics(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 function detectLinha(filename: string): string {
-    const lower = filename.toLowerCase();
+    const lower = stripDiacritics(filename).toLowerCase();
     for (const [key, value] of Object.entries(LINHA_MAP)) {
-        if (lower.includes(key)) return value;
+        if (lower.includes(stripDiacritics(key))) return value;
     }
     return 'Desconhecida';
 }
@@ -213,7 +236,9 @@ async function processFile(filePath: string): Promise<ParsedMedication[]> {
 }
 
 async function main() {
-    const bularioDir = process.argv[2] || path.resolve(__dirname, '../../../../../../Bulario/drive-download-20260315T234254Z-3-001');
+    // Filter out flags from argv to get directory path
+    const positionalArgs = process.argv.slice(2).filter(a => !a.startsWith('--'));
+    const bularioDir = positionalArgs[0] || path.resolve(__dirname, '../../../../../../Bulario/drive-download-20260315T234254Z-3-001');
 
     if (!fs.existsSync(bularioDir)) {
         console.error(`❌ Directory not found: ${bularioDir}`);
@@ -238,11 +263,30 @@ async function main() {
     }
 
     console.log(`\n📊 Total medications parsed: ${totalMeds}`);
-    console.log(`   Inserting into database...\n`);
 
-    // Upsert all medications
+    // Print summary by linha
+    const byLinha = allMedications.reduce((acc, m) => {
+        acc[m.linha_terapeutica] = (acc[m.linha_terapeutica] || 0) + 1;
+        return acc;
+    }, {} as Record<string, number>);
+
+    console.log(`\n📋 Summary by Linha Terapêutica:`);
+    for (const [linha, count] of Object.entries(byLinha).sort((a, b) => b[1] - a[1])) {
+        console.log(`   ${linha}: ${count}`);
+    }
+
+    // Export mode: write JSON file
+    if (isExportMode) {
+        const outputPath = path.resolve(bularioDir, '..', 'bulario-parsed.json');
+        fs.writeFileSync(outputPath, JSON.stringify(allMedications, null, 2), 'utf-8');
+        console.log(`\n📦 Exported to: ${outputPath}`);
+        console.log(`   ${allMedications.length} medications saved as JSON`);
+        return;
+    }
+
+    // DB mode: insert into database
+    console.log(`   Inserting into database...\n`);
     let inserted = 0;
-    let updated = 0;
     let errors = 0;
 
     for (const med of allMedications) {
@@ -263,8 +307,6 @@ async function main() {
                 },
                 create: med,
             });
-
-            // Check if it was an insert or update
             inserted++;
         } catch (error: any) {
             console.error(`   ❌ Error with ${med.codigo}: ${error.message}`);
@@ -272,21 +314,8 @@ async function main() {
         }
     }
 
-    console.log(`✅ Done!`);
-    console.log(`   Inserted/Updated: ${inserted}`);
+    console.log(`✅ Done! Inserted/Updated: ${inserted}`);
     if (errors > 0) console.log(`   Errors: ${errors}`);
-
-    // Print summary by linha
-    const byLinha = allMedications.reduce((acc, m) => {
-        acc[m.linha_terapeutica] = (acc[m.linha_terapeutica] || 0) + 1;
-        return acc;
-    }, {} as Record<string, number>);
-
-    console.log(`\n📋 Summary by Linha Terapêutica:`);
-    for (const [linha, count] of Object.entries(byLinha).sort((a, b) => b[1] - a[1])) {
-        console.log(`   ${linha}: ${count}`);
-    }
-
     await prisma.$disconnect();
 }
 

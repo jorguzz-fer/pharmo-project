@@ -13,6 +13,7 @@ const aiAssistantController = new AiAssistantController();
 
 // Bulário
 router.get('/bulario/buscar', authMiddleware, bularioController.search);
+router.post('/bulario/seed', bularioController.seedBularioMagistral);
 
 // Assistente IA
 router.post('/assistente/consultar', authMiddleware, aiAssistantController.consultar);
