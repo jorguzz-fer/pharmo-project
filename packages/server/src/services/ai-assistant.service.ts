@@ -24,18 +24,18 @@ export interface MedicamentoResult {
  * Full-text search in PostgreSQL for medications matching the query
  */
 export async function searchMedications(query: string, limit = 15): Promise<MedicamentoResult[]> {
-    // Clean query for tsquery
-    const words = query
+    // Clean query for tsquery - use OR (|) for broader matching
+    const searchTerms = query
         .replace(/[^\w\sáàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ]/g, '')
         .split(/\s+/)
-        .filter(w => w.length >= 2)
-        .map(w => `${w}:*`)
-        .join(' & ');
+        .filter(w => w.length >= 2);
 
-    if (!words) return [];
+    if (searchTerms.length === 0) return [];
+
+    // Try full-text search first with OR operator for broader results
+    const tsquery = searchTerms.map(w => `${w}:*`).join(' | ');
 
     try {
-        // Use PostgreSQL full-text search with portuguese configuration
         const results = await prisma.$queryRawUnsafe<MedicamentoResult[]>(`
             SELECT id, codigo, nome, linha_terapeutica, forma_farmaceutica,
                    indicacao, formula, modo_uso, especie, observacoes,
@@ -48,40 +48,38 @@ export async function searchMedications(query: string, limit = 15): Promise<Medi
                   @@ to_tsquery('portuguese', $1)
             ORDER BY rank DESC
             LIMIT $2
-        `, words, limit);
+        `, tsquery, limit);
 
-        return results;
+        if (results.length > 0) return results;
     } catch (error) {
-        // Fallback to ILIKE search if tsquery fails
-        console.warn('Full-text search failed, falling back to ILIKE:', error);
-        const searchTerms = query.split(/\s+/).filter(w => w.length >= 2);
-
-        if (searchTerms.length === 0) return [];
-
-        return prisma.bularioMagistral.findMany({
-            where: {
-                OR: searchTerms.flatMap(term => [
-                    { indicacao: { contains: term, mode: 'insensitive' as const } },
-                    { nome: { contains: term, mode: 'insensitive' as const } },
-                    { linha_terapeutica: { contains: term, mode: 'insensitive' as const } },
-                    { observacoes: { contains: term, mode: 'insensitive' as const } },
-                ]),
-            },
-            select: {
-                id: true,
-                codigo: true,
-                nome: true,
-                linha_terapeutica: true,
-                forma_farmaceutica: true,
-                indicacao: true,
-                formula: true,
-                modo_uso: true,
-                especie: true,
-                observacoes: true,
-            },
-            take: limit,
-        });
+        console.warn('Full-text search failed, trying ILIKE fallback:', error);
     }
+
+    // Fallback: ILIKE search (always runs if full-text returned 0 results)
+    console.log('Full-text returned 0 results, falling back to ILIKE for:', query);
+    return prisma.bularioMagistral.findMany({
+        where: {
+            OR: searchTerms.flatMap(term => [
+                { indicacao: { contains: term, mode: 'insensitive' as const } },
+                { nome: { contains: term, mode: 'insensitive' as const } },
+                { linha_terapeutica: { contains: term, mode: 'insensitive' as const } },
+                { observacoes: { contains: term, mode: 'insensitive' as const } },
+            ]),
+        },
+        select: {
+            id: true,
+            codigo: true,
+            nome: true,
+            linha_terapeutica: true,
+            forma_farmaceutica: true,
+            indicacao: true,
+            formula: true,
+            modo_uso: true,
+            especie: true,
+            observacoes: true,
+        },
+        take: limit,
+    });
 }
 
 /**
