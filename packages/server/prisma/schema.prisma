@@ -499,10 +499,34 @@ model LogCiencia {
 }
 
 // ========================================
+// BULÁRIO MAGISTRAL (RAG)
+// ========================================
+
+// 22. Bulário Magistral - Medicamentos manipulados PharmoPet
+model BularioMagistral {
+  id                 String   @id @default(uuid())
+  codigo             String   @unique // "7.1", "4.3.2"
+  nome               String // "Gel Otológico Antimicrobiano"
+  linha_terapeutica  String // "Otológica", "Dermatológica"
+  forma_farmaceutica String // "Gel otológico bioadesivo"
+  indicacao          String   @db.Text // "Tratamento de otite bacteriana..."
+  diferencial        String?  @db.Text
+  formula            String   @db.Text // Ingredientes da fórmula
+  modo_uso           String   @db.Text // "Aplicar 2 gotas..."
+  especie            String[] // ["cães", "gatos"]
+  observacoes        String?  @db.Text
+  controlado         Boolean  @default(false)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  @@map("bulario_magistral")
+}
+
+// ========================================
 // CATÁLOGO DE PRODUTOS PHARMOPET
 // ========================================
 
-// 22. Produtos (Catálogo de medicamentos com preço)
+// 23. Produtos (Catálogo de medicamentos com preço)
 model Produto {
   id             String   @id @default(uuid())
   codigo         String   @unique
