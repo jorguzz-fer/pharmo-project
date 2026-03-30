@@ -1,21 +1,29 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { searchMedications, generateRecommendation } from '../services/ai-assistant.service';
+import {
+    searchMedications,
+    searchPrincipiosAtivos,
+    generateRecommendation,
+} from '../services/ai-assistant.service';
 
 export class AiAssistantController {
     async consultar(req: Request, res: Response) {
         const schema = z.object({
             pergunta: z.string().min(5, 'A pergunta deve ter pelo menos 5 caracteres'),
+            species: z.enum(['cão', 'gato']).optional(),
         });
 
         try {
-            const { pergunta } = schema.parse(req.body);
+            const { pergunta, species } = schema.parse(req.body);
 
-            // Step 1: Search for relevant medications in DB
-            const medicamentos = await searchMedications(pergunta);
+            // Step 1: Busca em paralelo: fórmulas magistrais + princípios ativos
+            const [medicamentos, principiosAtivos] = await Promise.all([
+                searchMedications(pergunta),
+                searchPrincipiosAtivos(pergunta, species ?? null),
+            ]);
 
-            // Step 2: Generate AI recommendation with context
-            const resposta = await generateRecommendation(pergunta, medicamentos);
+            // Step 2: Generate AI recommendation with combined context
+            const resposta = await generateRecommendation(pergunta, medicamentos, principiosAtivos);
 
             return res.json({
                 resposta,
@@ -28,6 +36,15 @@ export class AiAssistantController {
                     indicacao: m.indicacao,
                     modo_uso: m.modo_uso,
                     especie: m.especie,
+                })),
+                principios_ativos: principiosAtivos.map(p => ({
+                    id: p.id,
+                    principio_ativo: p.principio_ativo,
+                    doenca: p.doenca,
+                    posologia: p.posologia,
+                    species: p.species,
+                    route_hint: p.route_hint,
+                    contraindicacoes: p.contraindicacoes,
                 })),
             });
         } catch (error: any) {

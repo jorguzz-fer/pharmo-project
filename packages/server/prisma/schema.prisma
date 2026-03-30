@@ -122,13 +122,17 @@ model Bulario {
   id               String   @id @default(uuid())
   doenca           String
   principio_ativo  String
-  concentracao     String
+  concentracao     String?
   posologia        String
   contraindicacoes String?
   controlado       Boolean  @default(false)
+  species          String?  // "dog" | "cat" | null
+  route_hint       String?  // "ORAL" | "VO" | "TOPICO" | null
+  source_record_id Int?     // record_id do CSV de origem
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
 
+  @@unique([principio_ativo, species])
   @@map("bulario")
 }
 
