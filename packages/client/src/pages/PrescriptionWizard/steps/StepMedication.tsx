@@ -44,8 +44,8 @@ export function StepMedication() {
     const [showCatalogDropdown, setShowCatalogDropdown] = useState(false);
     const [selectedProduto, setSelectedProduto] = useState<Produto | null>(null);
     const [isSearchingCatalog, setIsSearchingCatalog] = useState(false);
-    // Código alvo vindo do assistente IA (para auto-seleção exata)
-    const [targetCodigo, setTargetCodigo] = useState<string | null>(null);
+    // Ref para código alvo da IA (não causa re-render, evita loop no useEffect)
+    const targetCodigoRef = useRef<string | null>(null);
 
     // AI Assistant state
     const [showAssistant, setShowAssistant] = useState(false);
@@ -72,17 +72,18 @@ export function StepMedication() {
                 setCatalogResults(results);
 
                 // Se veio do assistente IA com código alvo, tenta match exato
-                if (targetCodigo && results.length > 0) {
+                const target = targetCodigoRef.current;
+                if (target && results.length > 0) {
                     const exactMatch = results.find(
-                        (p) => p.codigo.trim() === targetCodigo.trim()
+                        (p) => p.codigo.trim() === target.trim()
                     );
                     if (exactMatch) {
+                        targetCodigoRef.current = null; // limpa sem re-render
                         handleSelectProduto(exactMatch);
-                        setTargetCodigo(null);
                         return; // não abre dropdown
                     }
                 }
-
+                targetCodigoRef.current = null;
                 setShowCatalogDropdown(true);
             } catch (error) {
                 console.error('Erro ao buscar produtos:', error);
@@ -93,7 +94,7 @@ export function StepMedication() {
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [catalogSearchTerm, targetCodigo]);
+    }, [catalogSearchTerm]);
 
     // Auto-scroll chat
     useEffect(() => {
@@ -143,10 +144,10 @@ export function StepMedication() {
         setShowForm(true);
 
         if (medCodigo) {
-            // Guarda o código exato para auto-seleção após a busca
-            setTargetCodigo(medCodigo);
+            targetCodigoRef.current = medCodigo; // sem re-render
             setCatalogSearchTerm(medCodigo);
         } else {
+            targetCodigoRef.current = null;
             setCatalogSearchTerm(medName);
         }
     };
