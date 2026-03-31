@@ -44,6 +44,8 @@ export function StepMedication() {
     const [showCatalogDropdown, setShowCatalogDropdown] = useState(false);
     const [selectedProduto, setSelectedProduto] = useState<Produto | null>(null);
     const [isSearchingCatalog, setIsSearchingCatalog] = useState(false);
+    // Código alvo vindo do assistente IA (para auto-seleção exata)
+    const [targetCodigo, setTargetCodigo] = useState<string | null>(null);
 
     // AI Assistant state
     const [showAssistant, setShowAssistant] = useState(false);
@@ -66,7 +68,21 @@ export function StepMedication() {
             try {
                 setIsSearchingCatalog(true);
                 const response = await produtoService.buscar(catalogSearchTerm, 1, 15);
-                setCatalogResults(response.data);
+                const results = response.data;
+                setCatalogResults(results);
+
+                // Se veio do assistente IA com código alvo, tenta match exato
+                if (targetCodigo && results.length > 0) {
+                    const exactMatch = results.find(
+                        (p) => p.codigo.trim() === targetCodigo.trim()
+                    );
+                    if (exactMatch) {
+                        handleSelectProduto(exactMatch);
+                        setTargetCodigo(null);
+                        return; // não abre dropdown
+                    }
+                }
+
                 setShowCatalogDropdown(true);
             } catch (error) {
                 console.error('Erro ao buscar produtos:', error);
@@ -77,7 +93,7 @@ export function StepMedication() {
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [catalogSearchTerm]);
+    }, [catalogSearchTerm, targetCodigo]);
 
     // Auto-scroll chat
     useEffect(() => {
@@ -123,16 +139,16 @@ export function StepMedication() {
     };
 
     const handleAiSearchProduct = async (medName: string, medCodigo?: string) => {
-        // Busca pelo código se disponível (mais preciso), senão pelo nome
-        const searchTerm = medCodigo || medName;
-        setCatalogSearchTerm(searchTerm);
         setShowAssistant(false);
         setShowForm(true);
 
-        // Aguarda o debounce do useEffect e abre o dropdown automaticamente
-        setTimeout(() => {
-            setShowCatalogDropdown(true);
-        }, 400);
+        if (medCodigo) {
+            // Guarda o código exato para auto-seleção após a busca
+            setTargetCodigo(medCodigo);
+            setCatalogSearchTerm(medCodigo);
+        } else {
+            setCatalogSearchTerm(medName);
+        }
     };
 
     // ============================================================
