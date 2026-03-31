@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, Mess
 import { usePrescriptionStore } from '../../../store/prescription';
 import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
+import { formaFarmaceuticaService, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { api } from '../../../services/api';
 
 type MedForm = {
@@ -48,6 +49,9 @@ export function StepMedication() {
     const targetCodigoRef = useRef<string | null>(null);
     // Mensagem quando produto da IA não existe no catálogo
     const [aiProductNotFound, setAiProductNotFound] = useState<string | null>(null);
+
+    // Formas Farmacêuticas do banco
+    const [formasFarma, setFormasFarma] = useState<FormaFarmaceutica[]>([]);
 
     // AI Assistant state
     const [showAssistant, setShowAssistant] = useState(false);
@@ -103,6 +107,13 @@ export function StepMedication() {
 
         return () => clearTimeout(timer);
     }, [catalogSearchTerm]);
+
+    // Carregar formas farmacêuticas do banco
+    useEffect(() => {
+        formaFarmaceuticaService.listar()
+            .then(setFormasFarma)
+            .catch(() => setFormasFarma([]));
+    }, []);
 
     // Auto-scroll chat
     useEffect(() => {
@@ -544,23 +555,27 @@ export function StepMedication() {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Forma *</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Forma Farmacêutica *</label>
                                         <select
                                             {...register('form', { required: true })}
                                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                         >
-                                            <option value="Comprimido">Comprimido</option>
-                                            <option value="Capsula">Capsula</option>
-                                            <option value="Liquido">Liquido / Xarope</option>
-                                            <option value="Suspensao">Suspensao</option>
-                                            <option value="Pasta">Pasta Oral</option>
-                                            <option value="Petisco">Petisco Medicamentoso</option>
-                                            <option value="Gel">Gel</option>
-                                            <option value="Pomada">Pomada/Creme</option>
-                                            <option value="Sache">Sache</option>
-                                            <option value="Xampu">Xampu</option>
-                                            <option value="Solucao">Solucao</option>
-                                            <option value="Injetavel">Injetavel</option>
+                                            <option value="">Selecione</option>
+                                            {formasFarma.length > 0
+                                                ? formasFarma.map((f) => (
+                                                    <option key={f.id} value={f.nome}>{f.nome}</option>
+                                                ))
+                                                : <>
+                                                    <option value="CÁPSULAS">CÁPSULAS</option>
+                                                    <option value="BISCOITOS">BISCOITOS</option>
+                                                    <option value="SUSPENSÃO ORAL">SUSPENSÃO ORAL</option>
+                                                    <option value="PASTA ORAL">PASTA ORAL</option>
+                                                    <option value="GEL TRANSDERMICO">GEL TRANSDÉRMICO</option>
+                                                    <option value="CREME TÓPICO">CREME TÓPICO</option>
+                                                    <option value="SHAMPOO">SHAMPOO</option>
+                                                    <option value="SACHÊ">SACHÊ</option>
+                                                </>
+                                            }
                                         </select>
                                     </div>
                                     <div>

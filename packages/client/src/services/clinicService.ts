@@ -21,6 +21,12 @@ export interface Clinica {
     cpf_responsavel: string;
     status: 'PENDENTE' | 'EM_ANALISE' | 'APROVADA' | 'SUSPENSA' | 'INATIVA';
     observacoes_internas?: string;
+    // Condições comerciais (por parceiro)
+    taxa_manipulacao?: number | null;
+    custo_embalagens?: number | null;
+    desconto_parceiro?: number | null;
+    adicional_entrega?: number | null;
+    adicional_biscoito?: number | null;
     created_at: string;
     updated_at: string;
     approved_at?: string;
@@ -200,5 +206,15 @@ export const clinicService = {
 
     async deleteLogo(clinicaId: string): Promise<void> {
         return api.delete(`/admin/clinicas/${clinicaId}/logo`);
+    },
+
+    async updateComercial(clinicaId: string, data: {
+        taxa_manipulacao?: number | null;
+        custo_embalagens?: number | null;
+        desconto_parceiro?: number | null;
+        adicional_entrega?: number | null;
+        adicional_biscoito?: number | null;
+    }): Promise<Clinica> {
+        return api.put(`/admin/clinicas/${clinicaId}`, data);
     }
 };

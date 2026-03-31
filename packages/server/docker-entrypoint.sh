@@ -60,6 +60,14 @@ else
     echo "  ⚠️  Bulário seed failed ou já populado"
 fi
 
+# Seed V3: Insumos + Formas + Controlados + Exceções
+echo "  → Seeding V3 (insumos, formas, controlados, exceções)..."
+if npx tsx src/scripts/seed-v3.ts; then
+    echo "  ✅ Seed V3 concluído"
+else
+    echo "  ⚠️  Seed V3 failed ou já populado"
+fi
+
 echo ""
 echo "========================================="
 echo "🚀 Starting PharmoPet API Server..."

@@ -1,0 +1,37 @@
+[
+  {
+    "codigo": 556,
+    "produto": "AMITRIPITILINA",
+    "regra": "NÃO FAZ EM PASTA"
+  },
+  {
+    "codigo": 1079,
+    "produto": "EZETIMIBA",
+    "regra": "NÃO FAZ EM PASTA"
+  },
+  {
+    "codigo": 25,
+    "produto": "ITRACONAZOL",
+    "regra": "NÃO FAZ EM PASTA"
+  },
+  {
+    "codigo": 81,
+    "produto": "SIMETICONE",
+    "regra": "NÃO FAZ EM PASTA"
+  },
+  {
+    "codigo": 531,
+    "produto": "PANCREATINA",
+    "regra": "NÃO FAZ EM PASTA"
+  },
+  {
+    "codigo": 908,
+    "produto": "MUPIROCINA",
+    "regra": "NÃO FAZ EM PASTA"
+  },
+  {
+    "codigo": 347,
+    "produto": "TERBINAFINA",
+    "regra": "NÃO FAZ EM PASTA"
+  }
+]

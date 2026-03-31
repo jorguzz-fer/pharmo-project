@@ -279,6 +279,13 @@ model Clinica {
   // Branding
   logo_url String?
 
+  // Condições comerciais (precificação por parceiro)
+  taxa_manipulacao    Decimal? @db.Decimal(10, 2) // R$ fixo por pedido
+  custo_embalagens    Decimal? @db.Decimal(10, 2) // R$ fixo por pedido
+  desconto_parceiro   Decimal? @db.Decimal(5, 4)  // % desconto (0.40 = 40%)
+  adicional_entrega   Decimal? @db.Decimal(10, 2) // R$ fixo por pedido
+  adicional_biscoito  Decimal? @db.Decimal(10, 2) // R$ extra se forma = biscoito
+
   // Responsável
   responsavel_legal String
   cpf_responsavel   String
@@ -542,4 +549,58 @@ model Produto {
   updated_at     DateTime @updatedAt
 
   @@map("produtos")
+}
+
+// ========================================
+// INSUMOS FARMACÊUTICOS (BASE V3)
+// ========================================
+
+// 24. Insumo Farmacêutico — Princípios ativos com precificação
+model InsumoFarmaceutico {
+  id               String   @id @default(uuid())
+  codigo_interno   Int      @unique // Código do sistema PharmoPet (ex: 665)
+  descricao        String // Nome do princípio ativo (ex: "Gabapentina")
+  valor_custo      Decimal  @db.Decimal(10, 5) // Custo por grama
+  custo_referencia Decimal  @db.Decimal(10, 5) // Custo referência por grama
+  markup           Decimal  @db.Decimal(10, 2) // Multiplicador (ex: 648 = 6.48x)
+  un_manipulacao   String // Unidade de manipulação: "mg", "ml", "g"
+  estoque          Decimal  @db.Decimal(10, 4) // Estoque disponível (grama/ml)
+  calculo_tipo     String // "Cápsula", "Percentual", "Sem cálculo"
+  controlado       Boolean  @default(false)
+  lista_controle   String?  // "C1", "A2", etc. (se controlado)
+  ativo            Boolean  @default(true)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  regras_excecao RegraExcecao[]
+
+  @@map("insumos_farmaceuticos")
+}
+
+// 25. Formas Farmacêuticas — Tipos de formulação disponíveis
+model FormaFarmaceutica {
+  id         String   @id @default(uuid())
+  nome       String   @unique // "CÁPSULAS", "BISCOITOS", etc.
+  ativo      Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  regras_excecao RegraExcecao[]
+
+  @@map("formas_farmaceuticas")
+}
+
+// 26. Regras de Exceção — Incompatibilidades insumo × forma farmacêutica
+model RegraExcecao {
+  id                     String   @id @default(uuid())
+  insumo_farmaceutico_id String
+  forma_farmaceutica_id  String
+  descricao              String // "NÃO FAZ EM PASTA"
+  created_at             DateTime @default(now())
+
+  insumo InsumoFarmaceutico @relation(fields: [insumo_farmaceutico_id], references: [id], onDelete: Cascade)
+  forma  FormaFarmaceutica  @relation(fields: [forma_farmaceutica_id], references: [id], onDelete: Cascade)
+
+  @@unique([insumo_farmaceutico_id, forma_farmaceutica_id])
+  @@map("regras_excecao")
 }

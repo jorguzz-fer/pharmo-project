@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X, Link2, Send, Upload, Image, Loader2 } from 'lucide-react';
+import { ArrowLeft, Building2, MapPin, Mail, Phone, Edit, Trash2, FileText, Users, CheckCircle, XCircle, Search, X, Link2, Send, Upload, Image, Loader2, DollarSign, Save } from 'lucide-react';
 import { clinicService, type Clinica } from '../../services/clinicService';
 import { veterinarianService } from '../../services/veterinarianService';
 import { StatusBadge } from '../../components/StatusBadge';
@@ -13,7 +13,15 @@ export function AdminClinicDetails() {
     const [loading, setLoading] = useState(true);
     const [documents, setDocuments] = useState<any[]>([]);
     const [veterinarians, setVeterinarians] = useState<any[]>([]);
-    const [activeTab, setActiveTab] = useState<'info' | 'docs' | 'vets'>('info');
+    const [activeTab, setActiveTab] = useState<'info' | 'comercial' | 'docs' | 'vets'>('info');
+    const [savingComercial, setSavingComercial] = useState(false);
+    const [comercialData, setComercialData] = useState({
+        taxa_manipulacao: '',
+        custo_embalagens: '',
+        desconto_parceiro: '',
+        adicional_entrega: '',
+        adicional_biscoito: '',
+    });
     const [showLinkModal, setShowLinkModal] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -34,6 +42,13 @@ export function AdminClinicDetails() {
             setLoading(true);
             const data = await clinicService.getById(id!);
             setClinic(data);
+            setComercialData({
+                taxa_manipulacao: data.taxa_manipulacao != null ? String(data.taxa_manipulacao) : '',
+                custo_embalagens: data.custo_embalagens != null ? String(data.custo_embalagens) : '',
+                desconto_parceiro: data.desconto_parceiro != null ? String(Number(data.desconto_parceiro) * 100) : '',
+                adicional_entrega: data.adicional_entrega != null ? String(data.adicional_entrega) : '',
+                adicional_biscoito: data.adicional_biscoito != null ? String(data.adicional_biscoito) : '',
+            });
         } catch (error) {
             console.error('Error loading clinic:', error);
         } finally {
@@ -189,6 +204,31 @@ export function AdminClinicDetails() {
         }
     };
 
+    const handleComercialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setComercialData({ ...comercialData, [e.target.name]: e.target.value });
+    };
+
+    const handleSaveComercial = async () => {
+        if (!id) return;
+        setSavingComercial(true);
+        try {
+            const payload = {
+                taxa_manipulacao: comercialData.taxa_manipulacao ? parseFloat(comercialData.taxa_manipulacao) : null,
+                custo_embalagens: comercialData.custo_embalagens ? parseFloat(comercialData.custo_embalagens) : null,
+                desconto_parceiro: comercialData.desconto_parceiro ? parseFloat(comercialData.desconto_parceiro) / 100 : null,
+                adicional_entrega: comercialData.adicional_entrega ? parseFloat(comercialData.adicional_entrega) : null,
+                adicional_biscoito: comercialData.adicional_biscoito ? parseFloat(comercialData.adicional_biscoito) : null,
+            };
+            await clinicService.updateComercial(id, payload);
+            await loadClinic();
+            alert('Condições comerciais salvas com sucesso!');
+        } catch (error: any) {
+            alert(error.message || 'Erro ao salvar condições comerciais');
+        } finally {
+            setSavingComercial(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center py-12">
@@ -261,6 +301,16 @@ export function AdminClinicDetails() {
                     >
                         <Building2 className="w-4 h-4 inline mr-2" />
                         Informações
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('comercial')}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'comercial'
+                            ? 'border-teal-600 text-teal-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            }`}
+                    >
+                        <DollarSign className="w-4 h-4 inline mr-2" />
+                        Comercial
                     </button>
                     <button
                         onClick={() => setActiveTab('docs')}
@@ -466,6 +516,120 @@ export function AdminClinicDetails() {
                                 <p className="text-sm mt-1">{clinic.observacoes_internas}</p>
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {activeTab === 'comercial' && (
+                <div className="bg-white rounded-lg shadow p-6 space-y-6">
+                    <div>
+                        <h3 className="font-semibold text-lg mb-1">Condições Comerciais</h3>
+                        <p className="text-sm text-gray-500 mb-6">
+                            Configure taxas, descontos e adicionais específicos para este parceiro. Estes valores serão usados no motor de precificação.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Taxa de Manipulação (R$)
+                            </label>
+                            <input
+                                type="number"
+                                name="taxa_manipulacao"
+                                value={comercialData.taxa_manipulacao}
+                                onChange={handleComercialChange}
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Valor fixo cobrado por manipulação</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Custo de Embalagens (R$)
+                            </label>
+                            <input
+                                type="number"
+                                name="custo_embalagens"
+                                value={comercialData.custo_embalagens}
+                                onChange={handleComercialChange}
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Custo fixo de embalagem por pedido</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Desconto Parceiro (%)
+                            </label>
+                            <input
+                                type="number"
+                                name="desconto_parceiro"
+                                value={comercialData.desconto_parceiro}
+                                onChange={handleComercialChange}
+                                step="0.1"
+                                min="0"
+                                max="100"
+                                placeholder="0"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Percentual de desconto sobre o total (ex: 10 = 10%)</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Adicional Entrega (R$)
+                            </label>
+                            <input
+                                type="number"
+                                name="adicional_entrega"
+                                value={comercialData.adicional_entrega}
+                                onChange={handleComercialChange}
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Taxa adicional para entrega</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Adicional Biscoito (R$)
+                            </label>
+                            <input
+                                type="number"
+                                name="adicional_biscoito"
+                                value={comercialData.adicional_biscoito}
+                                onChange={handleComercialChange}
+                                step="0.01"
+                                min="0"
+                                placeholder="0,00"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Taxa adicional para forma biscoito/petisco</p>
+                        </div>
+                    </div>
+
+                    <div className="pt-4 border-t flex justify-end">
+                        <button
+                            onClick={handleSaveComercial}
+                            disabled={savingComercial}
+                            className="flex items-center space-x-2 px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
+                        >
+                            {savingComercial ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <Save className="w-4 h-4" />
+                            )}
+                            <span>{savingComercial ? 'Salvando...' : 'Salvar Condições'}</span>
+                        </button>
                     </div>
                 </div>
             )}

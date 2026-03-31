@@ -1,0 +1,7022 @@
+[
+  {
+    "codigo_interno": 1083,
+    "descricao": "Aceponato de Hidrocortisona",
+    "valor_custo": 3.1,
+    "custo_referencia": 3.1,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 252,
+    "descricao": "Acetilcisteina (N-Acetil L-Cisteína)",
+    "valor_custo": 0.15,
+    "custo_referencia": 0.15,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.672,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 422,
+    "descricao": "Ácido Acetil Salicílico",
+    "valor_custo": 0.059,
+    "custo_referencia": 0.059,
+    "markup": 216.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1864,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 911,
+    "descricao": "Ácido Alfa Lipóico",
+    "valor_custo": 1.66296,
+    "custo_referencia": 1.66296,
+    "markup": 200.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.9889,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 198,
+    "descricao": "Acido borico",
+    "valor_custo": 0.01196,
+    "custo_referencia": 0.01196,
+    "markup": 643.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0889,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 155,
+    "descricao": "Acido citrico",
+    "valor_custo": 0.025,
+    "custo_referencia": 0.038,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1322,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 178,
+    "descricao": "Ácido Clorídrico",
+    "valor_custo": 0.0173,
+    "custo_referencia": 0.0173,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1294,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 60,
+    "descricao": "Ácido Fólico",
+    "valor_custo": 0.42,
+    "custo_referencia": 0.72,
+    "markup": 1056.94,
+    "un_manipulacao": "mg",
+    "estoque": 8.33,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 605,
+    "descricao": "Ácido Glicirrízico",
+    "valor_custo": 2.25,
+    "custo_referencia": 2.25,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 11.97,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 898,
+    "descricao": "Acido Glicólico 70%",
+    "valor_custo": 0.064,
+    "custo_referencia": 0.064,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.4787,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 855,
+    "descricao": "Ácido Hialurônico",
+    "valor_custo": 1.08,
+    "custo_referencia": 1.08,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.8384,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 710,
+    "descricao": "Ácido Hialurônico líquido",
+    "valor_custo": 1.2,
+    "custo_referencia": 12.0,
+    "markup": 687.5,
+    "un_manipulacao": "ml",
+    "estoque": 94.5,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 242,
+    "descricao": "Ácido Lático",
+    "valor_custo": 0.032,
+    "custo_referencia": 0.032,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2394,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 62,
+    "descricao": "Ácido Salicílico",
+    "valor_custo": 0.0707,
+    "custo_referencia": 0.0707,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5288,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 593,
+    "descricao": "Ácido Ursodesoxicólico",
+    "valor_custo": 1.33,
+    "custo_referencia": 1.33,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.9584,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 969,
+    "descricao": "Acquabio",
+    "valor_custo": 1.3742,
+    "custo_referencia": 1.3742,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 10.279,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 232,
+    "descricao": "Aerosil",
+    "valor_custo": 0.34098,
+    "custo_referencia": 0.34098,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.5505,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 946,
+    "descricao": "Agaricus",
+    "valor_custo": 0.48,
+    "custo_referencia": 0.48,
+    "markup": 1020.83,
+    "un_manipulacao": "mg",
+    "estoque": 5.38,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 100,
+    "descricao": "Água purificada",
+    "valor_custo": 0.002,
+    "custo_referencia": 0.002,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.015,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 63,
+    "descricao": "Alantoína",
+    "valor_custo": 0.63,
+    "custo_referencia": 0.63,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.7124,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 437,
+    "descricao": "Albendazol",
+    "valor_custo": 0.11692,
+    "custo_referencia": 0.11692,
+    "markup": 2679.68,
+    "un_manipulacao": "mg",
+    "estoque": 3.25,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 546,
+    "descricao": "Alcachofra extrato seco",
+    "valor_custo": 0.054,
+    "custo_referencia": 0.064,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2867,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 279,
+    "descricao": "Álcool Absoluto",
+    "valor_custo": 0.0085,
+    "custo_referencia": 0.0085,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0636,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 532,
+    "descricao": "Álcool Cereais",
+    "valor_custo": 0.00866,
+    "custo_referencia": 0.00866,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0648,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 818,
+    "descricao": "Alfa-cetofenilalanina de cálcio",
+    "valor_custo": 3.56,
+    "custo_referencia": 3.56,
+    "markup": 243.0,
+    "un_manipulacao": "mg",
+    "estoque": 12.2108,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 606,
+    "descricao": "Alfa Bisabolol",
+    "valor_custo": 1.04,
+    "custo_referencia": 1.04,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 7.7792,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1074,
+    "descricao": "Alga Ascophyllum",
+    "valor_custo": 1.39,
+    "custo_referencia": 1.39,
+    "markup": 348.0,
+    "un_manipulacao": "g",
+    "estoque": 6.2272,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 442,
+    "descricao": "Alopurinol",
+    "valor_custo": 0.16192,
+    "custo_referencia": 0.16192,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2112,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 821,
+    "descricao": "Amicacina",
+    "valor_custo": 6.9,
+    "custo_referencia": 7.9,
+    "markup": 10.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.69,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 190,
+    "descricao": "Amido de Milho",
+    "valor_custo": 0.0059,
+    "custo_referencia": 0.0065,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0486,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 191,
+    "descricao": "Aminofilina",
+    "valor_custo": 0.61275,
+    "custo_referencia": 0.61275,
+    "markup": 350.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.7574,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 53,
+    "descricao": "Amiodarona",
+    "valor_custo": 0.4153,
+    "custo_referencia": 0.7,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.236,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 556,
+    "descricao": "Amitriptilina",
+    "valor_custo": 0.439,
+    "custo_referencia": 0.439,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.2837,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 3,
+    "descricao": "Amoxicilina tri hidratada",
+    "valor_custo": 0.44,
+    "custo_referencia": 0.44,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.2912,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 64,
+    "descricao": "Ampicilina tri hidratada",
+    "valor_custo": 0.265,
+    "custo_referencia": 0.273,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.042,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 750,
+    "descricao": "Anfotericina B",
+    "valor_custo": 2.5488,
+    "custo_referencia": 3.1946,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 23.8956,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 65,
+    "descricao": "Anlodipina",
+    "valor_custo": 0.56,
+    "custo_referencia": 0.56,
+    "markup": 900.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.6,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 303,
+    "descricao": "Arginina (L-Arginina)",
+    "valor_custo": 0.105,
+    "custo_referencia": 0.105,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7854,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 547,
+    "descricao": "Aroma Bacon",
+    "valor_custo": 0.314,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 984,
+    "descricao": "Aroma Banana",
+    "valor_custo": 0.534,
+    "custo_referencia": 0.235,
+    "markup": 200.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.705,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 374,
+    "descricao": "Aroma Carne",
+    "valor_custo": 0.24,
+    "custo_referencia": 0.2426,
+    "markup": 180.0,
+    "un_manipulacao": "g",
+    "estoque": 0.6793,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 616,
+    "descricao": "Aroma Costela",
+    "valor_custo": 0.033,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 600,
+    "descricao": "Aroma Framboesa",
+    "valor_custo": 0.168,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 575,
+    "descricao": "Aroma Frango",
+    "valor_custo": 0.36,
+    "custo_referencia": 0.36,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.08,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 777,
+    "descricao": "Aroma Frutas Vermelhas",
+    "valor_custo": 0.216,
+    "custo_referencia": 0.282,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.846,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 112,
+    "descricao": "Aroma Laranja",
+    "valor_custo": 0.03623,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 944,
+    "descricao": "Aroma Linguiça",
+    "valor_custo": 0.01,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 114,
+    "descricao": "Aroma Maça Verde",
+    "valor_custo": 0.401,
+    "custo_referencia": 0.401,
+    "markup": 216.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2672,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 991,
+    "descricao": "Aroma Marshmallow",
+    "valor_custo": 0.55,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 985,
+    "descricao": "Aroma Morango",
+    "valor_custo": 0.182,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 945,
+    "descricao": "Aroma Peixe",
+    "valor_custo": 0.326,
+    "custo_referencia": 0.326,
+    "markup": 200.0,
+    "un_manipulacao": "g",
+    "estoque": 0.978,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1056,
+    "descricao": "Aroma Picanha",
+    "valor_custo": 0.296,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "g",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 314,
+    "descricao": "Aroma Pó",
+    "valor_custo": 0.5,
+    "custo_referencia": 0.6,
+    "markup": 200.0,
+    "un_manipulacao": "g",
+    "estoque": 1.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1014,
+    "descricao": "Ashwagandha",
+    "valor_custo": 0.176,
+    "custo_referencia": 0.176,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3165,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 976,
+    "descricao": "Astaxantina",
+    "valor_custo": 1.39,
+    "custo_referencia": 1.39,
+    "markup": 500.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.34,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 989,
+    "descricao": "Astragalus",
+    "valor_custo": 0.079,
+    "custo_referencia": 0.079,
+    "markup": 900.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.79,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 571,
+    "descricao": "Atenolol",
+    "valor_custo": 1.20062,
+    "custo_referencia": 1.20062,
+    "markup": 934.48,
+    "un_manipulacao": "mg",
+    "estoque": 12.4202,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 979,
+    "descricao": "Auxina Tricógena",
+    "valor_custo": 0.799,
+    "custo_referencia": 0.799,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 5.9765,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 608,
+    "descricao": "Avenolat",
+    "valor_custo": 0.1638,
+    "custo_referencia": 0.20617,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 1.5422,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 250,
+    "descricao": "Azatioprina",
+    "valor_custo": 3.3,
+    "custo_referencia": 4.95714,
+    "markup": 404.32,
+    "un_manipulacao": "mg",
+    "estoque": 25.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 4,
+    "descricao": "Azitromicina",
+    "valor_custo": 2.9952,
+    "custo_referencia": 5.77037,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 43.1624,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 878,
+    "descricao": "Azuleno",
+    "valor_custo": 7.83,
+    "custo_referencia": 7.83,
+    "markup": 348.0,
+    "un_manipulacao": "g",
+    "estoque": 35.0784,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 683,
+    "descricao": "Bacitracina",
+    "valor_custo": 2.405,
+    "custo_referencia": 10.6,
+    "markup": 432.0,
+    "un_manipulacao": "ui",
+    "estoque": 56.392,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 1043,
+    "descricao": "BARBATIMÃO (EXTRATO)",
+    "valor_custo": 0.03,
+    "custo_referencia": 0.03,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2244,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1021,
+    "descricao": "Barbatimão (Tintura)",
+    "valor_custo": 0.09,
+    "custo_referencia": 0.09,
+    "markup": 648.0,
+    "un_manipulacao": "%",
+    "estoque": 0.6732,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 528,
+    "descricao": "BASE PEROLADA - UNIPER CP",
+    "valor_custo": 0.0095,
+    "custo_referencia": 0.0168,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.1257,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 843,
+    "descricao": "BELLADONNA TM",
+    "valor_custo": 0.05137,
+    "custo_referencia": 0.9,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 6.732,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 465,
+    "descricao": "Benazepril",
+    "valor_custo": 11.191,
+    "custo_referencia": 10.703,
+    "markup": 77.42,
+    "un_manipulacao": "mg",
+    "estoque": 18.9892,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1025,
+    "descricao": "Berberina",
+    "valor_custo": 0.9795,
+    "custo_referencia": 0.9795,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.3882,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 534,
+    "descricao": "Berinjela extrato seco",
+    "valor_custo": 0.0415,
+    "custo_referencia": 0.0415,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3104,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 67,
+    "descricao": "Betacaroteno",
+    "valor_custo": 0.5,
+    "custo_referencia": 0.3909,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.9239,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 861,
+    "descricao": "Betaglucana",
+    "valor_custo": 1.0297,
+    "custo_referencia": 1.0297,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.6725,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 436,
+    "descricao": "Betaína",
+    "valor_custo": 0.045,
+    "custo_referencia": 0.045,
+    "markup": 8135.29,
+    "un_manipulacao": "mg",
+    "estoque": 3.7059,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 68,
+    "descricao": "Betametasona",
+    "valor_custo": 15.792,
+    "custo_referencia": 18.0,
+    "markup": 1536.89,
+    "un_manipulacao": "mg",
+    "estoque": 294.64,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 479,
+    "descricao": "Betanecol",
+    "valor_custo": 12.0,
+    "custo_referencia": 59.6,
+    "markup": 108.0,
+    "un_manipulacao": "mg",
+    "estoque": 123.968,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 670,
+    "descricao": "Bezafibrato",
+    "valor_custo": 1.141,
+    "custo_referencia": 1.141,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.2527,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 5,
+    "descricao": "BHT",
+    "valor_custo": 0.02738,
+    "custo_referencia": 0.065,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4862,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 192,
+    "descricao": "Bicarbonato de Sódio",
+    "valor_custo": 0.018,
+    "custo_referencia": 0.018,
+    "markup": 7677.78,
+    "un_manipulacao": "mg",
+    "estoque": 1.4,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 941,
+    "descricao": "Bifidobacterium bifidum",
+    "valor_custo": 0.6527,
+    "custo_referencia": 0.85,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.508,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 942,
+    "descricao": "Bifidobacterium breve",
+    "valor_custo": 8.2,
+    "custo_referencia": 8.2,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 61.336,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1018,
+    "descricao": "Bifidobacterium lactis",
+    "valor_custo": 1.12,
+    "custo_referencia": 1.12,
+    "markup": 0,
+    "un_manipulacao": "ufc",
+    "estoque": 8.3776,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 69,
+    "descricao": "Biotina (Vitamina H)",
+    "valor_custo": 1.9,
+    "custo_referencia": 1.9,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 10.412,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1007,
+    "descricao": "BISGLICINATO DE CROMO",
+    "valor_custo": 0.093,
+    "custo_referencia": 0.093,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6956,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 882,
+    "descricao": "BISGLICINATO DE ZINCO 20%",
+    "valor_custo": 0.0347,
+    "custo_referencia": 0.0347,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2221,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 487,
+    "descricao": "Bitartarato Colina",
+    "valor_custo": 0.078,
+    "custo_referencia": 0.078,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5834,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1024,
+    "descricao": "Bitter mellon",
+    "valor_custo": 1.49,
+    "custo_referencia": 1.49,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.6752,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 684,
+    "descricao": "Boswellia serrata extrato seco",
+    "valor_custo": 0.103,
+    "custo_referencia": 0.103,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5644,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 916,
+    "descricao": "Bromelina",
+    "valor_custo": 0.2084,
+    "custo_referencia": 0.2084,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.5588,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 264,
+    "descricao": "Brometo de Potássio",
+    "valor_custo": 0.28,
+    "custo_referencia": 0.28,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.792,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 668,
+    "descricao": "BROMOCRIPTINA DILUIDA 1:100",
+    "valor_custo": 1.3054,
+    "custo_referencia": 1.3054,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 9.7644,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 667,
+    "descricao": "Bromocriptina pura",
+    "valor_custo": 112.7,
+    "custo_referencia": 112.7,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 842.996,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 70,
+    "descricao": "Bromoprida",
+    "valor_custo": 2.2232,
+    "custo_referencia": 2.2232,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 16.6295,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 613,
+    "descricao": "Budesonida",
+    "valor_custo": 36.418,
+    "custo_referencia": 36.418,
+    "markup": 932.06,
+    "un_manipulacao": "mg",
+    "estoque": 375.8571,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 583,
+    "descricao": "Buspirona",
+    "valor_custo": 3.1466,
+    "custo_referencia": 3.2,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 23.936,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1034,
+    "descricao": "Cálcio Citrato Malato",
+    "valor_custo": 0.063,
+    "custo_referencia": 0.063,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4712,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 337,
+    "descricao": "Cálcio Quelato",
+    "valor_custo": 0.03964,
+    "custo_referencia": 0.03964,
+    "markup": 486.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2323,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 902,
+    "descricao": "CALCITRIOL",
+    "valor_custo": 1.0,
+    "custo_referencia": 0.0,
+    "markup": 0,
+    "un_manipulacao": "mcg",
+    "estoque": 0.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 158,
+    "descricao": "CANFORA DAB 8",
+    "valor_custo": 0.03855,
+    "custo_referencia": 0.04478,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.335,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 897,
+    "descricao": "CAPS NR3",
+    "valor_custo": 0.0735,
+    "custo_referencia": 0.3,
+    "markup": 648.0,
+    "un_manipulacao": "un",
+    "estoque": 2.244,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 71,
+    "descricao": "CAPTOPRIL",
+    "valor_custo": 0.18,
+    "custo_referencia": 0.3,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.244,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 159,
+    "descricao": "Carbonato de Cálcio",
+    "valor_custo": 0.00613,
+    "custo_referencia": 0.00613,
+    "markup": 1000.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0674,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 72,
+    "descricao": "Carbopol 940",
+    "valor_custo": 0.063,
+    "custo_referencia": 0.104,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.7779,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 230,
+    "descricao": "Carboximetilcelulose (CMC)",
+    "valor_custo": 0.074,
+    "custo_referencia": 0.074,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5535,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 357,
+    "descricao": "Carprofeno",
+    "valor_custo": 4.1,
+    "custo_referencia": 4.1,
+    "markup": 340.87,
+    "un_manipulacao": "mg",
+    "estoque": 18.0757,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 161,
+    "descricao": "CARVAO ATIVO VEGETAL",
+    "valor_custo": 0.01655,
+    "custo_referencia": 0.03586,
+    "markup": 324.0,
+    "un_manipulacao": "g",
+    "estoque": 0.152,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 618,
+    "descricao": "CARVEDILOL",
+    "valor_custo": 1.23,
+    "custo_referencia": 5.0,
+    "markup": 756.0,
+    "un_manipulacao": "mg",
+    "estoque": 42.8,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 348,
+    "descricao": "CAULIM",
+    "valor_custo": 0.016,
+    "custo_referencia": 0.02232,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1187,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 415,
+    "descricao": "Cefadroxil",
+    "valor_custo": 0.46027,
+    "custo_referencia": 0.46027,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.4486,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 825,
+    "descricao": "Cefalexina (monohidratada compactada)",
+    "valor_custo": 1.1542,
+    "custo_referencia": 1.1542,
+    "markup": 405.05,
+    "un_manipulacao": "mg",
+    "estoque": 5.8293,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 214,
+    "descricao": "CELLUSIZE QP 100 (NATROSOL)",
+    "valor_custo": 0.06241,
+    "custo_referencia": 0.07267,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5436,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 188,
+    "descricao": "Celulose microcristalina",
+    "valor_custo": 0.0311,
+    "custo_referencia": 0.0311,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2326,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 730,
+    "descricao": "Centella Asiática",
+    "valor_custo": 0.025,
+    "custo_referencia": 0.025,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.187,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 887,
+    "descricao": "CERA DE ABELHAS BRANCA",
+    "valor_custo": 0.02832,
+    "custo_referencia": 0.02832,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.2118,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 913,
+    "descricao": "Ceramidas",
+    "valor_custo": 0.5138,
+    "custo_referencia": 0.72546,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.5246,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 529,
+    "descricao": "CERAMIDAS III",
+    "valor_custo": 0.462,
+    "custo_referencia": 1.93,
+    "markup": 162.0,
+    "un_manipulacao": "g",
+    "estoque": 5.0566,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 522,
+    "descricao": "CETIRIZINE",
+    "valor_custo": 3.12,
+    "custo_referencia": 3.12,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 23.3376,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 819,
+    "descricao": "Cetoanálodo Valina (Alfa-cetoanalogo valina)",
+    "valor_custo": 1.56,
+    "custo_referencia": 1.56,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.9888,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 817,
+    "descricao": "Cetoanálogo leucina (Alfa-cetoanálogoleucina)",
+    "valor_custo": 3.56,
+    "custo_referencia": 3.56,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 19.5088,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 980,
+    "descricao": "Cetoanálogo Metionina",
+    "valor_custo": 1.56,
+    "custo_referencia": 1.56,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.9888,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 7,
+    "descricao": "Cetoconazol",
+    "valor_custo": 0.68404,
+    "custo_referencia": 0.7876,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.5284,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 135,
+    "descricao": "CETOPROFENO",
+    "valor_custo": 0.3,
+    "custo_referencia": 0.3054,
+    "markup": 1170.46,
+    "un_manipulacao": "mg",
+    "estoque": 3.88,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 805,
+    "descricao": "CETRIMIDA",
+    "valor_custo": 0.16457,
+    "custo_referencia": 0.16457,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.231,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 483,
+    "descricao": "Chitosan (Fibras de crustáceo)",
+    "valor_custo": 0.053,
+    "custo_referencia": 0.053,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2374,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 883,
+    "descricao": "CICLAMATO DE SODIO",
+    "valor_custo": 0.02015,
+    "custo_referencia": 0.02015,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1507,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 717,
+    "descricao": "Ciclofosfamida",
+    "valor_custo": 8.83727,
+    "custo_referencia": 8.83727,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 66.1028,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 363,
+    "descricao": "Ciclopiroxolamina",
+    "valor_custo": 4.35,
+    "custo_referencia": 5.0,
+    "markup": 175.0,
+    "un_manipulacao": "g",
+    "estoque": 13.75,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 358,
+    "descricao": "Ciclosporina",
+    "valor_custo": 8.3,
+    "custo_referencia": 8.3,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 28.884,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 8,
+    "descricao": "Cimetidina",
+    "valor_custo": 0.3116,
+    "custo_referencia": 0.49904,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.7328,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 9,
+    "descricao": "Ciprofloxacina",
+    "valor_custo": 0.365,
+    "custo_referencia": 0.365,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.7302,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 213,
+    "descricao": "Ciproheptadina",
+    "valor_custo": 0.99,
+    "custo_referencia": 0.99,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.4052,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 11,
+    "descricao": "Citrato de Potássio",
+    "valor_custo": 0.082,
+    "custo_referencia": 0.082,
+    "markup": 638.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6052,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 10,
+    "descricao": "Citrato de Sódio",
+    "valor_custo": 0.045,
+    "custo_referencia": 0.05362,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4011,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 366,
+    "descricao": "CLARITROMICINA",
+    "valor_custo": 0.54836,
+    "custo_referencia": 1.5,
+    "markup": 324.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.36,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 12,
+    "descricao": "Clavulanato de Potássio",
+    "valor_custo": 3.0812,
+    "custo_referencia": 3.0812,
+    "markup": 183.6,
+    "un_manipulacao": "mg",
+    "estoque": 8.7383,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 373,
+    "descricao": "CLAVULANATO POT + AMOX TRIH 1:4",
+    "valor_custo": 0.572,
+    "custo_referencia": 1.4,
+    "markup": 460.71,
+    "un_manipulacao": "mg",
+    "estoque": 7.85,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 770,
+    "descricao": "CLEMASTINA DILUIDA 1:10",
+    "valor_custo": 10.06852,
+    "custo_referencia": 10.06852,
+    "markup": 1080.0,
+    "un_manipulacao": "mg",
+    "estoque": 118.8085,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 588,
+    "descricao": "CLEMASTINA PURA",
+    "valor_custo": 38.84,
+    "custo_referencia": 100.6,
+    "markup": 1080.0,
+    "un_manipulacao": "mg",
+    "estoque": 1187.08,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 745,
+    "descricao": "Clembuterol (1:100)",
+    "valor_custo": 18.37,
+    "custo_referencia": 50.0,
+    "markup": 180.0,
+    "un_manipulacao": "mcg",
+    "estoque": 140.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 753,
+    "descricao": "CLEMBUTEROL DILUÍDO 1:100 (EQÜINOS)",
+    "valor_custo": 0.50944,
+    "custo_referencia": 0.50944,
+    "markup": 2700.0,
+    "un_manipulacao": "mcg",
+    "estoque": 14.2643,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 774,
+    "descricao": "CLEMBUTEROL DILUÍDO 1:1000 (CÃES E GATOS)",
+    "valor_custo": 0.05953,
+    "custo_referencia": 0.05953,
+    "markup": 2700.0,
+    "un_manipulacao": "mcg",
+    "estoque": 1.6668,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 75,
+    "descricao": "Clindamicina (HCLl)",
+    "valor_custo": 3.6124,
+    "custo_referencia": 3.6124,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 16.1836,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 961,
+    "descricao": "Clindamicina (fosfato Uso Tópico) NÃO TEM",
+    "valor_custo": 3.4004,
+    "custo_referencia": 3.4,
+    "markup": 150.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.5,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 751,
+    "descricao": "CLOBETASOL PROPIONATO",
+    "valor_custo": 9.3,
+    "custo_referencia": 9.3,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 69.564,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 558,
+    "descricao": "CLOMIPRAMINA",
+    "valor_custo": 1.33,
+    "custo_referencia": 1.7,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 12.716,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 860,
+    "descricao": "Clopidogrel",
+    "valor_custo": 0.741,
+    "custo_referencia": 0.741,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.3197,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 731,
+    "descricao": "Clorella (pó)",
+    "valor_custo": 0.2027,
+    "custo_referencia": 0.2027,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.5162,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 781,
+    "descricao": "CLORETO DE BENZALCONIO 50%",
+    "valor_custo": 0.02189,
+    "custo_referencia": 0.0219,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1638,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 798,
+    "descricao": "CLORETO DE CALCIO DIHIDRATADO",
+    "valor_custo": 0.02636,
+    "custo_referencia": 0.02636,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1972,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 875,
+    "descricao": "CLORETO DE CETIL TRIMETIL AMONIO 50%",
+    "valor_custo": 0.02434,
+    "custo_referencia": 0.02434,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1821,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 801,
+    "descricao": "CLORETO DE FERRO",
+    "valor_custo": 0.10143,
+    "custo_referencia": 0.10143,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7587,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 354,
+    "descricao": "CLORETO DE MAGNÉSIO",
+    "valor_custo": 0.01748,
+    "custo_referencia": 0.08333,
+    "markup": 324.0,
+    "un_manipulacao": "g",
+    "estoque": 0.3533,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 163,
+    "descricao": "Cloreto de Sódio",
+    "valor_custo": 0.01152,
+    "custo_referencia": 0.012,
+    "markup": 41044.9,
+    "un_manipulacao": "mg",
+    "estoque": 4.9374,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 206,
+    "descricao": "Clorexidina (Clorhexidina/Clorexidine)",
+    "valor_custo": 0.05,
+    "custo_referencia": 0.069,
+    "markup": 348.0,
+    "un_manipulacao": "%",
+    "estoque": 0.3091,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 806,
+    "descricao": "CLOROBUTANOL HEMIHIDRATADO",
+    "valor_custo": 0.161,
+    "custo_referencia": 0.161,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2043,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 283,
+    "descricao": "CLORPROPAMIDA",
+    "valor_custo": 0.055,
+    "custo_referencia": 0.1,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.748,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 245,
+    "descricao": "Clotrimazol",
+    "valor_custo": 0.58756,
+    "custo_referencia": 0.58756,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.3949,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 881,
+    "descricao": "Cobre (Bisglicinato de Cobre 20%)",
+    "valor_custo": 0.05426,
+    "custo_referencia": 0.05426,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3473,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 566,
+    "descricao": "Codeína",
+    "valor_custo": 3.3608,
+    "custo_referencia": 3.3608,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 25.1388,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 596,
+    "descricao": "Coenzima Q10",
+    "valor_custo": 1.5626,
+    "custo_referencia": 1.5626,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.0004,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 298,
+    "descricao": "Colágeno hidrolisado",
+    "valor_custo": 2.1,
+    "custo_referencia": 2.1,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 15.708,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 772,
+    "descricao": "Colágeno tipo 2",
+    "valor_custo": 1.0316,
+    "custo_referencia": 1.0316,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.7164,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 468,
+    "descricao": "Colchicina",
+    "valor_custo": 0.7,
+    "custo_referencia": 0.7,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.836,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 759,
+    "descricao": "COLCHICINA DILUÍDA 1:100",
+    "valor_custo": 0.067,
+    "custo_referencia": 50.98,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 381.3304,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1030,
+    "descricao": "Colostro",
+    "valor_custo": 5.95,
+    "custo_referencia": 5.95,
+    "markup": 643.0,
+    "un_manipulacao": "g",
+    "estoque": 44.2085,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1044,
+    "descricao": "Complexo B",
+    "valor_custo": 1.36157,
+    "custo_referencia": 1.36157,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.7383,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 740,
+    "descricao": "COMPRIMIDOS DE CLOROFILA",
+    "valor_custo": 0.15,
+    "custo_referencia": 0.24,
+    "markup": 216.0,
+    "un_manipulacao": "un",
+    "estoque": 0.7584,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 741,
+    "descricao": "COMPRIMIDOS DE CONDROITINA E GLUCOSAMINA",
+    "valor_custo": 0.30599,
+    "custo_referencia": 0.34,
+    "markup": 216.0,
+    "un_manipulacao": "un",
+    "estoque": 1.0744,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 742,
+    "descricao": "COMPRIMIDOS POLIVITAMINICO C/ FERRO",
+    "valor_custo": 0.1,
+    "custo_referencia": 0.15,
+    "markup": 129.6,
+    "un_manipulacao": "un",
+    "estoque": 0.3444,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 13,
+    "descricao": "Condroitina",
+    "valor_custo": 0.32,
+    "custo_referencia": 0.32,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.4336,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 306,
+    "descricao": "CONHAQUE DOMEQ",
+    "valor_custo": 0.0169,
+    "custo_referencia": 0.0169,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1264,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 896,
+    "descricao": "CORANTE AMARELO CREPUSCULO",
+    "valor_custo": 0.215,
+    "custo_referencia": 0.215,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.6082,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 744,
+    "descricao": "CORANTE VERMELHO",
+    "valor_custo": 0.215,
+    "custo_referencia": 0.215,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 1.6082,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 952,
+    "descricao": "Cordyceps",
+    "valor_custo": 0.29,
+    "custo_referencia": 0.29,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2992,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 889,
+    "descricao": "COSMOWAX",
+    "valor_custo": 0.03957,
+    "custo_referencia": 0.03957,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.296,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 917,
+    "descricao": "Cramberry",
+    "valor_custo": 0.187,
+    "custo_referencia": 0.187,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.0248,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 790,
+    "descricao": "CROMOGLICATO SÓDICO",
+    "valor_custo": 1.365,
+    "custo_referencia": 1.365,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 10.2102,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1015,
+    "descricao": "Curcuma longa (Curcumina)",
+    "valor_custo": 0.4611,
+    "custo_referencia": 0.4611,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.5268,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 934,
+    "descricao": "D-Mannose",
+    "valor_custo": 0.5066,
+    "custo_referencia": 0.98,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.3704,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 152,
+    "descricao": "D-Pantenol",
+    "valor_custo": 0.14,
+    "custo_referencia": 0.14,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 1.0472,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 995,
+    "descricao": "D-Ribose",
+    "valor_custo": 0.10462,
+    "custo_referencia": 0.14838,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.1099,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 619,
+    "descricao": "Deflazacort",
+    "valor_custo": 5.9,
+    "custo_referencia": 15.5,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 99.2,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 701,
+    "descricao": "DEOPLEX",
+    "valor_custo": 0.1454,
+    "custo_referencia": 0.1454,
+    "markup": 540.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.9306,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 998,
+    "descricao": "Desmopet",
+    "valor_custo": 6.3705,
+    "custo_referencia": 6.3705,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 22.1693,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 491,
+    "descricao": "Desonida",
+    "valor_custo": 27.5,
+    "custo_referencia": 27.5,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 176.0,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 614,
+    "descricao": "Dexametasona",
+    "valor_custo": 7.764,
+    "custo_referencia": 7.764,
+    "markup": 348.0,
+    "un_manipulacao": "g",
+    "estoque": 34.7827,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 815,
+    "descricao": "DEXAMETASONA BASE 1:100 (USO INTERNO)",
+    "valor_custo": 0.11026,
+    "custo_referencia": 0.11026,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8247,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 119,
+    "descricao": "DEXAMETASONA BASE USO INTERNO",
+    "valor_custo": 12.3,
+    "custo_referencia": 12.3,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 92.004,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 788,
+    "descricao": "DEXAMETASONA FOSFATO USO OFTALMICO",
+    "valor_custo": 14.32,
+    "custo_referencia": 14.32,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 107.1136,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 519,
+    "descricao": "DEXTROSE ANIDRA",
+    "valor_custo": 0.01,
+    "custo_referencia": 0.01362,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.1019,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 997,
+    "descricao": "DHA",
+    "valor_custo": 0.001,
+    "custo_referencia": 0.001,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0075,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 516,
+    "descricao": "Diacereína",
+    "valor_custo": 1.9727,
+    "custo_referencia": 1.9727,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 10.4948,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 749,
+    "descricao": "DIAMOND V XPLS",
+    "valor_custo": 0.03291,
+    "custo_referencia": 0.042,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.3142,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 559,
+    "descricao": "Diazepam",
+    "valor_custo": 0.253,
+    "custo_referencia": 0.253,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8924,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 626,
+    "descricao": "DICLAZURIL",
+    "valor_custo": 0.499,
+    "custo_referencia": 0.97,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.1604,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 709,
+    "descricao": "Diclofenaco Sódico",
+    "valor_custo": 0.05085,
+    "custo_referencia": 0.05085,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3804,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 782,
+    "descricao": "DIESTEARATO DE POLIETILENOGLICOL 6000",
+    "valor_custo": 0.04886,
+    "custo_referencia": 0.04886,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3655,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 515,
+    "descricao": "DIETILESTIBESTROL PURO",
+    "valor_custo": 5.7,
+    "custo_referencia": 36.0,
+    "markup": 1836.0,
+    "un_manipulacao": "mg",
+    "estoque": 696.96,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 77,
+    "descricao": "DILTIAZEN HCL",
+    "valor_custo": 0.2248,
+    "custo_referencia": 0.2541,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.9007,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 175,
+    "descricao": "DIMETILSULFOXIDO",
+    "valor_custo": 0.03619,
+    "custo_referencia": 0.0447,
+    "markup": 432.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2378,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 16,
+    "descricao": "Dipirona",
+    "valor_custo": 1.30081,
+    "custo_referencia": 1.30081,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.8276,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 429,
+    "descricao": "Dipirona Líquida",
+    "valor_custo": 0.79,
+    "custo_referencia": 0.79,
+    "markup": 200.0,
+    "un_manipulacao": "ml",
+    "estoque": 2.37,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 816,
+    "descricao": "Dl- alfa-cetoisoleucina de calcio",
+    "valor_custo": 1.56,
+    "custo_referencia": 1.56,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.9888,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 820,
+    "descricao": "Dl- alfa-cetoisoleucina de calcio",
+    "valor_custo": 1.547,
+    "custo_referencia": 2.9,
+    "markup": 324.0,
+    "un_manipulacao": "mg",
+    "estoque": 12.296,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 585,
+    "descricao": "DL-Metionina",
+    "valor_custo": 0.0486,
+    "custo_referencia": 0.0486,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3635,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 873,
+    "descricao": "DMSA",
+    "valor_custo": 14.5,
+    "custo_referencia": 14.5,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 108.46,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 121,
+    "descricao": "Domperidona",
+    "valor_custo": 0.82,
+    "custo_referencia": 0.82,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.1336,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 122,
+    "descricao": "Doxiciclina",
+    "valor_custo": 0.99,
+    "custo_referencia": 0.99,
+    "markup": 1080.0,
+    "un_manipulacao": "mg",
+    "estoque": 11.682,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 591,
+    "descricao": "Drieline",
+    "valor_custo": 4.0161,
+    "custo_referencia": 4.44,
+    "markup": 216.0,
+    "un_manipulacao": "g",
+    "estoque": 14.0304,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 50,
+    "descricao": "EDTA",
+    "valor_custo": 0.13713,
+    "custo_referencia": 0.13713,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.0257,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 886,
+    "descricao": "ELASTOMERO DE SILICONE 9040",
+    "valor_custo": 0.1924,
+    "custo_referencia": 0.1924,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 1.4392,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 123,
+    "descricao": "Enalapril (Maleato de Enalapril)",
+    "valor_custo": 1.3,
+    "custo_referencia": 0.09,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6732,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 256,
+    "descricao": "Enrofloxacina",
+    "valor_custo": 1.12,
+    "custo_referencia": 1.12,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.0176,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 962,
+    "descricao": "Enterococcus faecium",
+    "valor_custo": 0.999,
+    "custo_referencia": 0.999,
+    "markup": 610.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.0929,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1047,
+    "descricao": "Enxofre (líquido) Bioenxofre",
+    "valor_custo": 0.28432,
+    "custo_referencia": 0.28432,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 2.1267,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1037,
+    "descricao": "Equinácea (Echinacea)",
+    "valor_custo": 0.1,
+    "custo_referencia": 0.1,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.748,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 905,
+    "descricao": "Eritromicina",
+    "valor_custo": 0.79,
+    "custo_referencia": 0.79,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 5.9092,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 124,
+    "descricao": "ERITROMICINA ESTOLATO",
+    "valor_custo": 0.24,
+    "custo_referencia": 0.25,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.87,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 333,
+    "descricao": "ESCINA",
+    "valor_custo": 3.85,
+    "custo_referencia": 3.85,
+    "markup": 108.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.008,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 925,
+    "descricao": "Espinheira Santa",
+    "valor_custo": 0.06,
+    "custo_referencia": 0.06,
+    "markup": 300.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.24,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 721,
+    "descricao": "Espiramicina",
+    "valor_custo": 1.89,
+    "custo_referencia": 1.89,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 14.1372,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 342,
+    "descricao": "Espironolactona",
+    "valor_custo": 1.8963,
+    "custo_referencia": 1.8963,
+    "markup": 364.75,
+    "un_manipulacao": "mg",
+    "estoque": 8.8131,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 981,
+    "descricao": "Espirulina pó (Spirulina)",
+    "valor_custo": 0.0403,
+    "custo_referencia": 0.06099,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2732,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 501,
+    "descricao": "ESSENCIA ERVA DOCE - USAR À 1%",
+    "valor_custo": 0.13715,
+    "custo_referencia": 0.13715,
+    "markup": 108.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2853,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 502,
+    "descricao": "ESSENCIA MATERNIDADE - USAR À 2%",
+    "valor_custo": 0.12274,
+    "custo_referencia": 0.13385,
+    "markup": 108.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2784,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 503,
+    "descricao": "ESSENCIA PANDA - USAR À 1%",
+    "valor_custo": 0.13971,
+    "custo_referencia": 0.14238,
+    "markup": 108.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2962,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 200,
+    "descricao": "Estearato de Magnésio",
+    "valor_custo": 0.0796,
+    "custo_referencia": 0.0796,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5954,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 931,
+    "descricao": "Estriol micro",
+    "valor_custo": 29.9,
+    "custo_referencia": 29.9,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 223.652,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 645,
+    "descricao": "ETER GLICERIL GUAIACOL",
+    "valor_custo": 0.10353,
+    "custo_referencia": 0.10353,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.7744,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 335,
+    "descricao": "EUCALIPTOL",
+    "valor_custo": 0.10847,
+    "custo_referencia": 0.16,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.1968,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 262,
+    "descricao": "EUMULGIN L",
+    "valor_custo": 0.07184,
+    "custo_referencia": 0.07424,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5553,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 999,
+    "descricao": "Exsynutriment",
+    "valor_custo": 1.0,
+    "custo_referencia": 1.0,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 7.48,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 427,
+    "descricao": "Ext glicólico de Aveia",
+    "valor_custo": 0.026,
+    "custo_referencia": 0.0275,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2057,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 900,
+    "descricao": "Extrato Glicólico Camomila",
+    "valor_custo": 0.0438,
+    "custo_referencia": 0.0438,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1962,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 125,
+    "descricao": "Extrato Glicólico de Aloe Vera",
+    "valor_custo": 0.0263,
+    "custo_referencia": 0.0263,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1178,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1046,
+    "descricao": "Extrato Glicólico de Arnica",
+    "valor_custo": 0.028,
+    "custo_referencia": 0.028,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.2094,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 126,
+    "descricao": "Extrato Glicólico de Calêndula",
+    "valor_custo": 0.0237,
+    "custo_referencia": 0.0237,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1773,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 880,
+    "descricao": "Extrato Glicolico de Hamamelis",
+    "valor_custo": 0.042,
+    "custo_referencia": 0.042,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3142,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1009,
+    "descricao": "EXTRATO SECO DE MARACUJA",
+    "valor_custo": 0.071,
+    "custo_referencia": 0.071,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5311,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1079,
+    "descricao": "Ezetimiba",
+    "valor_custo": 5.0148,
+    "custo_referencia": 5.0148,
+    "markup": 100.0,
+    "un_manipulacao": "mg",
+    "estoque": 10.0296,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 19,
+    "descricao": "Famotidina",
+    "valor_custo": 0.69,
+    "custo_referencia": 0.69,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.0912,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 854,
+    "descricao": "FANCICLOVIR",
+    "valor_custo": 10.5508,
+    "custo_referencia": 10.5508,
+    "markup": 300.0,
+    "un_manipulacao": "mg",
+    "estoque": 42.2032,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1053,
+    "descricao": "Farinha de Banana Verde",
+    "valor_custo": 0.0375,
+    "custo_referencia": 0.0375,
+    "markup": 300.0,
+    "un_manipulacao": "g",
+    "estoque": 0.15,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 311,
+    "descricao": "Farinha de Linhaça",
+    "valor_custo": 0.026,
+    "custo_referencia": 0.026,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.1945,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 827,
+    "descricao": "FASE AQUOSA P/MICROEMULSAO",
+    "valor_custo": 0.112,
+    "custo_referencia": 0.112,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.8378,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 826,
+    "descricao": "FASE OLEOSA P/MICROEMULSAO",
+    "valor_custo": 0.2325,
+    "custo_referencia": 0.2325,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 1.7391,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 438,
+    "descricao": "Febantel",
+    "valor_custo": 1.98,
+    "custo_referencia": 1.98,
+    "markup": 324.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.3952,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 690,
+    "descricao": "FEBENDAZOL",
+    "valor_custo": 0.16685,
+    "custo_referencia": 0.16685,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.248,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 922,
+    "descricao": "Fembendazol",
+    "valor_custo": 1.55,
+    "custo_referencia": 1.55,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.944,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 51,
+    "descricao": "FENILBUTASONA",
+    "valor_custo": 0.18,
+    "custo_referencia": 0.185,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3838,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 783,
+    "descricao": "FENILEFRINA CLORIDRATO",
+    "valor_custo": 1.2054,
+    "custo_referencia": 1.2054,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 9.0164,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1055,
+    "descricao": "Fenobarbital",
+    "valor_custo": 1.22642,
+    "custo_referencia": 0.25,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.87,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 921,
+    "descricao": "FENOFIBRATO",
+    "valor_custo": 0.9052,
+    "custo_referencia": 0.9052,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 6.7709,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 128,
+    "descricao": "Ferro Quelato",
+    "valor_custo": 0.09362,
+    "custo_referencia": 1.1,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.228,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 797,
+    "descricao": "Filme Orodispersível",
+    "valor_custo": 4.6,
+    "custo_referencia": 4.6,
+    "markup": 448.0,
+    "un_manipulacao": "g",
+    "estoque": 25.208,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 573,
+    "descricao": "FINASTERIDE",
+    "valor_custo": 7.9,
+    "custo_referencia": 10.9,
+    "markup": 972.0,
+    "un_manipulacao": "mg",
+    "estoque": 116.848,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 129,
+    "descricao": "FIPRONIL",
+    "valor_custo": 0.807,
+    "custo_referencia": 2.6,
+    "markup": 918.0,
+    "un_manipulacao": "mg",
+    "estoque": 26.468,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 923,
+    "descricao": "FIROCOXIBE",
+    "valor_custo": 33.5,
+    "custo_referencia": 33.5,
+    "markup": 1.0,
+    "un_manipulacao": "mg",
+    "estoque": 33.835,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 926,
+    "descricao": "FITOESFINGOSINE",
+    "valor_custo": 1.68,
+    "custo_referencia": 1.68,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 12.5664,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 20,
+    "descricao": "Fluconazol",
+    "valor_custo": 8.47,
+    "custo_referencia": 8.47,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 46.4156,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 872,
+    "descricao": "Fludrocortisona",
+    "valor_custo": 85.0,
+    "custo_referencia": 85.0,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 635.8,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 718,
+    "descricao": "FLUNIXIN MEGLUMINE",
+    "valor_custo": 0.767,
+    "custo_referencia": 1.4,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 10.472,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 428,
+    "descricao": "Fluocinolona Acetonido",
+    "valor_custo": 61.3,
+    "custo_referencia": 61.3,
+    "markup": 51.75,
+    "un_manipulacao": "mg",
+    "estoque": 93.0197,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 813,
+    "descricao": "FLUORESCEINA",
+    "valor_custo": 1.04382,
+    "custo_referencia": 1.69,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 12.6412,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 561,
+    "descricao": "Fluoxetina",
+    "valor_custo": 0.99,
+    "custo_referencia": 0.99,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.4152,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 486,
+    "descricao": "FOS (fruto-oligossacarídeos)",
+    "valor_custo": 0.0677,
+    "custo_referencia": 0.0677,
+    "markup": 324.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.287,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 996,
+    "descricao": "FOSFATIDILCOLINA",
+    "valor_custo": 0.36272,
+    "custo_referencia": 0.36272,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 2.7131,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1006,
+    "descricao": "FOSFATIDILSERINA",
+    "valor_custo": 2.1,
+    "custo_referencia": 2.1,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 15.708,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 239,
+    "descricao": "FOSFATO DE CÁLCIO DIBASICO",
+    "valor_custo": 0.04407,
+    "custo_referencia": 0.04407,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3296,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 799,
+    "descricao": "FOSFATO DE SODIO BIBASICO",
+    "valor_custo": 0.02524,
+    "custo_referencia": 0.02524,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1888,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 517,
+    "descricao": "FOSFATO SODIO MONOBASICO",
+    "valor_custo": 0.02843,
+    "custo_referencia": 0.0338,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2528,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 949,
+    "descricao": "FOSFATO TRICALCICO",
+    "valor_custo": 0.031,
+    "custo_referencia": 0.031,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2319,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1038,
+    "descricao": "Fosfolipídeo de caviar (FC Pet)",
+    "valor_custo": 10.26,
+    "custo_referencia": 10.26,
+    "markup": 400.0,
+    "un_manipulacao": "mg",
+    "estoque": 51.3,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 338,
+    "descricao": "Fósforo quelato",
+    "valor_custo": 0.04607,
+    "custo_referencia": 3.31,
+    "markup": 100.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.62,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 22,
+    "descricao": "Furosemida",
+    "valor_custo": 0.50376,
+    "custo_referencia": 0.50376,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.7606,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 892,
+    "descricao": "GABA - ACIDO GAMA AMINOBUTIRICO",
+    "valor_custo": 0.08,
+    "custo_referencia": 0.08,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5984,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 665,
+    "descricao": "Gabapentina",
+    "valor_custo": 0.31,
+    "custo_referencia": 0.31,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.3188,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 640,
+    "descricao": "Gama Orizanol (Gamma Oryzanol)",
+    "valor_custo": 0.57,
+    "custo_referencia": 0.57,
+    "markup": 216.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8012,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1016,
+    "descricao": "Ganoderma lucidum",
+    "valor_custo": 1.0473,
+    "custo_referencia": 1.0473,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.8338,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 664,
+    "descricao": "Garcínea camboja (Extrato Seco)",
+    "valor_custo": 0.0984,
+    "custo_referencia": 0.0984,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5235,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 476,
+    "descricao": "GEL AURICULAR",
+    "valor_custo": 0.0156,
+    "custo_referencia": 0.0156,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1167,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 839,
+    "descricao": "GEL TRANSDERMICO (BASE PRONTA)",
+    "valor_custo": 0.2871,
+    "custo_referencia": 0.30766,
+    "markup": 432.0,
+    "un_manipulacao": "g",
+    "estoque": 1.6368,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 78,
+    "descricao": "GELATINA PO",
+    "valor_custo": 0.1,
+    "custo_referencia": 0.1,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.748,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 699,
+    "descricao": "GENAPOL LT",
+    "valor_custo": 0.04147,
+    "custo_referencia": 0.1092,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.8168,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 592,
+    "descricao": "GENFIBROZILA",
+    "valor_custo": 0.58804,
+    "custo_referencia": 0.14501,
+    "markup": 864.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3979,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1000,
+    "descricao": "GENGIBRE",
+    "valor_custo": 0.5,
+    "custo_referencia": 0.5,
+    "markup": 1.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.505,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 130,
+    "descricao": "Gentamicina Sulfato",
+    "valor_custo": 1.432,
+    "custo_referencia": 1.432,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 10.7114,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 104,
+    "descricao": "GERMALL 115",
+    "valor_custo": 0.09436,
+    "custo_referencia": 0.16,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.1968,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 299,
+    "descricao": "Ginkgo Biloba",
+    "valor_custo": 0.149,
+    "custo_referencia": 0.149,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.1145,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 646,
+    "descricao": "Ginseng Siberiano Extrato seco",
+    "valor_custo": 0.15,
+    "custo_referencia": 0.15,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.122,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 79,
+    "descricao": "Glicerina Vegetal (bi-destilada)",
+    "valor_custo": 0.0189,
+    "custo_referencia": 0.014,
+    "markup": 348.0,
+    "un_manipulacao": "g",
+    "estoque": 0.0627,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 947,
+    "descricao": "Glicina",
+    "valor_custo": 0.0713,
+    "custo_referencia": 0.0713,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5333,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 414,
+    "descricao": "GLICOSE",
+    "valor_custo": 0.008,
+    "custo_referencia": 0.03735,
+    "markup": 432.0,
+    "un_manipulacao": "g",
+    "estoque": 0.1987,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 829,
+    "descricao": "GLOBULOS INERTES N 5",
+    "valor_custo": 0.05202,
+    "custo_referencia": 0.06329,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.4734,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 853,
+    "descricao": "GLUCAMATE LT",
+    "valor_custo": 0.215,
+    "custo_referencia": 0.215,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 1.6082,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 23,
+    "descricao": "Glucosamina",
+    "valor_custo": 0.04674,
+    "custo_referencia": 0.04674,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3496,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 362,
+    "descricao": "GLUTAMATO MONOSSODICO",
+    "valor_custo": 0.00981,
+    "custo_referencia": 0.04,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.2992,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1036,
+    "descricao": "Glycoxilpet",
+    "valor_custo": 6.9506,
+    "custo_referencia": 6.9506,
+    "markup": 300.0,
+    "un_manipulacao": "mg",
+    "estoque": 27.8024,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 533,
+    "descricao": "GOMA GUAR",
+    "valor_custo": 0.08045,
+    "custo_referencia": 0.08045,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6018,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1061,
+    "descricao": "Goma Xantana",
+    "valor_custo": 0.175,
+    "custo_referencia": 0.175,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 1.309,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 131,
+    "descricao": "GRISEOFULVINA MICRONIZADA",
+    "valor_custo": 0.87,
+    "custo_referencia": 0.87,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.6284,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 697,
+    "descricao": "GUAYACOL",
+    "valor_custo": 0.045,
+    "custo_referencia": 0.045,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3366,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 932,
+    "descricao": "Hamamélis extrato fluido",
+    "valor_custo": 0.069,
+    "custo_referencia": 0.069,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.5161,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 147,
+    "descricao": "HIALURONIDASE",
+    "valor_custo": 43.346,
+    "custo_referencia": 46.8,
+    "markup": 432.0,
+    "un_manipulacao": "utr",
+    "estoque": 248.976,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 847,
+    "descricao": "Hidralazina HCL",
+    "valor_custo": 5.085,
+    "custo_referencia": 5.085,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 38.0358,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 634,
+    "descricao": "HIDROCLOROTIAZIDA",
+    "valor_custo": 0.26,
+    "custo_referencia": 0.26,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.9448,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 24,
+    "descricao": "Hidrocortisona Acetato",
+    "valor_custo": 3.2,
+    "custo_referencia": 3.2,
+    "markup": 250.0,
+    "un_manipulacao": "mg",
+    "estoque": 11.2,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 586,
+    "descricao": "Hidroviton",
+    "valor_custo": 0.52,
+    "custo_referencia": 0.52102,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.3342,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 207,
+    "descricao": "Hidróxido de Alumínio",
+    "valor_custo": 0.04281,
+    "custo_referencia": 0.04281,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3202,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 107,
+    "descricao": "HIDROXIDO DE SÓDIO",
+    "valor_custo": 0.01823,
+    "custo_referencia": 0.0271,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2027,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 272,
+    "descricao": "HIDROXIPROPIL METIL CELULOSE",
+    "valor_custo": 0.09345,
+    "custo_referencia": 0.43048,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.22,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 359,
+    "descricao": "HIDROXIZINE",
+    "valor_custo": 0.215,
+    "custo_referencia": 0.245,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8326,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 498,
+    "descricao": "HIOSCINA N-BUTIL BROMETO",
+    "valor_custo": 47.5,
+    "custo_referencia": 48.75,
+    "markup": 69.23,
+    "un_manipulacao": "mg",
+    "estoque": 82.5,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 951,
+    "descricao": "Hipoclorito de sódio",
+    "valor_custo": 0.026,
+    "custo_referencia": 0.026,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1945,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 807,
+    "descricao": "HOMATROPINA METILBROMETO",
+    "valor_custo": 23.9,
+    "custo_referencia": 23.9,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 178.772,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 970,
+    "descricao": "HYGEAPHOS",
+    "valor_custo": 1.486,
+    "custo_referencia": 1.52975,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 11.4425,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 669,
+    "descricao": "IBUPROFENO",
+    "valor_custo": 0.044,
+    "custo_referencia": 0.044,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3291,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1058,
+    "descricao": "Imuno Tf Fator de transferencia",
+    "valor_custo": 26.25,
+    "custo_referencia": 26.25,
+    "markup": 300.0,
+    "un_manipulacao": "mg",
+    "estoque": 105.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 268,
+    "descricao": "inativo",
+    "valor_custo": 0.04604,
+    "custo_referencia": 0.04604,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3444,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 848,
+    "descricao": "INDOL-3-CARBINOL",
+    "valor_custo": 0.999,
+    "custo_referencia": 0.999,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 7.4725,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 789,
+    "descricao": "INDOMETACINA",
+    "valor_custo": 0.115,
+    "custo_referencia": 0.115,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8602,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 849,
+    "descricao": "INDOXICARBE",
+    "valor_custo": 1.69,
+    "custo_referencia": 4.0,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 29.92,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 842,
+    "descricao": "Inositol",
+    "valor_custo": 0.33,
+    "custo_referencia": 0.33,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.4684,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 693,
+    "descricao": "INTERFERON A2 DILUIDO (3000ui/ml)",
+    "valor_custo": 0.10434,
+    "custo_referencia": 0.10434,
+    "markup": 10800.0,
+    "un_manipulacao": "ui",
+    "estoque": 11.3731,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 132,
+    "descricao": "IODETO DE POTASSIO",
+    "valor_custo": 0.548,
+    "custo_referencia": 0.5691,
+    "markup": 216.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.7984,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 495,
+    "descricao": "Iodo Quelado",
+    "valor_custo": 0.074,
+    "custo_referencia": 0.12,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8976,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 133,
+    "descricao": "IODO RESSUBLIMADO",
+    "valor_custo": 0.49525,
+    "custo_referencia": 0.49525,
+    "markup": 216.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.565,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 494,
+    "descricao": "IOIMBINA",
+    "valor_custo": 4.77,
+    "custo_referencia": 4.77,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 35.6796,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 810,
+    "descricao": "IOIMBINA CLORIDRATO",
+    "valor_custo": 3.0,
+    "custo_referencia": 3.0,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 22.44,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 134,
+    "descricao": "Irgasan DP-300",
+    "valor_custo": 0.34,
+    "custo_referencia": 0.34,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.5232,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 643,
+    "descricao": "Isoflavona 40%",
+    "valor_custo": 0.51136,
+    "custo_referencia": 0.51136,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.2727,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 688,
+    "descricao": "ISONIAZIDA",
+    "valor_custo": 0.13014,
+    "custo_referencia": 0.13296,
+    "markup": 162.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3484,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 377,
+    "descricao": "ISOXUPRINE",
+    "valor_custo": 3.19,
+    "custo_referencia": 3.19,
+    "markup": 270.0,
+    "un_manipulacao": "g",
+    "estoque": 11.803,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 25,
+    "descricao": "ITRACONAZOL",
+    "valor_custo": 0.48,
+    "custo_referencia": 0.52,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.8896,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 868,
+    "descricao": "Itraconazol pellets",
+    "valor_custo": 0.4668,
+    "custo_referencia": 0.4668,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.0249,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 651,
+    "descricao": "Ivermectina pura",
+    "valor_custo": 1.6384,
+    "custo_referencia": 1.6384,
+    "markup": 1080.0,
+    "un_manipulacao": "mg",
+    "estoque": 19.3331,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 879,
+    "descricao": "Jaborandi extrato glicólico",
+    "valor_custo": 0.026,
+    "custo_referencia": 0.026,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1945,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 431,
+    "descricao": "Kawa-Kawa extrato seco",
+    "valor_custo": 0.95,
+    "custo_referencia": 0.95,
+    "markup": 458.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.301,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 73,
+    "descricao": "L-Carnitina (Levocarnitina)",
+    "valor_custo": 0.1971,
+    "custo_referencia": 0.1971,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.883,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 959,
+    "descricao": "L-Carnosina",
+    "valor_custo": 2.25,
+    "custo_referencia": 3.39,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 25.3572,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 434,
+    "descricao": "L-Cisteína",
+    "valor_custo": 0.129,
+    "custo_referencia": 0.129,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.9649,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 994,
+    "descricao": "L-Cistina",
+    "valor_custo": 0.19,
+    "custo_referencia": 0.19,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.4212,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1023,
+    "descricao": "L-Citrulina (Citrulina)",
+    "valor_custo": 0.45,
+    "custo_referencia": 0.45,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.366,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 884,
+    "descricao": "L-Fenilalanina (Fenilalanina)",
+    "valor_custo": 0.045,
+    "custo_referencia": 0.12,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8976,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 336,
+    "descricao": "L-Glutamina",
+    "valor_custo": 0.0622,
+    "custo_referencia": 0.0622,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4653,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 435,
+    "descricao": "L-Histidina",
+    "valor_custo": 0.41456,
+    "custo_referencia": 0.41456,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.1009,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 728,
+    "descricao": "L-Isoleucina (Isoleucina)",
+    "valor_custo": 0.13,
+    "custo_referencia": 0.26,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.9448,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 729,
+    "descricao": "L-Leucina",
+    "valor_custo": 0.115,
+    "custo_referencia": 0.15,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.122,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 27,
+    "descricao": "L-Lisina",
+    "valor_custo": 0.046,
+    "custo_referencia": 0.046,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3441,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 302,
+    "descricao": "L-Prolina",
+    "valor_custo": 0.148,
+    "custo_referencia": 0.21184,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.5846,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1054,
+    "descricao": "L-Theanine (Teanina)",
+    "valor_custo": 0.26004,
+    "custo_referencia": 0.26004,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.9451,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 864,
+    "descricao": "L-Threonine (Treonina)",
+    "valor_custo": 0.34,
+    "custo_referencia": 0.34,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.5432,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 814,
+    "descricao": "L-Tirosina (Tirosina)",
+    "valor_custo": 0.12804,
+    "custo_referencia": 0.12804,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.9577,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 727,
+    "descricao": "L-Valina",
+    "valor_custo": 0.072,
+    "custo_referencia": 0.099,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7405,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 26,
+    "descricao": "LACTATO DE AMONIO",
+    "valor_custo": 0.03441,
+    "custo_referencia": 0.04311,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3225,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 850,
+    "descricao": "LACTIL",
+    "valor_custo": 0.6712,
+    "custo_referencia": 0.6712,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 5.0206,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 249,
+    "descricao": "Lactobacillus acidophilus",
+    "valor_custo": 0.78,
+    "custo_referencia": 0.78,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.8344,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 247,
+    "descricao": "Lactobacillus Bifidum",
+    "valor_custo": 1.69,
+    "custo_referencia": 1.69,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 12.6412,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 966,
+    "descricao": "LACTOBACILLUS BULGARICUS",
+    "valor_custo": 4.15,
+    "custo_referencia": 4.15,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 31.042,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1035,
+    "descricao": "Lactobacillus Casei",
+    "valor_custo": 0.51,
+    "custo_referencia": 0.51,
+    "markup": 648.0,
+    "un_manipulacao": "ufc",
+    "estoque": 3.8148,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 968,
+    "descricao": "LACTOBACILLUS GASSERI",
+    "valor_custo": 6.4089,
+    "custo_referencia": 6.4089,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 47.9386,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 956,
+    "descricao": "LACTOBACILLUS HELVETICUS",
+    "valor_custo": 5.2,
+    "custo_referencia": 5.2,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 38.896,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 937,
+    "descricao": "LACTOBACILLUS JOHNSONII",
+    "valor_custo": 3.9,
+    "custo_referencia": 3.9,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 29.172,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 938,
+    "descricao": "LACTOBACILLUS PARACASEI",
+    "valor_custo": 2.45,
+    "custo_referencia": 2.45,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 18.326,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 939,
+    "descricao": "Lactobacillus plantarum",
+    "valor_custo": 2.45,
+    "custo_referencia": 2.45,
+    "markup": 438.0,
+    "un_manipulacao": "mg",
+    "estoque": 13.181,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 964,
+    "descricao": "LACTOBACILLUS REUTERI",
+    "valor_custo": 1.7243,
+    "custo_referencia": 1.7243,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 12.8978,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 940,
+    "descricao": "Lactobacillus rhamnosus",
+    "valor_custo": 0.45,
+    "custo_referencia": 0.45,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.366,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1029,
+    "descricao": "Lactobacilus faecium",
+    "valor_custo": 0.915,
+    "custo_referencia": 0.915,
+    "markup": 648.0,
+    "un_manipulacao": "ufc",
+    "estoque": 6.8442,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 990,
+    "descricao": "Lactoferrina",
+    "valor_custo": 11.2835,
+    "custo_referencia": 11.2835,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 50.5501,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 52,
+    "descricao": "LACTOSE",
+    "valor_custo": 0.01694,
+    "custo_referencia": 0.01694,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1267,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 258,
+    "descricao": "LANETTE N",
+    "valor_custo": 0.06001,
+    "custo_referencia": 0.06001,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4489,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 136,
+    "descricao": "LANOLINA ANIDRA",
+    "valor_custo": 0.07506,
+    "custo_referencia": 0.07742,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5791,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 411,
+    "descricao": "LANSOPRAZOL",
+    "valor_custo": 0.08,
+    "custo_referencia": 0.2134,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 1.5962,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 863,
+    "descricao": "LATANOPROSTA",
+    "valor_custo": 83556.0,
+    "custo_referencia": 83556.0,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 624998.88,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 876,
+    "descricao": "LAURIL ETER SULFOSSUCCINATO SODIO",
+    "valor_custo": 0.02,
+    "custo_referencia": 0.02678,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2003,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 290,
+    "descricao": "LAURIL SULFATO DE SÓDIO",
+    "valor_custo": 0.15,
+    "custo_referencia": 0.15,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.122,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 580,
+    "descricao": "LCD",
+    "valor_custo": 0.01906,
+    "custo_referencia": 0.05152,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3854,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 58,
+    "descricao": "LECITINA LIQUIDA",
+    "valor_custo": 0.1854,
+    "custo_referencia": 0.14,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.0472,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1081,
+    "descricao": "Leflunomina",
+    "valor_custo": 1.75,
+    "custo_referencia": 1.75,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.84,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 289,
+    "descricao": "LEVAMISOL HCL",
+    "valor_custo": 0.09567,
+    "custo_referencia": 0.98,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.3304,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1003,
+    "descricao": "Levedura de Cerveja",
+    "valor_custo": 0.021,
+    "custo_referencia": 0.021,
+    "markup": 1000.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.231,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 594,
+    "descricao": "LEVOFLOXACINA",
+    "valor_custo": 0.535,
+    "custo_referencia": 0.605,
+    "markup": 2379.34,
+    "un_manipulacao": "mg",
+    "estoque": 15.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1062,
+    "descricao": "Levofloxacino",
+    "valor_custo": 14.25714,
+    "custo_referencia": 14.25714,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 106.6434,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 648,
+    "descricao": "LEVOTIROXINA SÓDICA DILUIDA 1:100",
+    "valor_custo": 57.0,
+    "custo_referencia": 57.0,
+    "markup": -43.86,
+    "un_manipulacao": "mcg",
+    "estoque": 32.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 91,
+    "descricao": "Levotiroxina T4",
+    "valor_custo": 40.0,
+    "custo_referencia": 40.0,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 299.2,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 595,
+    "descricao": "LICOPENO (Extrato de Tomate)",
+    "valor_custo": 2.5,
+    "custo_referencia": 2.5,
+    "markup": 243.0,
+    "un_manipulacao": "mg",
+    "estoque": 8.575,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 28,
+    "descricao": "Lidocaína",
+    "valor_custo": 0.30634,
+    "custo_referencia": 0.3567,
+    "markup": 1582.09,
+    "un_manipulacao": "mg",
+    "estoque": 6.0,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1026,
+    "descricao": "Lipase",
+    "valor_custo": 0.407,
+    "custo_referencia": 0.407,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.0444,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 589,
+    "descricao": "Lisinopril",
+    "valor_custo": 3.12,
+    "custo_referencia": 3.12,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 23.3376,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 862,
+    "descricao": "LOMUSTINA",
+    "valor_custo": 4.9,
+    "custo_referencia": 14.0,
+    "markup": 1944.0,
+    "un_manipulacao": "mg",
+    "estoque": 286.16,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 885,
+    "descricao": "LOSARTAN POTASSICO",
+    "valor_custo": 0.00039,
+    "custo_referencia": 0.00039,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0029,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 760,
+    "descricao": "LUFENURON",
+    "valor_custo": 2.5,
+    "custo_referencia": 2.5,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 18.7,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 737,
+    "descricao": "Luteina",
+    "valor_custo": 0.58312,
+    "custo_referencia": 0.58312,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.3617,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 828,
+    "descricao": "MACKADET EQ 70",
+    "valor_custo": 0.02586,
+    "custo_referencia": 0.02586,
+    "markup": 540.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1655,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 304,
+    "descricao": "Magnésio",
+    "valor_custo": 0.3185,
+    "custo_referencia": 0.3185,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.4269,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1017,
+    "descricao": "Magnésio (Malato de Mg)",
+    "valor_custo": 0.10958,
+    "custo_referencia": 1.0,
+    "markup": 500.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1040,
+    "descricao": "Maltodextrina",
+    "valor_custo": 0.45,
+    "custo_referencia": 0.45,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.366,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 635,
+    "descricao": "Malva extrato fluido",
+    "valor_custo": 0.04037,
+    "custo_referencia": 0.04037,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.302,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 297,
+    "descricao": "Manganês",
+    "valor_custo": 0.07694,
+    "custo_referencia": 0.07694,
+    "markup": 350.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3462,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 238,
+    "descricao": "MANITOL",
+    "valor_custo": 0.058,
+    "custo_referencia": 0.075,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.561,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 955,
+    "descricao": "MARBOFLOXACINO",
+    "valor_custo": 19.9,
+    "custo_referencia": 19.9,
+    "markup": 13.82,
+    "un_manipulacao": "mg",
+    "estoque": 22.65,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 29,
+    "descricao": "MEBENDAZOL",
+    "valor_custo": 0.16,
+    "custo_referencia": 0.16,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.1968,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 716,
+    "descricao": "MEL DE JATAI",
+    "valor_custo": 0.05,
+    "custo_referencia": 0.05,
+    "markup": 432.0,
+    "un_manipulacao": "g",
+    "estoque": 0.266,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 355,
+    "descricao": "MELADO DE CANA",
+    "valor_custo": 0.00536,
+    "custo_referencia": 0.01233,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0922,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 767,
+    "descricao": "Melatonina",
+    "valor_custo": 1.2,
+    "custo_referencia": 1.2,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.776,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 629,
+    "descricao": "Melissa (Extrato Seco)",
+    "valor_custo": 0.06,
+    "custo_referencia": 0.123,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.92,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 550,
+    "descricao": "Melissa (Tintura)",
+    "valor_custo": 0.01471,
+    "custo_referencia": 0.123,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.92,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 649,
+    "descricao": "Meloxican",
+    "valor_custo": 0.63,
+    "custo_referencia": 0.63,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.8224,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 370,
+    "descricao": "MELSCREEN BLACK",
+    "valor_custo": 0.18971,
+    "custo_referencia": 0.247,
+    "markup": 324.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.0473,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 168,
+    "descricao": "Mentol Cristal USP",
+    "valor_custo": 0.3,
+    "custo_referencia": 0.3,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.244,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 726,
+    "descricao": "Mesalazina",
+    "valor_custo": 0.3695,
+    "custo_referencia": 0.44,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.2912,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 169,
+    "descricao": "METABISSULFITO DE SODIO",
+    "valor_custo": 0.03034,
+    "custo_referencia": 0.0317,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2371,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 758,
+    "descricao": "METFORMINA",
+    "valor_custo": 0.02509,
+    "custo_referencia": 0.02509,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1877,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 611,
+    "descricao": "METIL TESTOSTERONA",
+    "valor_custo": 3.35,
+    "custo_referencia": 3.8,
+    "markup": 432.0,
+    "un_manipulacao": "g",
+    "estoque": 20.216,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1022,
+    "descricao": "Metilfolato (Ácido Fólico e B9)",
+    "valor_custo": 0.39,
+    "custo_referencia": 0.39,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 2.9172,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 30,
+    "descricao": "Metimazol",
+    "valor_custo": 4.4,
+    "custo_referencia": 4.4,
+    "markup": 848.0,
+    "un_manipulacao": "mg",
+    "estoque": 41.712,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 822,
+    "descricao": "METOCARBAMOL",
+    "valor_custo": 0.55,
+    "custo_referencia": 1.5,
+    "markup": 280.8,
+    "un_manipulacao": "mg",
+    "estoque": 5.712,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 137,
+    "descricao": "METOCLOPRAMIDA HCL",
+    "valor_custo": 0.8264,
+    "custo_referencia": 0.8264,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.1815,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 654,
+    "descricao": "METOTREXATE",
+    "valor_custo": 52.5,
+    "custo_referencia": 52.5,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 336.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 287,
+    "descricao": "Metoxinamato de octila",
+    "valor_custo": 0.29952,
+    "custo_referencia": 0.29952,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3418,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 341,
+    "descricao": "Metronidazol",
+    "valor_custo": 0.135,
+    "custo_referencia": 0.135,
+    "markup": 3000.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.185,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 903,
+    "descricao": "MICOFENOLATO DE MOFETILA",
+    "valor_custo": 6.0,
+    "custo_referencia": 6.0,
+    "markup": 83.33,
+    "un_manipulacao": "mg",
+    "estoque": 11.0,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 906,
+    "descricao": "Miconazol",
+    "valor_custo": 0.58004,
+    "custo_referencia": 0.58004,
+    "markup": 298.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.3086,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 31,
+    "descricao": "MICONAZOL",
+    "valor_custo": 0.56,
+    "custo_referencia": 0.5962,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.4596,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1049,
+    "descricao": "Milbemicina Oxima",
+    "valor_custo": 490.0,
+    "custo_referencia": 490.0,
+    "markup": 200.0,
+    "un_manipulacao": "mg",
+    "estoque": 1470.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 477,
+    "descricao": "MINOXIDIL SULFATO",
+    "valor_custo": 1.4982,
+    "custo_referencia": 2.4316,
+    "markup": 324.0,
+    "un_manipulacao": "g",
+    "estoque": 10.31,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 877,
+    "descricao": "MIRISTATO DE ISOPROPILA",
+    "valor_custo": 0.03,
+    "custo_referencia": 0.03,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2244,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 845,
+    "descricao": "Mirtazapina (P.344)",
+    "valor_custo": 5.16,
+    "custo_referencia": 5.16,
+    "markup": 1284.62,
+    "un_manipulacao": "mg",
+    "estoque": 71.4462,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 570,
+    "descricao": "MITOTANO",
+    "valor_custo": 23.9,
+    "custo_referencia": 23.9,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 127.148,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 960,
+    "descricao": "Mometasona Furoato",
+    "valor_custo": 15.0,
+    "custo_referencia": 15.0,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 67.2,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 148,
+    "descricao": "MONOESTEARATO DE GLICERILA",
+    "valor_custo": 0.01139,
+    "custo_referencia": 0.01139,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0852,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1004,
+    "descricao": "MOS (Mananas Frações Ativas)",
+    "valor_custo": 0.35,
+    "custo_referencia": 0.35,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.618,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 852,
+    "descricao": "MOXIFLOXACINO HCL",
+    "valor_custo": 3.72,
+    "custo_referencia": 7.0,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 44.8,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 636,
+    "descricao": "MSM",
+    "valor_custo": 0.10498,
+    "custo_referencia": 0.10498,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5753,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 975,
+    "descricao": "Mulungu",
+    "valor_custo": 0.047,
+    "custo_referencia": 0.065,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4862,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 908,
+    "descricao": "Mupirocina",
+    "valor_custo": 16.9,
+    "custo_referencia": 16.9,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 58.812,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 963,
+    "descricao": "Mupirocina",
+    "valor_custo": 15.8,
+    "custo_referencia": 16.9,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 58.812,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1051,
+    "descricao": "N-Acetil-D-Glucosamina",
+    "valor_custo": 0.15005,
+    "custo_referencia": 0.8,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.984,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 950,
+    "descricao": "NALTREXONA",
+    "valor_custo": 84.0,
+    "custo_referencia": 84.0,
+    "markup": 614.29,
+    "un_manipulacao": "mg",
+    "estoque": 600.0,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 973,
+    "descricao": "NANOVET HYDRATE",
+    "valor_custo": 0.525,
+    "custo_referencia": 0.525,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 3.927,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 32,
+    "descricao": "Neomicina",
+    "valor_custo": 0.0877,
+    "custo_referencia": 0.09972,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7459,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 965,
+    "descricao": "NIACINA - VITAMINA B3",
+    "valor_custo": 0.16278,
+    "custo_referencia": 0.16278,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2176,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 194,
+    "descricao": "NIMESULIDE MICRONIZADA",
+    "valor_custo": 0.2,
+    "custo_referencia": 0.2,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.496,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 102,
+    "descricao": "NIPAGIM",
+    "valor_custo": 0.033,
+    "custo_referencia": 0.0385,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.288,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 103,
+    "descricao": "NIPAZOL",
+    "valor_custo": 0.034,
+    "custo_referencia": 0.039,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2917,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 244,
+    "descricao": "NISTATINA",
+    "valor_custo": 0.82,
+    "custo_referencia": 0.99,
+    "markup": 648.0,
+    "un_manipulacao": "ui",
+    "estoque": 7.4052,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 761,
+    "descricao": "Nitempiram",
+    "valor_custo": 3.45,
+    "custo_referencia": 3.45,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 25.806,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 764,
+    "descricao": "NITEMPIRAM DILUIDO 1:10",
+    "valor_custo": 0.34454,
+    "custo_referencia": 0.34454,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.2051,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 138,
+    "descricao": "Norfloxacina",
+    "valor_custo": 0.3571,
+    "custo_referencia": 0.3571,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.6711,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 707,
+    "descricao": "NUPRO",
+    "valor_custo": 0.00773,
+    "custo_referencia": 0.014,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1047,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 871,
+    "descricao": "Oclacitinib",
+    "valor_custo": 212.84,
+    "custo_referencia": 212.84,
+    "markup": 280.0,
+    "un_manipulacao": "mg",
+    "estoque": 808.792,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 139,
+    "descricao": "OCTOPIROX - PIROCTONEOLAMINA",
+    "valor_custo": 0.7286,
+    "custo_referencia": 0.7286,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.4499,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 291,
+    "descricao": "OL FIGADO DE BACALHAU",
+    "valor_custo": 0.12153,
+    "custo_referencia": 0.12153,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.909,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 313,
+    "descricao": "OL GIRASSOL",
+    "valor_custo": 0.01002,
+    "custo_referencia": 0.01002,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0749,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 809,
+    "descricao": "OL MILHO",
+    "valor_custo": 0.00803,
+    "custo_referencia": 0.02068,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1547,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 930,
+    "descricao": "Óleo de Amendoa Doce",
+    "valor_custo": 0.032,
+    "custo_referencia": 0.0348,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2603,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 823,
+    "descricao": "OLEO DE ARGAN",
+    "valor_custo": 0.23308,
+    "custo_referencia": 0.2383,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 1.7825,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1032,
+    "descricao": "Óleo de Borragem (Líquido)",
+    "valor_custo": 0.07,
+    "custo_referencia": 0.07,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.5236,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1031,
+    "descricao": "Óleo de Borragem (Pó)",
+    "valor_custo": 1.45,
+    "custo_referencia": 1.45,
+    "markup": 243.0,
+    "un_manipulacao": "g",
+    "estoque": 4.9735,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 891,
+    "descricao": "OLEO DE CARTAMO PO (BIO ATIVO)",
+    "valor_custo": 0.172,
+    "custo_referencia": 0.172,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2866,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 310,
+    "descricao": "Óleo de coco",
+    "valor_custo": 0.04684,
+    "custo_referencia": 0.04684,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3504,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 485,
+    "descricao": "OLEO DE COPAIBA",
+    "valor_custo": 0.14786,
+    "custo_referencia": 0.14786,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 1.106,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1084,
+    "descricao": "Óleo de Lemon Grass",
+    "valor_custo": 1.0,
+    "custo_referencia": 1.0,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 4.48,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1010,
+    "descricao": "Óleo de Macadâmia",
+    "valor_custo": 0.085,
+    "custo_referencia": 2.2,
+    "markup": 300.0,
+    "un_manipulacao": "ml",
+    "estoque": 8.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 141,
+    "descricao": "Óleo de Melaleuca - Tea tree oil",
+    "valor_custo": 0.24,
+    "custo_referencia": 0.24,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.0752,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 967,
+    "descricao": "Óleo de Neem",
+    "valor_custo": 0.219,
+    "custo_referencia": 0.25,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.87,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 804,
+    "descricao": "OLEO DE RICINO 40 OE",
+    "valor_custo": 0.0336,
+    "custo_referencia": 0.0336,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2513,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 140,
+    "descricao": "Óleo de Semente de Uva",
+    "valor_custo": 0.036,
+    "custo_referencia": 0.036,
+    "markup": 848.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3413,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 88,
+    "descricao": "OLEO DE SILICONE",
+    "valor_custo": 0.04414,
+    "custo_referencia": 0.04414,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3302,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 659,
+    "descricao": "Óleo essencial - Baunilha (absoluto)",
+    "valor_custo": 1.67,
+    "custo_referencia": 1.67,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 12.4916,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 151,
+    "descricao": "Óleo essencial - Camomila",
+    "valor_custo": 1.69,
+    "custo_referencia": 1.69,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 12.6412,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 657,
+    "descricao": "Óleo essencial - Lavanda",
+    "valor_custo": 1.6792,
+    "custo_referencia": 1.6792,
+    "markup": 432.0,
+    "un_manipulacao": "ml",
+    "estoque": 8.9333,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 150,
+    "descricao": "OLEO ESSENCIAL DE CITRONELA",
+    "valor_custo": 0.14586,
+    "custo_referencia": 0.19857,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.4853,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 544,
+    "descricao": "OLEO OLIVA",
+    "valor_custo": 0.05,
+    "custo_referencia": 0.05,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.374,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 933,
+    "descricao": "Ômega-3",
+    "valor_custo": 0.1154,
+    "custo_referencia": 0.1154,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8632,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 722,
+    "descricao": "Ômega-6",
+    "valor_custo": 0.15,
+    "custo_referencia": 0.26,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.9448,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1057,
+    "descricao": "Ômega vet gold",
+    "valor_custo": 0.38,
+    "custo_referencia": 0.38,
+    "markup": 448.0,
+    "un_manipulacao": "g",
+    "estoque": 2.0824,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 33,
+    "descricao": "Omeprazol pellets",
+    "valor_custo": 0.077,
+    "custo_referencia": 0.077,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.576,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 535,
+    "descricao": "Omeprazol pó",
+    "valor_custo": 1.235,
+    "custo_referencia": 1.235,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.5328,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 719,
+    "descricao": "Ondansetrona",
+    "valor_custo": 3.95,
+    "custo_referencia": 3.95,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 17.696,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 599,
+    "descricao": "ONYMYRRE",
+    "valor_custo": 0.71225,
+    "custo_referencia": 0.88,
+    "markup": 324.0,
+    "un_manipulacao": "g",
+    "estoque": 3.7312,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 597,
+    "descricao": "OvoPet - Copervet",
+    "valor_custo": 5.1,
+    "custo_referencia": 5.1,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 22.848,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 735,
+    "descricao": "OXANDROLONA",
+    "valor_custo": 45.012,
+    "custo_referencia": 45.012,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 336.6898,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 582,
+    "descricao": "OXIDO DE MAGNESIO",
+    "valor_custo": 0.066,
+    "custo_referencia": 0.066,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4937,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 153,
+    "descricao": "OXIDO DE ZINCO",
+    "valor_custo": 0.0156,
+    "custo_referencia": 0.018,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1346,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 142,
+    "descricao": "OXITETRACICLINA",
+    "valor_custo": 0.10115,
+    "custo_referencia": 0.10115,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7566,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 918,
+    "descricao": "Palmitolitanolamida (PEA)",
+    "valor_custo": 2.8465,
+    "custo_referencia": 2.8465,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 9.9058,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 531,
+    "descricao": "Pancreatina",
+    "valor_custo": 0.2249,
+    "custo_referencia": 0.2249,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.0076,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 430,
+    "descricao": "Papaína",
+    "valor_custo": 0.39,
+    "custo_referencia": 0.39,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.9172,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 187,
+    "descricao": "PARACETAMOL",
+    "valor_custo": 0.02887,
+    "custo_referencia": 0.03025,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2263,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 601,
+    "descricao": "PARAFINA SÓLIDA",
+    "valor_custo": 0.015,
+    "custo_referencia": 0.015,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1122,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 379,
+    "descricao": "Passiflora Extrato Seco",
+    "valor_custo": 0.079,
+    "custo_referencia": 0.079,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5909,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 639,
+    "descricao": "PCA-Na",
+    "valor_custo": 0.0215,
+    "custo_referencia": 0.022,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1646,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 251,
+    "descricao": "Pectina Citrica",
+    "valor_custo": 0.31,
+    "custo_referencia": 0.31,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.3188,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 893,
+    "descricao": "PELEMOL G-7A",
+    "valor_custo": 0.28004,
+    "custo_referencia": 0.28004,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 2.0947,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 739,
+    "descricao": "PELLETS INERTES",
+    "valor_custo": 0.04137,
+    "custo_referencia": 0.04137,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3094,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 607,
+    "descricao": "PENTAGLYCAN",
+    "valor_custo": 1.8,
+    "custo_referencia": 1.95756,
+    "markup": 216.0,
+    "un_manipulacao": "g",
+    "estoque": 6.1859,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 83,
+    "descricao": "PENTOXIFILINA",
+    "valor_custo": 0.28,
+    "custo_referencia": 0.29552,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.2105,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 293,
+    "descricao": "PERMETRINA",
+    "valor_custo": 0.38,
+    "custo_referencia": 0.38,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.8424,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 36,
+    "descricao": "PEROXIDO DE BENZOILA MICRONIZADO",
+    "valor_custo": 0.11943,
+    "custo_referencia": 0.11943,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8933,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 118,
+    "descricao": "PHENOVA",
+    "valor_custo": 0.08796,
+    "custo_referencia": 0.10972,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8207,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 912,
+    "descricao": "PHYSAVIE",
+    "valor_custo": 2.106,
+    "custo_referencia": 2.3895,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 17.8735,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 957,
+    "descricao": "Picnogenol",
+    "valor_custo": 0.175,
+    "custo_referencia": 0.175,
+    "markup": 1944.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.577,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 489,
+    "descricao": "Picolinato de Cromo",
+    "valor_custo": 0.53,
+    "custo_referencia": 0.712,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 5.3258,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 785,
+    "descricao": "PILOCARPINA CLORIDRATO",
+    "valor_custo": 11.776,
+    "custo_referencia": 11.776,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 88.0845,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 674,
+    "descricao": "Pimobendan",
+    "valor_custo": 30.943,
+    "custo_referencia": 30.943,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 138.6246,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 924,
+    "descricao": "Piperina",
+    "valor_custo": 3.2,
+    "custo_referencia": 3.2,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 23.936,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 869,
+    "descricao": "PIRACETAM",
+    "valor_custo": 0.095,
+    "custo_referencia": 0.1,
+    "markup": 300.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 257,
+    "descricao": "Pirantel",
+    "valor_custo": 0.7,
+    "custo_referencia": 0.7,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.236,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 243,
+    "descricao": "Piroxicam",
+    "valor_custo": 0.5,
+    "custo_referencia": 0.5,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.74,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1012,
+    "descricao": "Pirroloquinolina Quinona (PQQ)",
+    "valor_custo": 17.218,
+    "custo_referencia": 17.218,
+    "markup": 500.0,
+    "un_manipulacao": "mg",
+    "estoque": 103.308,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 182,
+    "descricao": "PLANTAREM 1200",
+    "valor_custo": 0.22,
+    "custo_referencia": 0.22,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.6456,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 894,
+    "descricao": "PLANTAREN 2000",
+    "valor_custo": 0.06,
+    "custo_referencia": 0.06,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4488,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 763,
+    "descricao": "PO P/AREA DOS OLHOS",
+    "valor_custo": 0.00835,
+    "custo_referencia": 0.00835,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0625,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 446,
+    "descricao": "PODOFILINA",
+    "valor_custo": 1.496,
+    "custo_referencia": 1.496,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 11.1901,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 56,
+    "descricao": "POLAWAX NF",
+    "valor_custo": 0.0397,
+    "custo_referencia": 0.04618,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3454,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 899,
+    "descricao": "Polidextroxe (excipiente sachê)",
+    "valor_custo": 0.0285,
+    "custo_referencia": 0.045,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.3366,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 888,
+    "descricao": "POLIETILENOGLICOL 1500",
+    "valor_custo": 0.05636,
+    "custo_referencia": 0.05636,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.4216,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 705,
+    "descricao": "POLIETILENOGLICOL 400",
+    "valor_custo": 0.0214,
+    "custo_referencia": 0.0214,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1601,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1027,
+    "descricao": "Polietilenoglicol 4000 (PEG 4000)",
+    "valor_custo": 0.03895,
+    "custo_referencia": 0.09,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6732,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 733,
+    "descricao": "POLIMIXINA B",
+    "valor_custo": 17.21,
+    "custo_referencia": 55.0,
+    "markup": 324.0,
+    "un_manipulacao": "ui",
+    "estoque": 233.2,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 971,
+    "descricao": "POLIQUATERNIUM",
+    "valor_custo": 0.02774,
+    "custo_referencia": 0.02774,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2075,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 851,
+    "descricao": "PONAZURIL",
+    "valor_custo": 2.017,
+    "custo_referencia": 4.0,
+    "markup": 540.0,
+    "un_manipulacao": "mg",
+    "estoque": 25.6,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1013,
+    "descricao": "Pool Lactobacillus",
+    "valor_custo": 0.5098,
+    "custo_referencia": 0.5098,
+    "markup": 348.0,
+    "un_manipulacao": "ufc",
+    "estoque": 2.2839,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 982,
+    "descricao": "Potássio",
+    "valor_custo": 0.0485,
+    "custo_referencia": 0.0485,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3628,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 196,
+    "descricao": "Praziquantel",
+    "valor_custo": 1.6438,
+    "custo_referencia": 1.6438,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 12.2956,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 907,
+    "descricao": "Prazosina",
+    "valor_custo": 19.9,
+    "custo_referencia": 19.9,
+    "markup": 50.0,
+    "un_manipulacao": "mg",
+    "estoque": 29.85,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 37,
+    "descricao": "Prednisolona",
+    "valor_custo": 3.18,
+    "custo_referencia": 3.18,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 14.2464,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 642,
+    "descricao": "Prednisolona Aceto Uso externo",
+    "valor_custo": 8.6,
+    "custo_referencia": 8.6,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 38.528,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 977,
+    "descricao": "Pregabalina",
+    "valor_custo": 0.52,
+    "custo_referencia": 0.7,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.236,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 282,
+    "descricao": "Prometazina",
+    "valor_custo": 0.624,
+    "custo_referencia": 0.62,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.6376,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 824,
+    "descricao": "PROPANEDIOL",
+    "valor_custo": 0.02505,
+    "custo_referencia": 0.02505,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.1874,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 195,
+    "descricao": "PROPANOLOL HCL",
+    "valor_custo": 3.75,
+    "custo_referencia": 3.75,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 28.05,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 145,
+    "descricao": "Propilenoglicol",
+    "valor_custo": 0.028,
+    "custo_referencia": 0.0359,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.2685,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 127,
+    "descricao": "Própolis extrato glicólico",
+    "valor_custo": 0.99967,
+    "custo_referencia": 0.99967,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 4.4785,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 345,
+    "descricao": "Própolis Extrato Seco",
+    "valor_custo": 0.34,
+    "custo_referencia": 0.34,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.5432,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 620,
+    "descricao": "Psyllium",
+    "valor_custo": 0.099,
+    "custo_referencia": 0.088,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3942,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 85,
+    "descricao": "PVP-I (IODO POVIDONE)",
+    "valor_custo": 0.2005,
+    "custo_referencia": 0.2005,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.4997,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 201,
+    "descricao": "PVP K-30",
+    "valor_custo": 0.06168,
+    "custo_referencia": 0.09415,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7042,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 524,
+    "descricao": "Quebra Pedra extrato seco",
+    "valor_custo": 0.068,
+    "custo_referencia": 0.071,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.5311,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 992,
+    "descricao": "Quercetina",
+    "valor_custo": 0.4915,
+    "custo_referencia": 0.62,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.0176,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 312,
+    "descricao": "RAÇAO",
+    "valor_custo": 0.00645,
+    "custo_referencia": 0.00738,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.0552,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 713,
+    "descricao": "RAÇAO HIPOALERGÊNICA",
+    "valor_custo": 0.029,
+    "custo_referencia": 0.029,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.2169,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 39,
+    "descricao": "Ranitidina",
+    "valor_custo": 0.096,
+    "custo_referencia": 0.096,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7181,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1059,
+    "descricao": "Relora",
+    "valor_custo": 5.5,
+    "custo_referencia": 5.5,
+    "markup": 350.0,
+    "un_manipulacao": "mg",
+    "estoque": 24.75,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1080,
+    "descricao": "Remanipulação Amantadina",
+    "valor_custo": 12.27,
+    "custo_referencia": 12.27,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 54.9696,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1064,
+    "descricao": "Remanipulação Fenobarbital",
+    "valor_custo": 0.65,
+    "custo_referencia": 0.65,
+    "markup": 100.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1060,
+    "descricao": "Repelente concentrado",
+    "valor_custo": 0.125,
+    "custo_referencia": 0.125,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.935,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 277,
+    "descricao": "RESCUE REMEDY",
+    "valor_custo": 3.06667,
+    "custo_referencia": 4.0,
+    "markup": 216.0,
+    "un_manipulacao": "ml",
+    "estoque": 12.64,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 698,
+    "descricao": "Resveratrol (Trans)",
+    "valor_custo": 1.79,
+    "custo_referencia": 1.79,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 9.8092,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 706,
+    "descricao": "RHEAPOL L-100",
+    "valor_custo": 0.8853,
+    "custo_referencia": 0.8853,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 6.622,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1011,
+    "descricao": "Rhodiola rosea (Rodiola rósea)",
+    "valor_custo": 0.29,
+    "custo_referencia": 0.29,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.1692,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 844,
+    "descricao": "Ribavirina",
+    "valor_custo": 0.6035,
+    "custo_referencia": 0.679,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.0789,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 308,
+    "descricao": "RIFAMPICINA",
+    "valor_custo": 4.1,
+    "custo_referencia": 4.1,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 18.368,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 958,
+    "descricao": "RISEDRONATO DE SÓDIO",
+    "valor_custo": 4.6,
+    "custo_referencia": 4.8,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 35.904,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1033,
+    "descricao": "Risidronato",
+    "valor_custo": 4.18,
+    "custo_referencia": 4.18,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 18.7264,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 752,
+    "descricao": "RONIDAZOL",
+    "valor_custo": 3.6,
+    "custo_referencia": 4.2,
+    "markup": 378.0,
+    "un_manipulacao": "mg",
+    "estoque": 20.076,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 833,
+    "descricao": "ROSA BENGALA",
+    "valor_custo": 2.7428,
+    "custo_referencia": 2.7428,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 20.5161,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 352,
+    "descricao": "Rutina",
+    "valor_custo": 0.20768,
+    "custo_referencia": 0.20768,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.5534,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 40,
+    "descricao": "SACARINA SODICA",
+    "valor_custo": 0.022,
+    "custo_referencia": 0.022,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1646,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 948,
+    "descricao": "SACCHAROMYCES + LEVANDULA OIL (TAST PLUS)",
+    "valor_custo": 1.55,
+    "custo_referencia": 1.55,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 11.594,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1075,
+    "descricao": "Salbutamol",
+    "valor_custo": 1.7986,
+    "custo_referencia": 1.7986,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 13.4535,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 334,
+    "descricao": "SALICILATO DE METILA",
+    "valor_custo": 0.03004,
+    "custo_referencia": 0.03004,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2247,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 407,
+    "descricao": "Same",
+    "valor_custo": 0.99,
+    "custo_referencia": 1.0359,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.6049,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 637,
+    "descricao": "SEBONORMINE",
+    "valor_custo": 1.6398,
+    "custo_referencia": 2.4434,
+    "markup": 216.0,
+    "un_manipulacao": "g",
+    "estoque": 7.7211,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 647,
+    "descricao": "Secnidazol",
+    "valor_custo": 0.69,
+    "custo_referencia": 0.69,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.0912,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 874,
+    "descricao": "SELAMECTINA",
+    "valor_custo": 160.0,
+    "custo_referencia": 400.0,
+    "markup": 400.0,
+    "un_manipulacao": "mg",
+    "estoque": 2000.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 711,
+    "descricao": "Selegilina (HCL)",
+    "valor_custo": 17.442,
+    "custo_referencia": 17.442,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 78.1402,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 301,
+    "descricao": "Selênio",
+    "valor_custo": 0.051,
+    "custo_referencia": 0.6,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 4.488,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 935,
+    "descricao": "SENSACTIVE PHYSALIS",
+    "valor_custo": 0.15257,
+    "custo_referencia": 0.15257,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.1412,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 734,
+    "descricao": "SEPIGEL 305 (USAR DE 0,5 - 5%)",
+    "valor_custo": 0.36712,
+    "custo_referencia": 0.36712,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 2.7461,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1008,
+    "descricao": "SERISEAL",
+    "valor_custo": 1.2274,
+    "custo_referencia": 1.2274,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 9.181,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 562,
+    "descricao": "SERTRALINA",
+    "valor_custo": 0.36,
+    "custo_referencia": 0.519,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 3.8821,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 87,
+    "descricao": "SF 1204/GE CICLOMETICONE VOLATIL",
+    "valor_custo": 0.03,
+    "custo_referencia": 0.035,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2618,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 590,
+    "descricao": "Sildenafil",
+    "valor_custo": 0.72,
+    "custo_referencia": 0.72,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.3856,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1039,
+    "descricao": "Silibin",
+    "valor_custo": 4.9,
+    "custo_referencia": 4.9,
+    "markup": 248.0,
+    "un_manipulacao": "mg",
+    "estoque": 17.052,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1071,
+    "descricao": "Silicio",
+    "valor_custo": 2.1,
+    "custo_referencia": 2.1,
+    "markup": 350.0,
+    "un_manipulacao": "mg",
+    "estoque": 9.45,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 462,
+    "descricao": "SILICONE DC 556",
+    "valor_custo": 0.147,
+    "custo_referencia": 0.147,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 1.0996,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 413,
+    "descricao": "Silimarina",
+    "valor_custo": 0.2595,
+    "custo_referencia": 0.2595,
+    "markup": 448.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.4221,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 81,
+    "descricao": "Simeticone",
+    "valor_custo": 0.2117,
+    "custo_referencia": 0.2117,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.5835,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 444,
+    "descricao": "SINVASTATINA",
+    "valor_custo": 0.89,
+    "custo_referencia": 3.9,
+    "markup": 378.0,
+    "un_manipulacao": "mg",
+    "estoque": 18.642,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1050,
+    "descricao": "SirtControl",
+    "valor_custo": 1.5,
+    "custo_referencia": 1.5,
+    "markup": 1.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.515,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 294,
+    "descricao": "SOLANGEL 401",
+    "valor_custo": 0.03677,
+    "custo_referencia": 0.047,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3516,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 205,
+    "descricao": "Solução Cloreto de Potássio",
+    "valor_custo": 0.08138,
+    "custo_referencia": 0.08138,
+    "markup": 75873.15,
+    "un_manipulacao": "mg",
+    "estoque": 61.827,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 802,
+    "descricao": "SOLUÇÃO GLICOSE 5%",
+    "valor_custo": 0.03,
+    "custo_referencia": 0.03,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2244,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 110,
+    "descricao": "Sorbato de Potássio",
+    "valor_custo": 0.25,
+    "custo_referencia": 0.25,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.87,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1045,
+    "descricao": "Sorbitol solução",
+    "valor_custo": 0.011,
+    "custo_referencia": 0.0231,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 0.1728,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 478,
+    "descricao": "SORO FISIOLOGICO",
+    "valor_custo": 0.0094,
+    "custo_referencia": 0.02742,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2051,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 508,
+    "descricao": "SOTALOL CLORIDRATO",
+    "valor_custo": 11.66667,
+    "custo_referencia": 11.66667,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 87.2667,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 702,
+    "descricao": "STIMU-TEX",
+    "valor_custo": 1.144,
+    "custo_referencia": 1.144,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 8.5571,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1019,
+    "descricao": "Streptococcus thermophilus",
+    "valor_custo": 2.45,
+    "custo_referencia": 2.45,
+    "markup": 348.0,
+    "un_manipulacao": "ufc",
+    "estoque": 10.976,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 835,
+    "descricao": "STRIPS FLUORESCEINA",
+    "valor_custo": 34.61,
+    "custo_referencia": 34.61,
+    "markup": 135.4,
+    "un_manipulacao": "un",
+    "estoque": 81.4712,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 836,
+    "descricao": "STRIPS ROSA BENGALA",
+    "valor_custo": 34.61,
+    "custo_referencia": 34.61,
+    "markup": 138.52,
+    "un_manipulacao": "un",
+    "estoque": 82.5512,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 831,
+    "descricao": "STRIPS TESTE LACRIMAL DE SCHIRMER",
+    "valor_custo": 32.61,
+    "custo_referencia": 32.61,
+    "markup": 180.13,
+    "un_manipulacao": "un",
+    "estoque": 91.3512,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 837,
+    "descricao": "STRIPS VERDE LISSAMINA",
+    "valor_custo": 34.61,
+    "custo_referencia": 34.61,
+    "markup": 144.76,
+    "un_manipulacao": "un",
+    "estoque": 84.7112,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 712,
+    "descricao": "SUBSALICILATO DE BISMUTO",
+    "valor_custo": 0.31586,
+    "custo_referencia": 0.31586,
+    "markup": 324.0,
+    "un_manipulacao": "g",
+    "estoque": 1.3392,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 451,
+    "descricao": "Sucralfato",
+    "valor_custo": 0.115,
+    "custo_referencia": 0.115,
+    "markup": 432.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6118,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 776,
+    "descricao": "Sucupira pó",
+    "valor_custo": 0.145,
+    "custo_referencia": 0.145,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.0846,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 791,
+    "descricao": "SULFACETAMIDA SÓDICA",
+    "valor_custo": 0.063,
+    "custo_referencia": 0.063,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.4712,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 254,
+    "descricao": "SULFADIAZINA BASE (USO INTERNO)",
+    "valor_custo": 0.7,
+    "custo_referencia": 0.7,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 5.236,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 378,
+    "descricao": "SULFADIAZINA PRATA (USO EXTERNO)",
+    "valor_custo": 4.7,
+    "custo_referencia": 4.7,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 35.156,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 972,
+    "descricao": "SULFADIAZINA SÓDICA",
+    "valor_custo": 65.0,
+    "custo_referencia": 65.0,
+    "markup": -53.85,
+    "un_manipulacao": "mg",
+    "estoque": 30.0,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1052,
+    "descricao": "Sulfadimetoxina",
+    "valor_custo": 4.40006,
+    "custo_referencia": 4.1,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 18.368,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 41,
+    "descricao": "SULFAMETOXAZOL",
+    "valor_custo": 0.12449,
+    "custo_referencia": 0.12449,
+    "markup": 864.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2001,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 309,
+    "descricao": "SULFANILAMIDA",
+    "valor_custo": 0.05156,
+    "custo_referencia": 0.1172,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8767,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 89,
+    "descricao": "SULFASALAZINA",
+    "valor_custo": 0.16772,
+    "custo_referencia": 0.26384,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.9735,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 203,
+    "descricao": "Sulfato de Zinco",
+    "valor_custo": 0.072,
+    "custo_referencia": 0.072,
+    "markup": 948.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.7546,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 507,
+    "descricao": "SULFATO FERROSO",
+    "valor_custo": 0.012,
+    "custo_referencia": 0.02285,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1709,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 420,
+    "descricao": "Sulfeto de Selênio",
+    "valor_custo": 0.96,
+    "custo_referencia": 0.96,
+    "markup": 318.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.0128,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 563,
+    "descricao": "SULPIRIDA",
+    "valor_custo": 0.21506,
+    "custo_referencia": 0.245,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8326,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 170,
+    "descricao": "Suspensão Oral",
+    "valor_custo": 0.00836,
+    "custo_referencia": 0.00836,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0625,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 666,
+    "descricao": "TACROLIMOS DILUÍDO 1:100",
+    "valor_custo": 6.27644,
+    "custo_referencia": 6.27644,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 46.9478,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 199,
+    "descricao": "TAG I'm greem pote",
+    "valor_custo": 0.081,
+    "custo_referencia": 0.078,
+    "markup": 0.0,
+    "un_manipulacao": "un",
+    "estoque": 0.078,
+    "calculo_tipo": "Sem cálculo"
+  },
+  {
+    "codigo_interno": 1042,
+    "descricao": "Tansulosina",
+    "valor_custo": 11.45,
+    "custo_referencia": 15.0,
+    "markup": 348.0,
+    "un_manipulacao": "g",
+    "estoque": 67.2,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 895,
+    "descricao": "TAPIOCA PURE Lot 0000938527",
+    "valor_custo": 0.06,
+    "custo_referencia": 0.06,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.4488,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 447,
+    "descricao": "Taurina",
+    "valor_custo": 0.03,
+    "custo_referencia": 0.03,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.1344,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 612,
+    "descricao": "TCM líquido (Triglicerídes de cadeia média)",
+    "valor_custo": 0.10299,
+    "custo_referencia": 0.10299,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.7704,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 226,
+    "descricao": "TCM pó (Triglicérides de cadeia média)",
+    "valor_custo": 0.32,
+    "custo_referencia": 0.32,
+    "markup": 648.0,
+    "un_manipulacao": "g",
+    "estoque": 2.3936,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 974,
+    "descricao": "TELMISARTANA",
+    "valor_custo": 7.9,
+    "custo_referencia": 7.9,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 59.092,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 525,
+    "descricao": "Teofilina",
+    "valor_custo": 0.0805,
+    "custo_referencia": 0.0805,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6021,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 347,
+    "descricao": "Terbinafina (HCL)",
+    "valor_custo": 0.6322,
+    "custo_referencia": 0.6322,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.8323,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 792,
+    "descricao": "TETRACAINA CLORIDRATO",
+    "valor_custo": 1.93,
+    "custo_referencia": 1.93,
+    "markup": 1080.0,
+    "un_manipulacao": "mg",
+    "estoque": 22.774,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 448,
+    "descricao": "TETRACICLINA",
+    "valor_custo": 0.18504,
+    "custo_referencia": 0.18504,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3841,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 775,
+    "descricao": "THIOMUCASE",
+    "valor_custo": 24.482,
+    "custo_referencia": 24.482,
+    "markup": 0,
+    "un_manipulacao": "utr",
+    "estoque": 183.1254,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 185,
+    "descricao": "TIABENDAZOL",
+    "valor_custo": 1.6,
+    "custo_referencia": 1.6,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 11.968,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 240,
+    "descricao": "Tiamina (VIT B1)",
+    "valor_custo": 0.43,
+    "custo_referencia": 0.43,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 3.2164,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 757,
+    "descricao": "TILOSINA TARTARATO",
+    "valor_custo": 1.0,
+    "custo_referencia": 2.1,
+    "markup": 90.48,
+    "un_manipulacao": "mg",
+    "estoque": 4.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 834,
+    "descricao": "TIMEROSAL",
+    "valor_custo": 11.2284,
+    "custo_referencia": 11.2284,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 83.9884,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 748,
+    "descricao": "Timomodulina",
+    "valor_custo": 2.09,
+    "custo_referencia": 2.09,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 9.3632,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 859,
+    "descricao": "Tinidazol",
+    "valor_custo": 0.15,
+    "custo_referencia": 3.78,
+    "markup": 300.0,
+    "un_manipulacao": "mg",
+    "estoque": 15.12,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 686,
+    "descricao": "TINTURA DE AGRIAO",
+    "valor_custo": 0.0135,
+    "custo_referencia": 0.02,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1496,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 204,
+    "descricao": "TINTURA DE ARNICA",
+    "valor_custo": 0.024,
+    "custo_referencia": 0.024,
+    "markup": 540.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1536,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 332,
+    "descricao": "TINTURA DE BENJOIM",
+    "valor_custo": 0.01663,
+    "custo_referencia": 0.02552,
+    "markup": 648.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1909,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 536,
+    "descricao": "TINTURA DE CAPIM LIMAO",
+    "valor_custo": 0.01616,
+    "custo_referencia": 0.01616,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1209,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 404,
+    "descricao": "TINTURA DE CHAMOMILA",
+    "valor_custo": 0.01382,
+    "custo_referencia": 0.014,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1047,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 512,
+    "descricao": "TINTURA DE CONFREI",
+    "valor_custo": 0.02386,
+    "custo_referencia": 0.02386,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1785,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 808,
+    "descricao": "Tintura de Cúrcuma longa",
+    "valor_custo": 69.0,
+    "custo_referencia": 3.9,
+    "markup": 176.92,
+    "un_manipulacao": "ml",
+    "estoque": 10.8,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 402,
+    "descricao": "Tintura de Echinacea",
+    "valor_custo": 0.17,
+    "custo_referencia": 0.17,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.7616,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 538,
+    "descricao": "TINTURA DE ERVA DE STA MARIA",
+    "valor_custo": 0.01604,
+    "custo_referencia": 0.01604,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.12,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 513,
+    "descricao": "TINTURA DE HAMAMELIS",
+    "valor_custo": 0.02518,
+    "custo_referencia": 0.042,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3142,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 474,
+    "descricao": "TINTURA DE HIPERICUM PERFORATUM",
+    "valor_custo": 0.01852,
+    "custo_referencia": 0.02948,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2205,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 537,
+    "descricao": "TINTURA DE LOSNA",
+    "valor_custo": 0.01953,
+    "custo_referencia": 0.04989,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3732,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 549,
+    "descricao": "TINTURA DE PASSIFLORA",
+    "valor_custo": 0.01547,
+    "custo_referencia": 0.01547,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1157,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 551,
+    "descricao": "TINTURA DE PIPER METISTICUM (KAWA KAWA)",
+    "valor_custo": 0.04002,
+    "custo_referencia": 0.04022,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3008,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 725,
+    "descricao": "TINTURA DE PROPOLIS",
+    "valor_custo": 0.0324,
+    "custo_referencia": 0.055,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.4114,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 405,
+    "descricao": "TINTURA DE RHUS TOXIDENDRON",
+    "valor_custo": 0.24908,
+    "custo_referencia": 0.33333,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 2.4933,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 403,
+    "descricao": "TINTURA DE ROSMARINUS (ALECRIM)",
+    "valor_custo": 0.01206,
+    "custo_referencia": 0.02042,
+    "markup": 432.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1086,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 510,
+    "descricao": "TINTURA DE RUTA GRAVEOLENS (ARRUDA)",
+    "valor_custo": 0.0195,
+    "custo_referencia": 0.03064,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2292,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 440,
+    "descricao": "TINTURA DE SALIX ALBA",
+    "valor_custo": 0.05005,
+    "custo_referencia": 0.05005,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.3744,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 509,
+    "descricao": "TINTURA DE SALVIA",
+    "valor_custo": 0.032,
+    "custo_referencia": 0.032,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.2394,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 756,
+    "descricao": "TINTURA DE THUYA",
+    "valor_custo": 0.01588,
+    "custo_referencia": 0.02,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1496,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1082,
+    "descricao": "Tintura de Tuia (Thuya)",
+    "valor_custo": 2.59,
+    "custo_referencia": 2.59,
+    "markup": 348.0,
+    "un_manipulacao": "%",
+    "estoque": 11.6032,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 552,
+    "descricao": "TINTURA DE VALERIANA",
+    "valor_custo": 0.02221,
+    "custo_referencia": 0.0224,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.1676,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 787,
+    "descricao": "TIOSSULFATO DE SÓDIO PENTAIDRATADO",
+    "valor_custo": 0.01315,
+    "custo_referencia": 0.01315,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.0984,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 720,
+    "descricao": "TOBRAMICINA",
+    "valor_custo": 9.7,
+    "custo_referencia": 9.7,
+    "markup": 1080.0,
+    "un_manipulacao": "g",
+    "estoque": 114.46,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 857,
+    "descricao": "TOLTRAZURIL",
+    "valor_custo": 0.9,
+    "custo_referencia": 2.3,
+    "markup": 1296.0,
+    "un_manipulacao": "mg",
+    "estoque": 32.108,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 929,
+    "descricao": "Torasemida",
+    "valor_custo": 7.79,
+    "custo_referencia": 0.9,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 6.732,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 568,
+    "descricao": "Tramadol",
+    "valor_custo": 0.928,
+    "custo_referencia": 0.928,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.1574,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 432,
+    "descricao": "TRANSCUTOL CG",
+    "valor_custo": 0.094,
+    "custo_referencia": 0.11764,
+    "markup": 0,
+    "un_manipulacao": "ml",
+    "estoque": 0.8799,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1076,
+    "descricao": "Trazodona",
+    "valor_custo": 1.2459,
+    "custo_referencia": 1.2459,
+    "markup": 1296.0,
+    "un_manipulacao": "mg",
+    "estoque": 17.3928,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 92,
+    "descricao": "Triancinolona (Acetonida Micro)",
+    "valor_custo": 15.9,
+    "custo_referencia": 15.9,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 71.232,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1077,
+    "descricao": "TRIBUTIRINA",
+    "valor_custo": 2.03,
+    "custo_referencia": 2.03,
+    "markup": 100.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.06,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 692,
+    "descricao": "Trilostano",
+    "valor_custo": 18.134,
+    "custo_referencia": 18.134,
+    "markup": 180.0,
+    "un_manipulacao": "mg",
+    "estoque": 50.7752,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1041,
+    "descricao": "Trimetropim",
+    "valor_custo": 179.0,
+    "custo_referencia": 0.179,
+    "markup": 643.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.33,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 241,
+    "descricao": "Triptofano (L-TRIPTOFANO)",
+    "valor_custo": 0.135,
+    "custo_referencia": 0.14,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6272,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 177,
+    "descricao": "Tris (Hidromexitil Aminometano)",
+    "valor_custo": 0.95,
+    "custo_referencia": 0.95,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 7.106,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 263,
+    "descricao": "TWEEN 80",
+    "valor_custo": 0.04,
+    "custo_referencia": 0.1076,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.8048,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 865,
+    "descricao": "TYLOXAPOL",
+    "valor_custo": 19.02,
+    "custo_referencia": 19.02,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 142.2696,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 212,
+    "descricao": "Unha de Gato pó",
+    "valor_custo": 0.049,
+    "custo_referencia": 0.04,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2992,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 376,
+    "descricao": "UNIGEL (Uso Interno)",
+    "valor_custo": 0.02469,
+    "custo_referencia": 0.05228,
+    "markup": 0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3911,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 93,
+    "descricao": "Uréia",
+    "valor_custo": 0.033,
+    "custo_referencia": 0.033,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2468,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 380,
+    "descricao": "Valeriana Extrato Seco",
+    "valor_custo": 0.108,
+    "custo_referencia": 0.17352,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2979,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 954,
+    "descricao": "Vanádio Quelato",
+    "valor_custo": 0.08338,
+    "custo_referencia": 0.08338,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6237,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 94,
+    "descricao": "VASELINA LIQUIDA",
+    "valor_custo": 0.01605,
+    "custo_referencia": 0.01605,
+    "markup": 108.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0334,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 95,
+    "descricao": "VASELINA SOLIDA",
+    "valor_custo": 0.03208,
+    "custo_referencia": 0.03208,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.24,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 641,
+    "descricao": "Vegelip",
+    "valor_custo": 0.4,
+    "custo_referencia": 0.4,
+    "markup": 348.0,
+    "un_manipulacao": "ml",
+    "estoque": 1.792,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 830,
+    "descricao": "VERDE LISSAMINA",
+    "valor_custo": 8.08,
+    "custo_referencia": 8.08,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 60.4384,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 369,
+    "descricao": "VIOLET FLOWERS",
+    "valor_custo": 0.07933,
+    "custo_referencia": 0.07933,
+    "markup": 432.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.422,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 46,
+    "descricao": "Vit B12 (diluida 1:100)",
+    "valor_custo": 33.682,
+    "custo_referencia": 33.682,
+    "markup": 648.0,
+    "un_manipulacao": "mcg",
+    "estoque": 251.9414,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 61,
+    "descricao": "VIT B15 (ACIDO PANGÂMICO)",
+    "valor_custo": 2.7,
+    "custo_referencia": 2.7684,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 20.7076,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 97,
+    "descricao": "Vit D3 (diluida 1:100)",
+    "valor_custo": 0.03382,
+    "custo_referencia": 0.03382,
+    "markup": 648.0,
+    "un_manipulacao": "ui",
+    "estoque": 0.253,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 773,
+    "descricao": "VIT K1 DILUIDA 1:100",
+    "valor_custo": 0.05603,
+    "custo_referencia": 0.05603,
+    "markup": 324.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.2376,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 49,
+    "descricao": "VIT K1 PURA",
+    "valor_custo": 3.29517,
+    "custo_referencia": 5.82,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 43.5336,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 803,
+    "descricao": "VITALGREEN CLEAR 3X1",
+    "valor_custo": 0.01149,
+    "custo_referencia": 0.01483,
+    "markup": 540.0,
+    "un_manipulacao": "ml",
+    "estoque": 0.0949,
+    "calculo_tipo": "QSP"
+  },
+  {
+    "codigo_interno": 901,
+    "descricao": "Vitamina K2 (Menaquinona)",
+    "valor_custo": 3.1,
+    "custo_referencia": 3.1,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 13.888,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 96,
+    "descricao": "Vitamina A oleosa",
+    "valor_custo": 0.98716,
+    "custo_referencia": 1.1,
+    "markup": 648.0,
+    "un_manipulacao": "ui",
+    "estoque": 8.228,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 45,
+    "descricao": "Vitamina A pó",
+    "valor_custo": 0.33808,
+    "custo_referencia": 0.33808,
+    "markup": 348.0,
+    "un_manipulacao": "ui",
+    "estoque": 1.5146,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 650,
+    "descricao": "Vitamina B12- Cianocobalamina",
+    "valor_custo": 15.28,
+    "custo_referencia": 15.28,
+    "markup": 348.0,
+    "un_manipulacao": "mcg",
+    "estoque": 68.4544,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 143,
+    "descricao": "Vitamina B2 (Riboflavina)",
+    "valor_custo": 0.52,
+    "custo_referencia": 0.52,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 2.3296,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 1005,
+    "descricao": "Vitamina B3 (Nicotinamida)",
+    "valor_custo": 0.0726,
+    "custo_referencia": 0.0726,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.543,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 34,
+    "descricao": "Vitamina B5 (Pantotenato de Cálcio)",
+    "valor_custo": 0.24424,
+    "custo_referencia": 0.24424,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.8269,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 47,
+    "descricao": "Vitamina B6 (Piridoxina HCL)",
+    "valor_custo": 0.16844,
+    "custo_referencia": 0.16844,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.2599,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 48,
+    "descricao": "Vitamina C",
+    "valor_custo": 0.04844,
+    "custo_referencia": 0.04844,
+    "markup": 548.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.3139,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 653,
+    "descricao": "Vitamina D3- Colecalciferol",
+    "valor_custo": 22.0,
+    "custo_referencia": 22.0,
+    "markup": 350.0,
+    "un_manipulacao": "ui",
+    "estoque": 99.0,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 425,
+    "descricao": "Vitamina E óleo",
+    "valor_custo": 0.184,
+    "custo_referencia": 0.184,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 1.3763,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 98,
+    "descricao": "Vitamina E pó",
+    "valor_custo": 0.22,
+    "custo_referencia": 0.22,
+    "markup": 348.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.9856,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1048,
+    "descricao": "Vitamina K (K1 - óleo)",
+    "valor_custo": 17.2,
+    "custo_referencia": 17.2,
+    "markup": 448.0,
+    "un_manipulacao": "g",
+    "estoque": 94.256,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 469,
+    "descricao": "XAROPE DE MALTE",
+    "valor_custo": 0.02571,
+    "custo_referencia": 0.03,
+    "markup": 1080.0,
+    "un_manipulacao": "g",
+    "estoque": 0.354,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 656,
+    "descricao": "XILITOL",
+    "valor_custo": 0.04288,
+    "custo_referencia": 0.057,
+    "markup": 0,
+    "un_manipulacao": "g",
+    "estoque": 0.4264,
+    "calculo_tipo": "Percentual"
+  },
+  {
+    "codigo_interno": 455,
+    "descricao": "Yucca extrato seco",
+    "valor_custo": 0.65,
+    "custo_referencia": 0.65,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 4.862,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 1028,
+    "descricao": "Zeaxantina",
+    "valor_custo": 1.2688,
+    "custo_referencia": 1.2688,
+    "markup": 548.0,
+    "un_manipulacao": "g",
+    "estoque": 8.2218,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 755,
+    "descricao": "Zidovudina",
+    "valor_custo": 8.822,
+    "custo_referencia": 8.822,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 65.9886,
+    "calculo_tipo": "Cápsula"
+  },
+  {
+    "codigo_interno": 305,
+    "descricao": "Zinco",
+    "valor_custo": 0.0868,
+    "custo_referencia": 0.0868,
+    "markup": 648.0,
+    "un_manipulacao": "mg",
+    "estoque": 0.6493,
+    "calculo_tipo": "Cápsula"
+  }
+]
