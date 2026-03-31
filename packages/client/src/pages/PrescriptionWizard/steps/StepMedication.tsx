@@ -122,10 +122,17 @@ export function StepMedication() {
         }
     };
 
-    const handleAiSearchProduct = async (medName: string) => {
-        setCatalogSearchTerm(medName);
+    const handleAiSearchProduct = async (medName: string, medCodigo?: string) => {
+        // Busca pelo código se disponível (mais preciso), senão pelo nome
+        const searchTerm = medCodigo || medName;
+        setCatalogSearchTerm(searchTerm);
         setShowAssistant(false);
         setShowForm(true);
+
+        // Aguarda o debounce do useEffect e abre o dropdown automaticamente
+        setTimeout(() => {
+            setShowCatalogDropdown(true);
+        }, 400);
     };
 
     // ============================================================
@@ -252,7 +259,7 @@ export function StepMedication() {
                                                             </div>
                                                             <button
                                                                 type="button"
-                                                                onClick={() => handleAiSearchProduct(med.nome)}
+                                                                onClick={() => handleAiSearchProduct(med.nome, med.codigo)}
                                                                 className="ml-2 text-xs bg-purple-600 text-white px-2.5 py-1 rounded-md hover:bg-purple-700 flex-shrink-0"
                                                             >
                                                                 Buscar
