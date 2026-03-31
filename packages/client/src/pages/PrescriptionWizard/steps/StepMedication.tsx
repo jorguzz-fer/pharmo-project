@@ -46,6 +46,8 @@ export function StepMedication() {
     const [isSearchingCatalog, setIsSearchingCatalog] = useState(false);
     // Ref para código alvo da IA (não causa re-render, evita loop no useEffect)
     const targetCodigoRef = useRef<string | null>(null);
+    // Mensagem quando produto da IA não existe no catálogo
+    const [aiProductNotFound, setAiProductNotFound] = useState<string | null>(null);
 
     // AI Assistant state
     const [showAssistant, setShowAssistant] = useState(false);
@@ -73,17 +75,23 @@ export function StepMedication() {
 
                 // Se veio do assistente IA com código alvo, tenta match exato
                 const target = targetCodigoRef.current;
-                if (target && results.length > 0) {
+                if (target) {
+                    targetCodigoRef.current = null;
                     const exactMatch = results.find(
                         (p) => p.codigo.trim() === target.trim()
                     );
                     if (exactMatch) {
-                        targetCodigoRef.current = null; // limpa sem re-render
                         handleSelectProduto(exactMatch);
-                        return; // não abre dropdown
+                        return; // auto-selecionou, não abre dropdown
+                    } else {
+                        // Produto sugerido pela IA não existe no catálogo
+                        setAiProductNotFound(target);
+                        setCatalogSearchTerm('');
+                        setCatalogResults([]);
+                        setShowCatalogDropdown(false);
+                        return;
                     }
                 }
-                targetCodigoRef.current = null;
                 setShowCatalogDropdown(true);
             } catch (error) {
                 console.error('Erro ao buscar produtos:', error);
@@ -142,6 +150,7 @@ export function StepMedication() {
     const handleAiSearchProduct = async (medName: string, medCodigo?: string) => {
         setShowAssistant(false);
         setShowForm(true);
+        setAiProductNotFound(null);
 
         if (medCodigo) {
             targetCodigoRef.current = medCodigo; // sem re-render
@@ -405,7 +414,7 @@ export function StepMedication() {
                                 <input
                                     type="text"
                                     value={catalogSearchTerm}
-                                    onChange={(e) => setCatalogSearchTerm(e.target.value)}
+                                    onChange={(e) => { setAiProductNotFound(null); setCatalogSearchTerm(e.target.value); }}
                                     onFocus={() => catalogSearchTerm.length >= 2 && setShowCatalogDropdown(true)}
                                     placeholder="Ex: Meloxicam, Sildenafil, 11.14..."
                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -453,6 +462,21 @@ export function StepMedication() {
                             {showCatalogDropdown && catalogResults.length === 0 && catalogSearchTerm.length >= 2 && !isSearchingCatalog && (
                                 <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-4 text-center text-gray-500 text-sm">
                                     Nenhum produto encontrado para "{catalogSearchTerm}"
+                                </div>
+                            )}
+
+                            {/* Aviso: produto da IA não está no catálogo */}
+                            {aiProductNotFound && (
+                                <div className="mt-2 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
+                                    <span className="text-amber-500 text-lg leading-none">⚠️</span>
+                                    <div>
+                                        <p className="text-sm font-medium text-amber-800">
+                                            Produto <span className="font-mono bg-amber-100 px-1 rounded">{aiProductNotFound}</span> não encontrado no catálogo
+                                        </p>
+                                        <p className="text-xs text-amber-700 mt-0.5">
+                                            Este item ainda não está disponível. Busque outro produto manualmente.
+                                        </p>
+                                    </div>
                                 </div>
                             )}
 
