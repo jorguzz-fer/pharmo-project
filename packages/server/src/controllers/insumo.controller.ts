@@ -235,6 +235,40 @@ export class InsumoController {
       return res.status(500).json({ error: 'Erro ao remover exceção' });
     }
   }
+
+  // Verificar se um texto contém substância controlada
+  async verificarControlado(req: Request, res: Response) {
+    try {
+      const { texto } = req.query;
+      if (!texto || (texto as string).trim().length < 3) {
+        return res.json({ controlado: false, substancias: [] });
+      }
+
+      // Buscar todos os insumos controlados
+      const controlados = await prisma.insumoFarmaceutico.findMany({
+        where: { controlado: true, ativo: true },
+        select: { descricao: true, lista_controle: true },
+      });
+
+      // Verificar se algum nome aparece no texto do produto
+      const textoLower = (texto as string).toLowerCase();
+      const encontrados = controlados.filter((c) => {
+        const nome = c.descricao.toLowerCase().split(' ')[0]; // primeira palavra
+        return nome.length >= 4 && textoLower.includes(nome);
+      });
+
+      return res.json({
+        controlado: encontrados.length > 0,
+        substancias: encontrados.map((c) => ({
+          nome: c.descricao,
+          lista: c.lista_controle,
+        })),
+      });
+    } catch (error: any) {
+      console.error('Erro ao verificar controlado:', error);
+      return res.json({ controlado: false, substancias: [] });
+    }
+  }
 }
 
 export class FormaFarmaceuticaController {

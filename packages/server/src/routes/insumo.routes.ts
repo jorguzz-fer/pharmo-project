@@ -9,6 +9,7 @@ const formaController = new FormaFarmaceuticaController();
 // Insumos Farmacêuticos
 router.get('/insumos', authMiddleware, insumoController.buscar);
 router.get('/insumos/controlados', authMiddleware, insumoController.listarControlados);
+router.get('/insumos/verificar-controlado', authMiddleware, insumoController.verificarControlado);
 router.get('/insumos/:id', authMiddleware, insumoController.buscarPorId);
 router.patch('/insumos/:id/controlado', authMiddleware, insumoController.toggleControlado);
 

@@ -70,6 +70,14 @@ export const insumoService = {
     return response.data;
   },
 
+  async verificarControlado(texto: string): Promise<{ controlado: boolean; substancias: Array<{ nome: string; lista: string }> }> {
+    const response = await axios.get(`${API_URL}/insumos/verificar-controlado`, {
+      params: { texto },
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
   async listarControlados() {
     const response = await axios.get(`${API_URL}/insumos/controlados`, {
       headers: getAuthHeader(),

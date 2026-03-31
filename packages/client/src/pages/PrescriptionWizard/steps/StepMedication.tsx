@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, Mess
 import { usePrescriptionStore } from '../../../store/prescription';
 import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
-import { formaFarmaceuticaService, type FormaFarmaceutica } from '../../../services/insumo.service';
+import { formaFarmaceuticaService, insumoService, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { api } from '../../../services/api';
 
 type MedForm = {
@@ -52,6 +52,9 @@ export function StepMedication() {
 
     // Formas Farmacêuticas do banco
     const [formasFarma, setFormasFarma] = useState<FormaFarmaceutica[]>([]);
+
+    // Controlado info
+    const [controladoInfo, setControladoInfo] = useState<{ controlado: boolean; substancias: Array<{ nome: string; lista: string }> } | null>(null);
 
     // AI Assistant state
     const [showAssistant, setShowAssistant] = useState(false);
@@ -120,7 +123,7 @@ export function StepMedication() {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [aiMessages]);
 
-    const handleSelectProduto = (produto: Produto) => {
+    const handleSelectProduto = async (produto: Produto) => {
         setSelectedProduto(produto);
         setCatalogSearchTerm(produto.nome);
         setValue('codigo', produto.codigo);
@@ -128,6 +131,14 @@ export function StepMedication() {
         setValue('preco_sugestao', Number(produto.preco_sugestao));
         setValue('preco_tabela', Number(produto.preco_tabela));
         setShowCatalogDropdown(false);
+
+        // Verificar se contém substância controlada
+        try {
+            const check = await insumoService.verificarControlado(produto.nome);
+            setControladoInfo(check);
+        } catch {
+            setControladoInfo(null);
+        }
     };
 
     // ============================================================
@@ -181,6 +192,8 @@ export function StepMedication() {
             dosage: data.dosagem_mg_kg || '',
             preco_sugestao: data.preco_sugestao,
             preco_tabela: data.preco_tabela,
+            controlado: controladoInfo?.controlado || false,
+            lista_controle: controladoInfo?.substancias?.[0]?.lista || undefined,
         });
         resetForm();
     };
@@ -191,6 +204,7 @@ export function StepMedication() {
         setSelectedProduto(null);
         setCatalogResults([]);
         setShowForm(false);
+        setControladoInfo(null);
     };
 
     const handleNext = () => {
@@ -496,6 +510,25 @@ export function StepMedication() {
                                             <p className="text-xs text-green-700">
                                                 Clinica: {formatPrice(selectedProduto.preco_tabela)}
                                             </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Alerta de controlado */}
+                            {controladoInfo?.controlado && (
+                                <div className="mt-2 bg-amber-50 border border-amber-300 rounded-lg p-3">
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-amber-600 text-lg leading-none">&#9888;</span>
+                                        <div>
+                                            <p className="text-sm font-semibold text-amber-800">Medicamento Controlado</p>
+                                            {controladoInfo.substancias.map((s, idx) => (
+                                                <p key={idx} className="text-xs text-amber-700">
+                                                    {s.nome} — <span className="font-bold">{s.lista || 'Controlado'}</span>
+                                                    {s.lista === 'ANTIMICROBIANO' && ' (Requer receita antimicrobiana)'}
+                                                    {['C1', 'B1', 'A2'].includes(s.lista) && ' (Requer receituário especial)'}
+                                                </p>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, Download, CheckCircle, FileText, Loader2 } from 'lucide-react';
+import { ArrowLeft, Send, Download, CheckCircle, FileText, Loader2, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePrescriptionStore } from '../../../store/prescription';
 import { useAuthStore } from '../../../store/auth';
@@ -188,6 +188,26 @@ export function StepReview() {
                     </div>
 
                     <div className="border-t border-b border-gray-100 py-6 mb-6">
+                        {/* Banner de controlados */}
+                        {medications.some(m => m.controlado) && (
+                            <div className="mb-4 bg-amber-50 border border-amber-300 rounded-lg p-3 flex items-start gap-2">
+                                <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                                <div>
+                                    <p className="text-sm font-semibold text-amber-800">Atenção: Prescrição contém medicamento(s) controlado(s)</p>
+                                    <p className="text-xs text-amber-700 mt-1">
+                                        {medications.filter(m => m.controlado).map(m => {
+                                            const tipo = m.lista_controle === 'ANTIMICROBIANO'
+                                                ? 'Antimicrobiano - requer receita específica'
+                                                : m.lista_controle
+                                                    ? `Lista ${m.lista_controle} - requer receituário especial`
+                                                    : 'Controlado';
+                                            return `${m.drug} (${tipo})`;
+                                        }).join(' | ')}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
                         <h4 className="font-bold text-gray-900 mb-4">Uso Veterinário ({medications.length} medicamento{medications.length > 1 ? 's' : ''})</h4>
 
                         <div className="space-y-3">
@@ -202,7 +222,18 @@ export function StepReview() {
                                                 </span>
                                             )}
                                         </div>
-                                        <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-bold">{med.form}</span>
+                                        <div className="flex items-center gap-2">
+                                            {med.controlado && (
+                                                <span className={`text-xs px-2 py-1 rounded font-bold ${
+                                                    med.lista_controle === 'ANTIMICROBIANO'
+                                                        ? 'bg-blue-100 text-blue-800'
+                                                        : 'bg-red-100 text-red-700'
+                                                }`}>
+                                                    {med.lista_controle === 'ANTIMICROBIANO' ? 'Antimicrobiano' : `Controlado ${med.lista_controle || ''}`}
+                                                </span>
+                                            )}
+                                            <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-bold">{med.form}</span>
+                                        </div>
                                     </div>
                                     <p className="text-sm text-gray-600 mb-1">Dose: {med.dosage} • Quantidade: {med.amount}</p>
                                     {med.observations && (

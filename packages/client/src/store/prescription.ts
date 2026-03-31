@@ -11,6 +11,8 @@ type Medication = {
     observations: string;
     preco_sugestao?: number;
     preco_tabela?: number;
+    controlado?: boolean;
+    lista_controle?: string;
 };
 
 interface PrescriptionState {
