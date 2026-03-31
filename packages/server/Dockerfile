@@ -40,10 +40,12 @@ COPY server/package*.json ./
 # Install production dependencies + tsx for running seeds
 RUN npm ci --omit=dev && npm install tsx
 
-# Copy built files, prisma, and entrypoint
+# Copy built files, prisma, scripts and entrypoint
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/src/scripts ./src/scripts
+COPY server/data ./data
 COPY server/docker-entrypoint.sh ./docker-entrypoint.sh
 
 # Make entrypoint executable

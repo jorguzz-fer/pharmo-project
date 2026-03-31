@@ -52,6 +52,14 @@ else
     echo "  ⚠️  Produtos seed failed or already populated"
 fi
 
+# Bulário base (princípios ativos CSV V2)
+echo "  → Seeding bulário base (princípios ativos)..."
+if npx tsx src/scripts/seed-bulario-csv.ts data/bulario_ai_ready.csv; then
+    echo "  ✅ Bulário base seeded"
+else
+    echo "  ⚠️  Bulário seed failed ou já populado"
+fi
+
 echo ""
 echo "========================================="
 echo "🚀 Starting PharmoPet API Server..."
