@@ -4,6 +4,17 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://api.pharmopet.com.br/ap
 
 function getAuthHeader() {
   const token = localStorage.getItem('token');
+  // Fallback: try Zustand persist storage
+  if (!token) {
+    try {
+      const authStorage = localStorage.getItem('pharmo-auth-storage');
+      if (authStorage) {
+        const parsed = JSON.parse(authStorage);
+        const t = parsed?.state?.token;
+        if (t) return { Authorization: `Bearer ${t}` };
+      }
+    } catch { /* skip */ }
+  }
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
@@ -30,6 +41,14 @@ export interface FormaFarmaceutica {
   ativo: boolean;
 }
 
+export interface RegraExcecao {
+  id: string;
+  insumo_codigo: number;
+  insumo_descricao: string;
+  forma_nome: string;
+  descricao: string | null;
+}
+
 export const insumoService = {
   async buscar(busca: string, page = 1, limit = 20, somenteDisponivel = false) {
     const params = new URLSearchParams();
@@ -46,6 +65,50 @@ export const insumoService = {
 
   async buscarPorId(id: string) {
     const response = await axios.get(`${API_URL}/insumos/${id}`, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async listarControlados() {
+    const response = await axios.get(`${API_URL}/insumos/controlados`, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async toggleControlado(id: string, controlado: boolean, lista_controle?: string) {
+    const response = await axios.patch(`${API_URL}/insumos/${id}/controlado`, {
+      controlado,
+      lista_controle,
+    }, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+};
+
+export const regraExcecaoService = {
+  async listar() {
+    const response = await axios.get(`${API_URL}/regras-excecao`, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async adicionar(insumo_id: string, forma_id: string, descricao?: string) {
+    const response = await axios.post(`${API_URL}/regras-excecao`, {
+      insumo_id,
+      forma_id,
+      descricao,
+    }, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async remover(id: string) {
+    const response = await axios.delete(`${API_URL}/regras-excecao/${id}`, {
       headers: getAuthHeader(),
     });
     return response.data;

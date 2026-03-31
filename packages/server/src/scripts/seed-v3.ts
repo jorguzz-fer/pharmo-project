@@ -78,29 +78,46 @@ async function seedInsumos() {
 }
 
 async function seedControlados() {
-  const controlados: Array<{ nome: string; lista: string }> = loadJson('controlados.json');
+  const controlados: Array<{ codigo?: number; nome: string; lista: string }> = loadJson('controlados.json');
   if (!controlados.length) return;
   console.log(`\n💊 Controlados: ${controlados.length}`);
   let matched = 0, notFound = 0;
+
+  // Primeiro, reseta todos para não-controlado (permite re-runs limpas)
+  await prisma.insumoFarmaceutico.updateMany({
+    where: { controlado: true },
+    data: { controlado: false, lista_controle: null },
+  });
+
   for (const ctrl of controlados) {
-    // Busca o insumo pelo nome (match parcial insensível)
-    const insumos = await prisma.insumoFarmaceutico.findMany({
-      where: { descricao: { contains: ctrl.nome.split(' ')[0], mode: 'insensitive' } },
-    });
-    if (insumos.length > 0) {
-      for (const insumo of insumos) {
-        await prisma.insumoFarmaceutico.update({
-          where: { id: insumo.id },
-          data: {
-            controlado: true,
-            lista_controle: ctrl.lista || null,
-          },
-        });
-      }
+    let insumo = null;
+
+    // Match por código exato (preferencial)
+    if (ctrl.codigo) {
+      insumo = await prisma.insumoFarmaceutico.findUnique({
+        where: { codigo_interno: ctrl.codigo },
+      });
+    }
+
+    // Fallback: match por nome exato (case insensitive)
+    if (!insumo) {
+      insumo = await prisma.insumoFarmaceutico.findFirst({
+        where: { descricao: { equals: ctrl.nome, mode: 'insensitive' } },
+      });
+    }
+
+    if (insumo) {
+      await prisma.insumoFarmaceutico.update({
+        where: { id: insumo.id },
+        data: {
+          controlado: true,
+          lista_controle: ctrl.lista || null,
+        },
+      });
       matched++;
     } else {
       notFound++;
-      console.log(`   ⚠️  Não encontrado: ${ctrl.nome}`);
+      console.log(`   ⚠️  Não encontrado: ${ctrl.nome} (código: ${ctrl.codigo || 'N/A'})`);
     }
   }
   console.log(`   ✅ Marcados: ${matched} | Não encontrados: ${notFound}`);

@@ -16,6 +16,7 @@ import { AdminVeterinarians } from './pages/admin/AdminVeterinarians';
 import { AdminVeterinarianDetails } from './pages/admin/AdminVeterinarianDetails';
 import { AdminVeterinarianForm } from './pages/admin/AdminVeterinarianForm';
 import PrincipiosAtivos from './pages/PrincipiosAtivos';
+import { AdminInsumos } from './pages/admin/AdminInsumos';
 import { OrderStatus } from './pages/OrderStatus';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
@@ -98,6 +99,7 @@ export default function App() {
           <Route path="veterinarios/:id" element={<AdminVeterinarianDetails />} />
           <Route path="veterinarios/:id/editar" element={<AdminVeterinarianForm />} />
           <Route path="principios-ativos" element={<PrincipiosAtivos />} />
+          <Route path="insumos" element={<AdminInsumos />} />
         </Route>
       </Routes>
     </BrowserRouter>

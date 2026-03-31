@@ -1,74 +1,23 @@
 [
-  {
-    "nome": "Amitriptilina",
-    "lista": "C1"
-  },
-  {
-    "nome": "Amoxicilina tri hidratada",
-    "lista": ""
-  },
-  {
-    "nome": "Cefalexina (monohidratada compactada)",
-    "lista": ""
-  },
-  {
-    "nome": "Ciprofloxacina",
-    "lista": ""
-  },
-  {
-    "nome": "Codeína",
-    "lista": "A2"
-  },
-  {
-    "nome": "Doxiciclina",
-    "lista": ""
-  },
-  {
-    "nome": "Enrofloxacina",
-    "lista": ""
-  },
-  {
-    "nome": "Remanipulação - ativos diversos",
-    "lista": "C1"
-  },
-  {
-    "nome": "Fluoxetina",
-    "lista": "C1"
-  },
-  {
-    "nome": "Gabapentina",
-    "lista": "C1"
-  },
-  {
-    "nome": "Metronidazol",
-    "lista": ""
-  },
-  {
-    "nome": "Norfloxacina",
-    "lista": ""
-  },
-  {
-    "nome": "Pregabalina",
-    "lista": "C1"
-  },
-  {
-    "nome": "Ribavirina",
-    "lista": "C1"
-  },
-  {
-    "nome": "Selegilina (HCL)",
-    "lista": "C1"
-  },
-  {
-    "nome": "Tramadol",
-    "lista": "A2"
-  },
-  {
-    "nome": "Trazodona",
-    "lista": "C1"
-  },
-  {
-    "nome": "Clindamicina (HCLl)",
-    "lista": ""
-  }
+  { "codigo": 556, "nome": "Amitriptilina", "lista": "C1" },
+  { "codigo": 3, "nome": "Amoxicilina tri hidratada", "lista": "ANTIMICROBIANO" },
+  { "codigo": 825, "nome": "Cefalexina (monohidratada compactada)", "lista": "ANTIMICROBIANO" },
+  { "codigo": 9, "nome": "Ciprofloxacina", "lista": "ANTIMICROBIANO" },
+  { "codigo": 75, "nome": "Clindamicina (HCLl)", "lista": "ANTIMICROBIANO" },
+  { "codigo": 566, "nome": "Codeína", "lista": "A2" },
+  { "codigo": 559, "nome": "Diazepam", "lista": "B1" },
+  { "codigo": 122, "nome": "Doxiciclina", "lista": "ANTIMICROBIANO" },
+  { "codigo": 256, "nome": "Enrofloxacina", "lista": "ANTIMICROBIANO" },
+  { "codigo": 1055, "nome": "Fenobarbital", "lista": "B1" },
+  { "codigo": 561, "nome": "Fluoxetina", "lista": "C1" },
+  { "codigo": 665, "nome": "Gabapentina", "lista": "C1" },
+  { "codigo": 341, "nome": "Metronidazol", "lista": "ANTIMICROBIANO" },
+  { "codigo": 138, "nome": "Norfloxacina", "lista": "ANTIMICROBIANO" },
+  { "codigo": 977, "nome": "Pregabalina", "lista": "C1" },
+  { "codigo": 1064, "nome": "Remanipulação Fenobarbital", "lista": "C1" },
+  { "codigo": 1080, "nome": "Remanipulação Amantadina", "lista": "C1" },
+  { "codigo": 844, "nome": "Ribavirina", "lista": "C1" },
+  { "codigo": 711, "nome": "Selegilina (HCL)", "lista": "C1" },
+  { "codigo": 568, "nome": "Tramadol", "lista": "A2" },
+  { "codigo": 1076, "nome": "Trazodona", "lista": "C1" }
 ]

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, LogOut, Menu, X, Phone, TrendingUp, Building2, Users } from 'lucide-react';
+import { LayoutDashboard, FileText, LogOut, Menu, X, Phone, TrendingUp, Building2, Users, FlaskConical } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
 
 export function MainLayout() {
@@ -170,6 +170,20 @@ export function MainLayout() {
                             >
                                 <Users className="w-5 h-5" />
                                 Veterinários
+                            </NavLink>
+
+                            <NavLink
+                                to="/admin/insumos"
+                                onClick={closeSidebar}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                                        ? 'bg-gray-800 text-white font-medium'
+                                        : 'text-gray-600 hover:bg-gray-50'
+                                    }`
+                                }
+                            >
+                                <FlaskConical className="w-5 h-5" />
+                                Insumos
                             </NavLink>
                         </>
                     )}
