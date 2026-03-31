@@ -465,20 +465,6 @@ export function StepMedication() {
                                 </div>
                             )}
 
-                            {/* Aviso: produto da IA não está no catálogo */}
-                            {aiProductNotFound && (
-                                <div className="mt-2 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
-                                    <span className="text-amber-500 text-lg leading-none">⚠️</span>
-                                    <div>
-                                        <p className="text-sm font-medium text-amber-800">
-                                            Produto <span className="font-mono bg-amber-100 px-1 rounded">{aiProductNotFound}</span> não encontrado no catálogo
-                                        </p>
-                                        <p className="text-xs text-amber-700 mt-0.5">
-                                            Este item ainda não está disponível. Busque outro produto manualmente.
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
 
                             {/* Selected product card */}
                             {selectedProduto && (

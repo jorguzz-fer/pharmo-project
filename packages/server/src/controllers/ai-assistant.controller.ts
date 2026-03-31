@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
+import { PrismaClient } from '@prisma/client';
 import {
     searchMedications,
     searchPrincipiosAtivos,
     generateRecommendation,
 } from '../services/ai-assistant.service';
+
+const prisma = new PrismaClient();
 
 export class AiAssistantController {
     async consultar(req: Request, res: Response) {
@@ -22,12 +25,21 @@ export class AiAssistantController {
                 searchPrincipiosAtivos(pergunta, species ?? null),
             ]);
 
-            // Step 2: Generate AI recommendation with combined context
-            const resposta = await generateRecommendation(pergunta, medicamentos, principiosAtivos);
+            // Step 2: Filtra medicamentos que existem no catálogo de produtos
+            const codigos = medicamentos.map(m => m.codigo);
+            const produtosExistentes = await prisma.produto.findMany({
+                where: { codigo: { in: codigos } },
+                select: { codigo: true },
+            });
+            const codigosNoCatalogo = new Set(produtosExistentes.map(p => p.codigo));
+            const medicamentosFiltrados = medicamentos.filter(m => codigosNoCatalogo.has(m.codigo));
+
+            // Step 3: Generate AI recommendation with combined context
+            const resposta = await generateRecommendation(pergunta, medicamentosFiltrados, principiosAtivos);
 
             return res.json({
                 resposta,
-                medicamentos: medicamentos.map(m => ({
+                medicamentos: medicamentosFiltrados.map(m => ({
                     id: m.id,
                     codigo: m.codigo,
                     nome: m.nome,
