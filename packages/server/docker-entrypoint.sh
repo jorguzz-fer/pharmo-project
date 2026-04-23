@@ -73,3 +73,4 @@ echo "========================================="
 echo "🚀 Starting PharmoPet API Server..."
 echo "========================================="
 exec node dist/index.js
+# Trigger rebuild 1776952005
