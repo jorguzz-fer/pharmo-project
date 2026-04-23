@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://api.pharmopet.com.br/api';
+function getBaseUrl() {
+  let url = import.meta.env.VITE_API_URL || 'https://api.pharmopet.com.br/api';
+  if (url.endsWith('/')) url = url.slice(0, -1);
+  if (!url.endsWith('/api')) url = `${url}/api`;
+  return url;
+}
+
+const API_URL = getBaseUrl();
 
 function getAuthHeader() {
   const token = localStorage.getItem('token');
