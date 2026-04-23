@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, Download, CheckCircle, FileText, Loader2, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Send, Download, CheckCircle, FileText, Loader2, AlertTriangle, FlaskConical, ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePrescriptionStore } from '../../../store/prescription';
 import { useAuthStore } from '../../../store/auth';
@@ -19,6 +19,7 @@ export function StepReview() {
     const [isSending, setIsSending] = useState(false);
     const [isPrinting, setIsPrinting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [expandedBreakdown, setExpandedBreakdown] = useState<number | null>(null);
 
     const handlePrintDraft = async () => {
         if (!user || !tutor || !animal || medications.length === 0) {
@@ -212,10 +213,20 @@ export function StepReview() {
 
                         <div className="space-y-3">
                             {medications.map((med, index) => (
-                                <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <div key={index} className={`p-4 rounded-lg border ${
+                                    med.is_magistral
+                                        ? 'bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200'
+                                        : 'bg-gray-50 border-gray-100'
+                                }`}>
                                     <div className="flex justify-between items-start mb-2">
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 flex-wrap">
                                             <span className="font-bold text-lg text-gray-900">{med.drug}</span>
+                                            {med.is_magistral && (
+                                                <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                                                    <FlaskConical className="w-3 h-3" />
+                                                    MAGISTRAL
+                                                </span>
+                                            )}
                                             {med.codigo && (
                                                 <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-mono">
                                                     {med.codigo}
@@ -240,13 +251,87 @@ export function StepReview() {
                                         <p className="text-sm text-gray-800 italic mt-2">"{med.observations}"</p>
                                     )}
                                     {(med.preco_sugestao || med.preco_tabela) && (
-                                        <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200 text-sm">
+                                        <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200 text-sm items-center flex-wrap">
                                             <span className="text-green-700 font-medium">
-                                                Venda: R$ {Number(med.preco_sugestao || 0).toFixed(2).replace('.', ',')}
+                                                {med.is_magistral ? 'Valor final: ' : 'Venda: '}
+                                                R$ {Number(med.preco_sugestao || 0).toFixed(2).replace('.', ',')}
                                             </span>
-                                            <span className="text-blue-700 font-medium">
-                                                Clínica: R$ {Number(med.preco_tabela || 0).toFixed(2).replace('.', ',')}
-                                            </span>
+                                            {!med.is_magistral && med.preco_tabela !== undefined && (
+                                                <span className="text-blue-700 font-medium">
+                                                    Clínica: R$ {Number(med.preco_tabela || 0).toFixed(2).replace('.', ',')}
+                                                </span>
+                                            )}
+                                            {med.is_magistral && med.magistral_breakdown && (
+                                                <button
+                                                    onClick={() => setExpandedBreakdown(expandedBreakdown === index ? null : index)}
+                                                    className="ml-auto text-xs text-indigo-700 hover:text-indigo-900 font-medium flex items-center gap-1"
+                                                >
+                                                    {expandedBreakdown === index ? (
+                                                        <>Ocultar detalhes <ChevronUp className="w-3 h-3" /></>
+                                                    ) : (
+                                                        <>Ver detalhes <ChevronDown className="w-3 h-3" /></>
+                                                    )}
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Breakdown detalhado para magistral */}
+                                    {med.is_magistral && med.magistral_breakdown && expandedBreakdown === index && (
+                                        <div className="mt-3 pt-3 border-t border-indigo-200 bg-white/60 rounded-lg p-3 text-sm space-y-2">
+                                            <div>
+                                                <p className="font-semibold text-indigo-900 mb-1">Ingredientes:</p>
+                                                <div className="space-y-1">
+                                                    {med.magistral_breakdown.ingredientes.map((ing: any, i: number) => (
+                                                        <div key={i} className="flex justify-between text-xs">
+                                                            <span className="text-gray-700">
+                                                                {ing.descricao} ({ing.dosagem_mg}mg × {ing.quantidade})
+                                                            </span>
+                                                            <span className="text-gray-900 font-medium">R$ {Number(ing.custo_ingrediente).toFixed(2).replace('.', ',')}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="space-y-1 pt-2 border-t border-indigo-100">
+                                                <div className="flex justify-between text-xs">
+                                                    <span className="text-gray-600">Matéria prima</span>
+                                                    <span>R$ {Number(med.magistral_breakdown.total_materia_prima).toFixed(2).replace('.', ',')}</span>
+                                                </div>
+                                                <div className="flex justify-between text-xs">
+                                                    <span className="text-gray-600">+ Taxa manipulação</span>
+                                                    <span>R$ {Number(med.magistral_breakdown.taxa_manipulacao).toFixed(2).replace('.', ',')}</span>
+                                                </div>
+                                                <div className="flex justify-between text-xs">
+                                                    <span className="text-gray-600">+ Embalagens</span>
+                                                    <span>R$ {Number(med.magistral_breakdown.custo_embalagens).toFixed(2).replace('.', ',')}</span>
+                                                </div>
+                                                <div className="flex justify-between text-xs font-medium">
+                                                    <span>Subtotal</span>
+                                                    <span>R$ {Number(med.magistral_breakdown.subtotal).toFixed(2).replace('.', ',')}</span>
+                                                </div>
+                                                {med.magistral_breakdown.desconto_parceiro_pct > 0 && (
+                                                    <div className="flex justify-between text-xs text-green-700">
+                                                        <span>Desconto ({(med.magistral_breakdown.desconto_parceiro_pct * 100).toFixed(0)}%)</span>
+                                                        <span>- R$ {Number(med.magistral_breakdown.desconto_valor).toFixed(2).replace('.', ',')}</span>
+                                                    </div>
+                                                )}
+                                                {med.magistral_breakdown.adicional_entrega > 0 && (
+                                                    <div className="flex justify-between text-xs">
+                                                        <span className="text-gray-600">+ Entrega</span>
+                                                        <span>R$ {Number(med.magistral_breakdown.adicional_entrega).toFixed(2).replace('.', ',')}</span>
+                                                    </div>
+                                                )}
+                                                {med.magistral_breakdown.adicional_biscoito > 0 && (
+                                                    <div className="flex justify-between text-xs">
+                                                        <span className="text-gray-600">+ Biscoito</span>
+                                                        <span>R$ {Number(med.magistral_breakdown.adicional_biscoito).toFixed(2).replace('.', ',')}</span>
+                                                    </div>
+                                                )}
+                                                <div className="flex justify-between font-bold text-indigo-900 pt-1 border-t border-indigo-200">
+                                                    <span>VALOR FINAL</span>
+                                                    <span>R$ {Number(med.magistral_breakdown.valor_final).toFixed(2).replace('.', ',')}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </div>

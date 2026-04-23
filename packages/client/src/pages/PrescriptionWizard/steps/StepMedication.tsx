@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, MessageCircle, Send, X, Loader2, Bot } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, MessageCircle, Send, X, Loader2, Bot, FlaskConical } from 'lucide-react';
 import { usePrescriptionStore } from '../../../store/prescription';
 import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
 import { formaFarmaceuticaService, insumoService, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { api } from '../../../services/api';
+import { MagistralBuilder } from '../components/MagistralBuilder';
 
 type MedForm = {
     codigo?: string;
@@ -62,6 +63,24 @@ export function StepMedication() {
     const [aiInput, setAiInput] = useState('');
     const [aiLoading, setAiLoading] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
+
+    // Magistral Builder state
+    const [showMagistral, setShowMagistral] = useState(false);
+    const [vetClinicaId, setVetClinicaId] = useState<string | undefined>(undefined);
+
+    // Carrega clínica do veterinário (pega a primeira se houver múltiplas)
+    useEffect(() => {
+        api.get('/veterinario/minhas-clinicas')
+            .then((resp: any) => {
+                const clinicas = resp?.clinicas || resp?.data || resp;
+                if (Array.isArray(clinicas) && clinicas.length > 0) {
+                    setVetClinicaId(clinicas[0].id);
+                }
+            })
+            .catch(() => {
+                // Se falhar, apenas segue sem clínica (preço sem condições)
+            });
+    }, []);
 
     // ============================================================
     // CATALOG SEARCH (PharmoPet products)
@@ -207,6 +226,35 @@ export function StepMedication() {
         setControladoInfo(null);
     };
 
+    const handleMagistralConfirm = (dados: {
+        drug: string;
+        form: string;
+        amount: string;
+        dosage: string;
+        preco_sugestao: number;
+        preco_tabela: number;
+        controlado: boolean;
+        lista_controle?: string;
+        is_magistral: boolean;
+        magistral_breakdown: any;
+        observations: string;
+    }) => {
+        addMedication({
+            drug: dados.drug,
+            dosage: dados.dosage,
+            form: dados.form,
+            amount: dados.amount,
+            observations: dados.observations,
+            preco_sugestao: dados.preco_sugestao,
+            preco_tabela: dados.preco_tabela,
+            controlado: dados.controlado,
+            lista_controle: dados.lista_controle,
+            is_magistral: true,
+            magistral_breakdown: dados.magistral_breakdown,
+        });
+        setShowMagistral(false);
+    };
+
     const handleNext = () => {
         if (medications.length === 0) {
             alert('Adicione pelo menos um medicamento');
@@ -225,24 +273,54 @@ export function StepMedication() {
         <div className="max-w-3xl mx-auto">
             <h2 className="text-xl font-bold text-gray-900 mb-6">3. Prescricao Medica</h2>
 
+            {/* Magistral Builder Modal */}
+            {showMagistral && (
+                <MagistralBuilder
+                    clinicaId={vetClinicaId}
+                    onCancel={() => setShowMagistral(false)}
+                    onConfirm={handleMagistralConfirm}
+                />
+            )}
+
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                {/* AI Assistant Banner */}
-                <button
-                    type="button"
-                    onClick={() => setShowAssistant(!showAssistant)}
-                    className="w-full bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 mb-6 flex gap-3 items-center hover:from-purple-100 hover:to-blue-100 transition-all text-left"
-                >
-                    <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Bot className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                        <h4 className="font-bold text-purple-900 text-sm">Assistente PharmoPet</h4>
-                        <p className="text-sm text-purple-700">
-                            Descreva o caso clinico e receba sugestoes de medicamentos magistrais
-                        </p>
-                    </div>
-                    <MessageCircle className="w-5 h-5 text-purple-500" />
-                </button>
+                {/* Action Buttons: AI Assistant + Magistral Builder */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                    {/* AI Assistant Banner */}
+                    <button
+                        type="button"
+                        onClick={() => setShowAssistant(!showAssistant)}
+                        className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 flex gap-3 items-center hover:from-purple-100 hover:to-blue-100 transition-all text-left"
+                    >
+                        <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <Bot className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1">
+                            <h4 className="font-bold text-purple-900 text-sm">Assistente PharmoPet</h4>
+                            <p className="text-xs text-purple-700">
+                                Sugestões clínicas por IA
+                            </p>
+                        </div>
+                        <MessageCircle className="w-5 h-5 text-purple-500" />
+                    </button>
+
+                    {/* Magistral Builder Banner */}
+                    <button
+                        type="button"
+                        onClick={() => setShowMagistral(true)}
+                        className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-4 flex gap-3 items-center hover:from-indigo-100 hover:to-purple-100 transition-all text-left"
+                    >
+                        <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <FlaskConical className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1">
+                            <h4 className="font-bold text-indigo-900 text-sm">Formulação Magistral</h4>
+                            <p className="text-xs text-indigo-700">
+                                Monte fórmula e veja preço em tempo real
+                            </p>
+                        </div>
+                        <Plus className="w-5 h-5 text-indigo-500" />
+                    </button>
+                </div>
 
                 {/* AI Assistant Panel */}
                 {showAssistant && (
@@ -363,19 +441,38 @@ export function StepMedication() {
                     <div className="mb-6 space-y-3">
                         <h3 className="font-semibold text-gray-900">Medicamentos Adicionados ({medications.length})</h3>
                         {medications.map((med, index) => (
-                            <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-200 flex justify-between items-start">
+                            <div key={index} className={`p-4 rounded-lg border flex justify-between items-start ${
+                                med.is_magistral
+                                    ? 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200'
+                                    : 'bg-gray-50 border-gray-200'
+                            }`}>
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-2">
+                                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                                         <h4 className="font-bold text-gray-900">{med.drug}</h4>
+                                        {med.is_magistral && (
+                                            <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                                                <FlaskConical className="w-3 h-3" />
+                                                MAGISTRAL
+                                            </span>
+                                        )}
                                         {med.codigo && (
                                             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono">
                                                 {med.codigo}
                                             </span>
                                         )}
+                                        {med.controlado && (
+                                            <span className={`text-xs px-2 py-0.5 rounded font-bold ${
+                                                med.lista_controle === 'ANTIMICROBIANO'
+                                                    ? 'bg-blue-100 text-blue-800'
+                                                    : 'bg-red-100 text-red-700'
+                                            }`}>
+                                                {med.lista_controle === 'ANTIMICROBIANO' ? 'Antimicrobiano' : `Controlado ${med.lista_controle || ''}`}
+                                            </span>
+                                        )}
                                     </div>
-                                    <div className="grid grid-cols-3 gap-2 text-sm text-gray-600">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-gray-600">
                                         <div>
-                                            <span className="font-medium">Dosagem:</span> {med.dosagem_mg_kg || med.dosage} mg/kg
+                                            <span className="font-medium">Dosagem:</span> {med.is_magistral ? med.dosage : `${med.dosagem_mg_kg || med.dosage} mg/kg`}
                                         </div>
                                         <div>
                                             <span className="font-medium">Forma:</span> {med.form}
@@ -388,16 +485,23 @@ export function StepMedication() {
                                         <div className="flex gap-4 mt-2 text-sm">
                                             <span className="text-green-700 font-medium">
                                                 <DollarSign className="w-3.5 h-3.5 inline -mt-0.5" />
-                                                Cliente: {formatPrice(med.preco_sugestao)}
+                                                {med.is_magistral ? 'Valor final' : 'Cliente'}: {formatPrice(med.preco_sugestao)}
                                             </span>
-                                            <span className="text-blue-700 font-medium">
-                                                <DollarSign className="w-3.5 h-3.5 inline -mt-0.5" />
-                                                Clinica: {formatPrice(med.preco_tabela)}
-                                            </span>
+                                            {!med.is_magistral && (
+                                                <span className="text-blue-700 font-medium">
+                                                    <DollarSign className="w-3.5 h-3.5 inline -mt-0.5" />
+                                                    Clinica: {formatPrice(med.preco_tabela)}
+                                                </span>
+                                            )}
+                                            {med.is_magistral && med.magistral_breakdown && (
+                                                <span className="text-gray-500 text-xs">
+                                                    ({med.magistral_breakdown.ingredientes.length} ingrediente{med.magistral_breakdown.ingredientes.length > 1 ? 's' : ''})
+                                                </span>
+                                            )}
                                         </div>
                                     )}
                                     {med.observations && (
-                                        <p className="text-sm text-gray-600 mt-2">{med.observations}</p>
+                                        <p className="text-sm text-gray-600 mt-2 italic">"{med.observations}"</p>
                                     )}
                                 </div>
                                 <button

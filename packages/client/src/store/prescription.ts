@@ -1,5 +1,31 @@
 import { create } from 'zustand';
 
+export type MagistralIngrediente = {
+    codigo_interno: number;
+    descricao: string;
+    dosagem_mg: number;
+    quantidade: number;
+    custo_ingrediente?: number;
+    controlado?: boolean;
+    lista_controle?: string | null;
+};
+
+export type MagistralBreakdown = {
+    ingredientes: MagistralIngrediente[];
+    total_materia_prima: number;
+    taxa_manipulacao: number;
+    custo_embalagens: number;
+    subtotal: number;
+    desconto_parceiro_pct: number;
+    desconto_valor: number;
+    valor_com_desconto: number;
+    adicional_entrega: number;
+    adicional_biscoito: number;
+    valor_final: number;
+    forma_farmaceutica: string;
+    avisos: string[];
+};
+
 type Medication = {
     id?: string;
     codigo?: string;
@@ -13,6 +39,9 @@ type Medication = {
     preco_tabela?: number;
     controlado?: boolean;
     lista_controle?: string;
+    // Magistral fields
+    is_magistral?: boolean;
+    magistral_breakdown?: MagistralBreakdown;
 };
 
 interface PrescriptionState {
