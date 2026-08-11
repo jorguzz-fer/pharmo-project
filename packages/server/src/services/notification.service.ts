@@ -1,13 +1,26 @@
-import { whatsappService } from './whatsapp.service';
+import { whatsappService, type EnvioResultado } from './whatsapp.service';
 
 class NotificationService {
-    async notifyPrescriptionCreated(tutorPhone: string, tutorName: string, paymentLink: string) {
-        // Logic to format phone number if needed
-        await whatsappService.sendPrescriptionLink(tutorPhone, tutorName, paymentLink);
+    async notifyPrescriptionCreated(
+        tutorPhone: string | null | undefined,
+        tutorName: string,
+        paymentLink: string
+    ): Promise<EnvioResultado> {
+        if (!tutorPhone) {
+            return { enviado: false, motivo: 'Tutor não tem telefone cadastrado' };
+        }
+        return whatsappService.sendPrescriptionLink(tutorPhone, tutorName, paymentLink);
     }
 
-    async notifyPaymentConfirmed(tutorPhone: string, tutorName: string, orderId: string) {
-        await whatsappService.sendPaymentConfirmation(tutorPhone, tutorName, orderId);
+    async notifyPaymentConfirmed(
+        tutorPhone: string | null | undefined,
+        tutorName: string,
+        orderId: string
+    ): Promise<EnvioResultado> {
+        if (!tutorPhone) {
+            return { enviado: false, motivo: 'Tutor não tem telefone cadastrado' };
+        }
+        return whatsappService.sendPaymentConfirmation(tutorPhone, tutorName, orderId);
     }
 }
 

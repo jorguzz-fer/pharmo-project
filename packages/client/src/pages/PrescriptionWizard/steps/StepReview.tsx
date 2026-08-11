@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { usePrescriptionStore } from '../../../store/prescription';
 import { useAuthStore } from '../../../store/auth';
 import { api } from '../../../services/api';
+import { validacaoClinicaService } from '../../../services/validacaoClinica.service';
 
 function getBaseUrl() {
     let url = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
@@ -13,13 +14,14 @@ function getBaseUrl() {
 }
 
 export function StepReview() {
-    const { tutor, animal, medications, setStep, reset } = usePrescriptionStore();
+    const { tutor, animal, medications, doenca, setStep, reset } = usePrescriptionStore();
     const { user, token } = useAuthStore();
     const navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
     const [isPrinting, setIsPrinting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [expandedBreakdown, setExpandedBreakdown] = useState<number | null>(null);
+    const [envioResultado, setEnvioResultado] = useState<{ enviado: boolean; motivo?: string } | null>(null);
 
     const handlePrintDraft = async () => {
         if (!user || !tutor || !animal || medications.length === 0) {
@@ -99,26 +101,53 @@ export function StepReview() {
                 return;
             }
 
-            // Create Prescription with first medication (for compatibility)
-            const firstMed = medications[0];
+            // Envia a prescrição completa: todos os medicamentos e os preços praticados
             const data = {
                 veterinario_id: user.id,
                 tutor_id: tutor.id,
                 animal_id: animal.id,
-                medicamento: firstMed.drug,
-                dosagem: firstMed.dosage,
-                forma_farmaceutica: firstMed.form,
-                quantidade: firstMed.amount,
-                observacoes: firstMed.observations,
-                doenca: '' // TODO: Add disease field
+                doenca: doenca || undefined,
+                medicamentos: medications.map(m => ({
+                    codigo_medicamento: m.codigo || null,
+                    medicamento: m.drug,
+                    dosagem: m.dosage,
+                    forma_farmaceutica: m.form,
+                    quantidade: m.amount,
+                    observacoes: m.observations || null,
+                    preco_sugestao: Number(m.preco_sugestao ?? 0),
+                    preco_tabela: Number(m.preco_tabela ?? 0),
+                    is_magistral: Boolean(m.is_magistral),
+                })),
             };
 
             const response = await api.post('/prescricoes', data);
+            const prescricaoId = response.prescricao?.id;
 
-            // Optionally send (mock)
-            if (response.prescricao?.id) {
-                await api.post(`/prescricoes/${response.prescricao.id}/enviar`, {});
+            // Grava as ciências de dose fora do range (só agora existe prescricao_id)
+            if (prescricaoId) {
+                const comCiencia = medications.filter(m => m.ciencia);
+                for (const med of comCiencia) {
+                    try {
+                        await validacaoClinicaService.registrarCiencia({
+                            prescricao_id: prescricaoId,
+                            animal_id: animal.id,
+                            ...med.ciencia!,
+                        });
+                    } catch (err) {
+                        // A prescrição já existe; falha no log é reportada, não desfaz o cadastro
+                        console.error('Falha ao registrar ciência de dose:', err);
+                    }
+                }
             }
+
+            let envio: { enviado?: boolean; motivo?: string } = {};
+            if (prescricaoId) {
+                envio = await api.post(`/prescricoes/${prescricaoId}/enviar`, {});
+            }
+            setEnvioResultado({
+                enviado: Boolean(envio.enviado),
+                motivo: envio.motivo,
+            });
 
             setIsSending(false);
             setIsSuccess(true);
@@ -127,7 +156,7 @@ export function StepReview() {
             setTimeout(() => {
                 reset();
                 navigate('/veterinario/dashboard');
-            }, 3000);
+            }, envio.enviado ? 3000 : 6000);
 
         } catch (error: any) {
             console.error(error);
@@ -148,13 +177,36 @@ export function StepReview() {
     };
 
     if (isSuccess) {
+        const enviado = envioResultado?.enviado;
         return (
             <div className="max-w-md mx-auto text-center py-12">
-                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
+                <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-6 ${enviado ? 'bg-green-100' : 'bg-amber-100'}`}>
+                    {enviado
+                        ? <CheckCircle className="w-8 h-8 text-green-600" />
+                        : <AlertTriangle className="w-8 h-8 text-amber-600" />}
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Prescrição Enviada!</h2>
-                <p className="text-gray-500 mb-8">O link de pagamento e a receita foram enviados para o WhatsApp do tutor ({tutor?.phone || tutor?.telefone}).</p>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    {enviado ? 'Prescrição Enviada!' : 'Prescrição Registrada'}
+                </h2>
+                {enviado ? (
+                    <p className="text-gray-500 mb-8">
+                        O link de pagamento e a receita foram enviados para o WhatsApp do tutor ({tutor?.phone || tutor?.telefone}).
+                    </p>
+                ) : (
+                    <div className="mb-8 space-y-2">
+                        <p className="text-gray-600">
+                            A prescrição e o orçamento foram salvos, mas <strong>não foram enviados ao tutor</strong>.
+                        </p>
+                        {envioResultado?.motivo && (
+                            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                                {envioResultado.motivo}
+                            </p>
+                        )}
+                        <p className="text-sm text-gray-500">
+                            Use "Salvar em PDF" para entregar a receita ao tutor.
+                        </p>
+                    </div>
+                )}
                 <div className="animate-pulse text-sm text-gray-400">Redirecionando para o dashboard...</div>
             </div>
         )

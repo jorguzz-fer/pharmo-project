@@ -1,8 +1,13 @@
 import { Router } from 'express';
 import { ValidacaoClinicaController } from '../controllers/validacaoClinica.controller';
+import { authMiddleware } from '../middlewares/auth.middleware';
 
 const router = Router();
 const controller = new ValidacaoClinicaController();
+
+// Todas as rotas exigem autenticação: os logs de ciência identificam o
+// veterinário responsável e não podem ser gravados sem token.
+router.use(authMiddleware);
 
 // Validação de dosagem
 router.post('/dosagem', controller.validarDosagem.bind(controller));

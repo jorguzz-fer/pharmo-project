@@ -12,6 +12,864 @@
     "preco_tabela": 29.4
   },
   {
+    "codigo": "2.2",
+    "nome": "Cápsulas - Cetoconazol + Complexo Hepato Pharmo Pet",
+    "preco_sugestao": 72.0,
+    "preco_tabela": 43.2
+  },
+  {
+    "codigo": "2.4",
+    "nome": "Pasta Oral Feline - Itraconazol + Iodeto de Potássio + Complexo Dermaprotectvet Pharmo Pet",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "2.5",
+    "nome": "Suspensão – Terbinafina + Complexo Biolipidvet Pharmo Pet",
+    "preco_sugestao": 100.0,
+    "preco_tabela": 60.0
+  },
+  {
+    "codigo": "3.3",
+    "nome": "Suspensão de Cefalexina + Complexo Pharmo Pet Protect",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "3.4",
+    "nome": "Petiscos de Ciprofloxacino + Pharmo Pet Digest",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "3.5",
+    "nome": "Cápsulas de Clindamicina",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "3.6",
+    "nome": "Cápsulas de Doxiciclina + Curcumina Fitossomada Pharmo Pet Recovery",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "3.7",
+    "nome": "Suspensão de Enrofloxacina + Complexo Pharmo Pet Protect - Cães",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "3.8",
+    "nome": "Suspensão de Enrofloxacina + Pharmo Pet Digest - Gatos",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "3.9",
+    "nome": "Suspensão de Eritromicina + Pharmo Pet Mucosa",
+    "preco_sugestao": 54.0,
+    "preco_tabela": 32.4
+  },
+  {
+    "codigo": "3.10",
+    "nome": "Petiscos de Norfloxacina + Complexo Pharmo Pet Digest",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "3.11",
+    "nome": "Cápsulas de Rifampicina + Pharmo Pet Derma",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "4.1.1",
+    "nome": "Creme antifúngico e antimicrobiano (Desonida + Gentamicina + Miconazol)",
+    "preco_sugestao": 51.0,
+    "preco_tabela": 30.6
+  },
+  {
+    "codigo": "4.1.2",
+    "nome": "Creme antifúngico (Clotrimazol + Dexametasona + Óleo de melaleuca)",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "4.1.3",
+    "nome": "Gel antifúngico (Cetoconazol + Tintura de barbatimão)",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "4.1.4",
+    "nome": "Pomada antifúngica (Betametasona + Miconazol)",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "4.1.5",
+    "nome": "Xampu com Ciclopirox Olamina (Malassezia)",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "4.1.6",
+    "nome": "Xampu com Clorexidina e Cetoconazol",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "4.1.7",
+    "nome": "Xampu com Clorexidina e Miconazol",
+    "preco_sugestao": 72.0,
+    "preco_tabela": 43.2
+  },
+  {
+    "codigo": "4.1.13",
+    "nome": "Xampu de Triclosan",
+    "preco_sugestao": 66.0,
+    "preco_tabela": 39.6
+  },
+  {
+    "codigo": "4.2.1",
+    "nome": "Creme anti-inflamatório e cicatrizante com D-pantenol",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "4.2.2",
+    "nome": "Creme cicatrizante e repelente (Alantoína + Clorexidina + Óxido de zinco + Citronela)",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "4.2.3",
+    "nome": "Pomada cicatrizante com ácido bórico",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "4.2.4",
+    "nome": "Pomada cicatrizante com sulfadiazina de prata",
+    "preco_sugestao": 66.0,
+    "preco_tabela": 39.6
+  },
+  {
+    "codigo": "4.2.6",
+    "nome": "Gel anti-inflamatório (Dexametasona + DMSO + Lidocaína + Arnica)",
+    "preco_sugestao": 56.0,
+    "preco_tabela": 33.6
+  },
+  {
+    "codigo": "4.2.7",
+    "nome": "Solução anti-inflamatória (DMSO + Hidrocortisona acetato + Lidocaína)",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "4.2.8",
+    "nome": "Loção anti-inflamatória (Hidrocortisona + Vitamina E + Camomila)",
+    "preco_sugestao": 54.0,
+    "preco_tabela": 32.4
+  },
+  {
+    "codigo": "4.2.12",
+    "nome": "Pomada (Clindamicina 1%)",
+    "preco_sugestao": 53.0,
+    "preco_tabela": 31.8
+  },
+  {
+    "codigo": "4.2.12.2",
+    "nome": "Pomada (Clindamicina 1%)",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "4.3.1",
+    "nome": "Antimicrobianos (tópicos)",
+    "preco_sugestao": 56.0,
+    "preco_tabela": 33.6
+  },
+  {
+    "codigo": "4.3.2",
+    "nome": "Pomada antimicrobiana com Tobramicina (Alantoína + Dexametasona)",
+    "preco_sugestao": 69.0,
+    "preco_tabela": 41.4
+  },
+  {
+    "codigo": "4.3.3",
+    "nome": "Spray antimicrobiano com D-pantenol (Desonida + Gentamicina)",
+    "preco_sugestao": 64.0,
+    "preco_tabela": 38.4
+  },
+  {
+    "codigo": "4.3.4",
+    "nome": "Pomada antimicrobiana (Alantoína + Neomicina + Óxido de zinco)",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "4.4.2",
+    "nome": "Creme com Ureia e Ácido Salicílico (Ceratolítico)",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "4.4.4",
+    "nome": "Xampu anti seborreico (Sulfeto de Selênio)",
+    "preco_sugestao": 67.0,
+    "preco_tabela": 40.2
+  },
+  {
+    "codigo": "4.4.5",
+    "nome": "Xampu anti seborreico (Enxofre + Alcatrão)",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "4.4.6",
+    "nome": "Xampu anti seborreico (Enxofre + Ácido salicílico + Irgasan)",
+    "preco_sugestao": 63.0,
+    "preco_tabela": 37.8
+  },
+  {
+    "codigo": "4.4.8",
+    "nome": "Xampu Seborreia oleosa para cães (Cetrimida)",
+    "preco_sugestao": 92.0,
+    "preco_tabela": 55.2
+  },
+  {
+    "codigo": "4.4.12",
+    "nome": "Xampu com Piritionato de Zinco",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "4.4.13",
+    "nome": "Xampu com Sulfeto de Selênio (controle de oleosidade)",
+    "preco_sugestao": 64.0,
+    "preco_tabela": 38.4
+  },
+  {
+    "codigo": "4.4.14",
+    "nome": "Xampu de Enxofre com Triclosan",
+    "preco_sugestao": 61.0,
+    "preco_tabela": 36.6
+  },
+  {
+    "codigo": "4.6.1",
+    "nome": "Xampu dessensibilizante (Alfa-bisabolol + Aloe + Calêndula)",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "4.6.1.2",
+    "nome": "Xampu dessensibilizante (Alfa-bisabolol + Aloe + Calêndula)",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "4.6.2",
+    "nome": "Spray dessensibilizante (Ácido hialurônico + Alfa-bisabolol)",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "4.7.5",
+    "nome": "Repelente de ação combinada (Citronela + Neem)",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "4.7.7",
+    "nome": "Pour-on com óleo de Neem",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "4.7.8",
+    "nome": "Xampu antipulgas com óleo de Neem",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "4.7.9",
+    "nome": "Suspensão de Nitempiram (Milases / controle rápido)",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "4.7.10",
+    "nome": "Xampu com Tiabendazol (escabicida/acaricida)",
+    "preco_sugestao": 85.0,
+    "preco_tabela": 51.0
+  },
+  {
+    "codigo": "4.7.11",
+    "nome": "Spray antipulgas (óleo de neem)",
+    "preco_sugestao": 54.0,
+    "preco_tabela": 32.4
+  },
+  {
+    "codigo": "4.8.1",
+    "nome": "Filtro solar hidratante (FPS 30)",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "4.8.2",
+    "nome": "Filtro solar com repelente (citronela)",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "4.8.3",
+    "nome": "Filtro solar spray (FPS 30)",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "4.9.1",
+    "nome": "Creme para hiperqueratoses (Ureia 20% etc.)",
+    "preco_sugestao": 74.0,
+    "preco_tabela": 44.4
+  },
+  {
+    "codigo": "4.9.2",
+    "nome": "Xampu Hidratante (D-pantenol etc.)",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "4.9.3",
+    "nome": "Spray hidratante (equivalente 4.9.4)",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "4.9.5",
+    "nome": "Spray hidratante com ácido lático",
+    "preco_sugestao": 45.0,
+    "preco_tabela": 27.0
+  },
+  {
+    "codigo": "4.9.8",
+    "nome": "Xampu hidratante para peles sensíveis",
+    "preco_sugestao": 73.0,
+    "preco_tabela": 43.8
+  },
+  {
+    "codigo": "4.9.10",
+    "nome": "Solução dermatológica hidratante",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "4.10.1",
+    "nome": "Petiscos de Deflazacort (dosagens por faixa)",
+    "preco_sugestao": 78.0,
+    "preco_tabela": 46.8
+  },
+  {
+    "codigo": "4.10.3",
+    "nome": "Cápsulas de Pentoxifilina",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "4.10.4",
+    "nome": "Emulsão de Ciclosporina (uso oral)",
+    "preco_sugestao": 85.0,
+    "preco_tabela": 51.0
+  },
+  {
+    "codigo": "4.10.5",
+    "nome": "Xampu com Corticoide (Dexametasona)",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "4.10.6",
+    "nome": "Xampu com Corticoide e D-pantenol (Betametasona)",
+    "preco_sugestao": 64.0,
+    "preco_tabela": 38.4
+  },
+  {
+    "codigo": "4.10.9",
+    "nome": "Spray para Dermatite das Dobras - Pharmo Pet",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "5.1",
+    "nome": "Petisco Antioxidante",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "5.2",
+    "nome": "Petisco para Controle da Obesidade",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "5.3",
+    "nome": "Petisco Polivitamínico para Cães",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "5.4",
+    "nome": "Cápsulas Antienvelhecimento",
+    "preco_sugestao": 92.0,
+    "preco_tabela": 55.2
+  },
+  {
+    "codigo": "5.5",
+    "nome": "Petisco para Queda de Pelos",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "5.6",
+    "nome": "Cápsulas de Agaricus blazei (Cogumelo do Sol)",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "5.7",
+    "nome": "Nutracêutico Fitoterápico para Cães",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
+  },
+  {
+    "codigo": "5.8",
+    "nome": "Nutracêutico Fitoterápico para Gatos",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "5.9",
+    "nome": "Cápsulas de Complexo B - Cães",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "5.10",
+    "nome": "Cápsulas de Complexo B - Gatos",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "5.11",
+    "nome": "Cápsulas de Óleo de Linhaça",
+    "preco_sugestao": 53.0,
+    "preco_tabela": 31.8
+  },
+  {
+    "codigo": "5.12",
+    "nome": "Complexo Vitamínico com Dexametasona - Cães",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "5.13",
+    "nome": "Complexo Vitamínico com Dexametasona - Gatos",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "5.14",
+    "nome": "Cápsulas de Glucosamina + Condroitina",
+    "preco_sugestao": 72.0,
+    "preco_tabela": 43.2
+  },
+  {
+    "codigo": "5.15",
+    "nome": "Pasta Oral de Taurina + L-Carnitina (Felinos)",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "5.16",
+    "nome": "Cápsulas de Coenzima Q10",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "5.17",
+    "nome": "Petisco Hepatoprotetor (Silimarina + Colina)",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "5.18",
+    "nome": "Cápsulas de Probióticos + Prebióticos",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "5.19",
+    "nome": "Petisco Calmante (L-Teanina + Passiflora + Valeriana)",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
+  },
+  {
+    "codigo": "5.20",
+    "nome": "Cápsulas de Beta-Glucanas + Vitamina C",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "5.21",
+    "nome": "Petisco Renal Support",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "5.22",
+    "nome": "Cápsulas de Astaxantina + Vitamina E",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "5.23",
+    "nome": "Cápsulas de L-Lisina",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "5.24",
+    "nome": "Petisco Articular Avançado (UC-II + MSM)",
+    "preco_sugestao": 85.0,
+    "preco_tabela": 51.0
+  },
+  {
+    "codigo": "5.25",
+    "nome": "Cápsulas de Spirulina + Chlorella",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "5.26",
+    "nome": "Cápsulas de Biotina",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "5.27",
+    "nome": "Cápsulas de L-Triptofano + Magnésio",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "5.28",
+    "nome": "Cápsulas de Curcumina + Piperina",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "5.29",
+    "nome": "Cápsulas de Luteína + Zeaxantina",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
+  },
+  {
+    "codigo": "5.30",
+    "nome": "Petisco Detox Hepático",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "5.31",
+    "nome": "Cápsulas de Ômega 3 + Vitamina D3",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "5.32",
+    "nome": "Pasta Oral Multivitamínica",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "6.2",
+    "nome": "Petisco Antibiótico Periodontal - Amoxicilina + Clavulanato de Potássio",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "6.3",
+    "nome": "Enxaguatório Bucal de Clorexidina + Malva",
+    "preco_sugestao": 45.0,
+    "preco_tabela": 27.0
+  },
+  {
+    "codigo": "6.4",
+    "nome": "Gel Dental de Clorexidina + Calêndula e Própolis",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "6.5",
+    "nome": "Gel Oral Antisséptico - Clorexidina + Própolis + Aloe vera",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "6.6",
+    "nome": "Gel de Triancinolona + Triclosan",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "6.7",
+    "nome": "Solução Bucal Antisséptica - Malva + Própolis",
+    "preco_sugestao": 45.0,
+    "preco_tabela": 27.0
+  },
+  {
+    "codigo": "7.1",
+    "nome": "Gel Otológico Antimicrobiano",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "7.2",
+    "nome": "Gel Anti-inflamatório Auricular - Arnica + Hamamélis + DMSO",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "7.3",
+    "nome": "Solução de Limpeza Ácida com Aloe vera + Calêndula",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "7.5",
+    "nome": "Solução Ceruminolítica Ácida - Ácido Lático + Ácido Salicílico",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "7.6",
+    "nome": "Solução Otológica Antisséptica - Clorexidina + Cetoconazol",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "7.7",
+    "nome": "Solução Otológica Antisséptica - Clorexidina",
+    "preco_sugestao": 45.0,
+    "preco_tabela": 27.0
+  },
+  {
+    "codigo": "7.10",
+    "nome": "Solução Otológica Antibacteriana e Antifúngica – Ácido Lático + Cetoconazol",
+    "preco_sugestao": 43.0,
+    "preco_tabela": 25.8
+  },
+  {
+    "codigo": "7.11",
+    "nome": "Gel Otológico com Ciprofloxacino e Betametasona",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "7.12",
+    "nome": "Solução Antifúngica com Clorexidina e Terbinafina",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "7.13",
+    "nome": "Gel Otológico Calmante e Regenerador com Aloe vera e Calêndula",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "7.14",
+    "nome": "Gel Antisséptico de Manutenção com Própolis e Melaleuca",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "7.15",
+    "nome": "Solução Secante com Álcool Isopropílico e Hamamélis",
+    "preco_sugestao": 45.0,
+    "preco_tabela": 27.0
+  },
+  {
+    "codigo": "7.17",
+    "nome": "Gel Otológico Trissinérgico Antimicrobiano e Cicatrizante",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "7.18",
+    "nome": "Solução Antiparasitária Otológica com Ivermectina e Própolis",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "7.20",
+    "nome": "Solução Otológica Calmante e Refrescante",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "8.1",
+    "nome": "Cápsulas de Fembendazol",
+    "preco_sugestao": 45.0,
+    "preco_tabela": 27.0
+  },
+  {
+    "codigo": "8.2",
+    "nome": "Cápsulas de Ivermectina",
+    "preco_sugestao": 42.0,
+    "preco_tabela": 25.2
+  },
+  {
+    "codigo": "8.3",
+    "nome": "Cápsulas de Metronidazol",
+    "preco_sugestao": 40.0,
+    "preco_tabela": 24.0
+  },
+  {
+    "codigo": "8.4",
+    "nome": "Suspensão de Albendazol + Praziquantel",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "8.5",
+    "nome": "Cápsulas Vermífugas Combinadas",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "9.1",
+    "nome": "Petiscos de Carprofeno",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "09.1.2",
+    "nome": "Pasta de Carprofeno para Gatos",
+    "preco_sugestao": 43.0,
+    "preco_tabela": 25.8
+  },
+  {
+    "codigo": "9.1.2",
+    "nome": "Pasta de Carprofeno para Gatos",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "9.2",
+    "nome": "Petiscos de Garra do Diabo",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "9.3",
+    "nome": "Petiscos de Colágeno Bioidêntico Tipo II",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "9.5",
+    "nome": "Suplemento para Osteopenia",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "9.8",
+    "nome": "Cápsulas de Meloxicam",
+    "preco_sugestao": 44.0,
+    "preco_tabela": 26.4
+  },
+  {
+    "codigo": "9.9",
+    "nome": "Gel Anti-inflamatório Tópico",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "9.10",
+    "nome": "Gel Relaxante Muscular",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "9.11",
+    "nome": "Regenerador Articular Completo",
+    "preco_sugestao": 80.0,
+    "preco_tabela": 48.0
+  },
+  {
+    "codigo": "9.12",
+    "nome": "Regenerador Articular de Condroitina e Glucosamina com MSM",
+    "preco_sugestao": 78.0,
+    "preco_tabela": 46.8
+  },
+  {
+    "codigo": "9.13",
+    "nome": "Regenerador Articular com Colágeno Bioidêntico Tipo II",
+    "preco_sugestao": 82.0,
+    "preco_tabela": 49.2
+  },
+  {
+    "codigo": "9.14",
+    "nome": "Regenerador Articular Cães",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "9.15",
+    "nome": "Regenerador Articular Cães (Fase petisco)",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "9.16",
+    "nome": "Regenerador Articular Cães com MSM e Vitamina C",
+    "preco_sugestao": 78.0,
+    "preco_tabela": 46.8
+  },
+  {
+    "codigo": "9.18.",
+    "nome": "Artropatias com Presença de Dor fase pó",
+    "preco_sugestao": 196.0,
+    "preco_tabela": 117.6
+  },
+  {
+    "codigo": "9.18",
+    "nome": "Artropatias com Presença de Dor",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
+  },
+  {
+    "codigo": "9.18.1",
+    "nome": "Artropatias com Presença de Dor fase petisco",
+    "preco_sugestao": 77.0,
+    "preco_tabela": 46.2
+  },
+  {
+    "codigo": "9.19",
+    "nome": "Suspensão de Firocoxibe",
+    "preco_sugestao": 85.0,
+    "preco_tabela": 51.0
+  },
+  {
+    "codigo": "9.20",
+    "nome": "Petiscos de Diacereína",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
     "codigo": "10.1",
     "nome": "Sachês de Glutamina",
     "preco_sugestao": 83.0,
@@ -42,6 +900,12 @@
     "preco_tabela": 40.8
   },
   {
+    "codigo": "10.5.2",
+    "nome": "Petiscos Nutracêuticos para Pacientes em Quimioterapia Associal com",
+    "preco_sugestao": 78.0,
+    "preco_tabela": 46.8
+  },
+  {
     "codigo": "10.6",
     "nome": "Cápsulas de Ciclofosfamida",
     "preco_sugestao": 76.0,
@@ -61,39 +925,93 @@
   },
   {
     "codigo": "11.1",
-    "nome": "Cápsulas de Lomustina Gatos",
-    "preco_sugestao": 56.0,
-    "preco_tabela": 33.6
+    "nome": "Petiscos de Captopril",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
   },
   {
-    "codigo": "11.10",
-    "nome": "Suspensão de Espironolactona",
-    "preco_sugestao": 72.0,
-    "preco_tabela": 43.2
+    "codigo": "11.2",
+    "nome": "Cápsulas de Diltiazem",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
   },
   {
-    "codigo": "11.11",
-    "nome": "Suspensão de Lisinopril",
-    "preco_sugestao": 85.0,
-    "preco_tabela": 51.0
+    "codigo": "11.3",
+    "nome": "Cápsulas de Pimobendan",
+    "preco_sugestao": 95.0,
+    "preco_tabela": 57.0
   },
   {
-    "codigo": "11.12.1",
-    "nome": "Pasta Oral de Anlodipino para Cães",
-    "preco_sugestao": 41.0,
-    "preco_tabela": 24.6
-  },
-  {
-    "codigo": "11.12.2",
-    "nome": "Pasta Oral de Anlodipino para Gatos",
+    "codigo": "11.4",
+    "nome": "Cápsulas de Atenolol - Cães",
     "preco_sugestao": 50.0,
     "preco_tabela": 30.0
   },
   {
+    "codigo": "11.4.2",
+    "nome": "Cápsulas de Atenolol - Gatos",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "11.5",
+    "nome": "Cápsulas de Enalapril",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "11.6",
+    "nome": "Cápsulas de Propanolol - Cães",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "11.7",
+    "nome": "Cápsulas de Propanolol - Gatos",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "11.8",
+    "nome": "Petiscos p/ Cardiomiopatia Dilatada - Cães",
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
+  },
+  {
+    "codigo": "11.9",
+    "nome": "Suspensão de Benazepril",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "11.10",
+    "nome": "Suspensão de Espironolactona",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "11.11",
+    "nome": "Suspensão de Lisinopril",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "11.12.1",
+    "nome": "Pasta Oral de Anlodipino - Cães",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "11.12.2",
+    "nome": "Pasta Oral de Anlodipino - Gatos",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
     "codigo": "11.14",
     "nome": "Cápsulas de Sildenafil",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
   },
   {
     "codigo": "11.15.1",
@@ -110,134 +1028,140 @@
   {
     "codigo": "11.16",
     "nome": "Cápsulas de Enalapril com Pimobendan e Diuréticos",
-    "preco_sugestao": 87.0,
-    "preco_tabela": 52.2
+    "preco_sugestao": 98.0,
+    "preco_tabela": 58.8
   },
   {
     "codigo": "11.17",
     "nome": "Suspensão de Carvedilol",
-    "preco_sugestao": 55.0,
-    "preco_tabela": 33.0
-  },
-  {
-    "codigo": "11.18.1",
-    "nome": "Pasta Oral de Aminofilina para Cães",
-    "preco_sugestao": 56.0,
-    "preco_tabela": 33.6
-  },
-  {
-    "codigo": "11.18.2",
-    "nome": "Pasta Oral de Aminofilina para Gatos",
     "preco_sugestao": 62.0,
     "preco_tabela": 37.2
   },
   {
-    "codigo": "11.2",
-    "nome": "Cápsulas de Diltiazem",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
+    "codigo": "11.18.1",
+    "nome": "Pasta Oral de Aminofilina - Cães",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
   },
   {
-    "codigo": "11.3",
-    "nome": "Cápsulas de Pimobendan",
-    "preco_sugestao": 54.0,
-    "preco_tabela": 32.4
-  },
-  {
-    "codigo": "11.4",
-    "nome": "Cápsulas de Atenolol – Cães",
-    "preco_sugestao": 44.0,
-    "preco_tabela": 26.4
-  },
-  {
-    "codigo": "11.4.2",
-    "nome": "Cápsulas de Atenolol – Gatos",
-    "preco_sugestao": 45.0,
-    "preco_tabela": 27.0
-  },
-  {
-    "codigo": "11.5",
-    "nome": "Cápsulas de Enalapril",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "11.8",
-    "nome": "Petiscos para Cardiomiopatia Dilatada – Cães",
-    "preco_sugestao": 71.0,
-    "preco_tabela": 42.6
-  },
-  {
-    "codigo": "11.9",
-    "nome": "Suspensão de Benazepril",
-    "preco_sugestao": 44.0,
-    "preco_tabela": 26.4
+    "codigo": "11.18.2",
+    "nome": "Pasta Oral de Aminofilina - Gatos",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
   },
   {
     "codigo": "12.1",
     "nome": "Gel Transdérmico de Amitriptilina para Gatos",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
-  },
-  {
-    "codigo": "12.2",
-    "nome": "Gel Transdérmico de Enalapril para Gatos",
-    "preco_sugestao": 73.0,
-    "preco_tabela": 43.8
-  },
-  {
-    "codigo": "12.3",
-    "nome": "Gel Transdérmico de Mirtazapina para Gatos",
     "preco_sugestao": 55.0,
     "preco_tabela": 33.0
   },
   {
+    "codigo": "12.2",
+    "nome": "Gel Transdérmico de Enalapril para Gatos",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "12.3",
+    "nome": "Gel Transdérmico de Mirtazapina para Gatos",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
     "codigo": "12.4",
     "nome": "Gel Transdérmico de Metimazol",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
   },
   {
     "codigo": "12.5",
     "nome": "Gel Transdérmico Anti-inflamatório para Gatos",
-    "preco_sugestao": 65.0,
-    "preco_tabela": 39.0
+    "preco_sugestao": 56.0,
+    "preco_tabela": 33.6
   },
   {
     "codigo": "13.1.1",
     "nome": "Cápsulas de Levotiroxina para Cães",
-    "preco_sugestao": 45.0,
-    "preco_tabela": 27.0
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
   },
   {
     "codigo": "13.1.2",
     "nome": "Cápsulas de Levotiroxina para Gatos",
-    "preco_sugestao": 46.0,
-    "preco_tabela": 27.6
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
   },
   {
     "codigo": "13.2.1",
     "nome": "Cápsulas de Trilostano para Cães",
-    "preco_sugestao": 59.0,
-    "preco_tabela": 35.4
+    "preco_sugestao": 85.0,
+    "preco_tabela": 51.0
   },
   {
     "codigo": "13.2.2",
     "nome": "Cápsulas de Trilostano para Gatos",
-    "preco_sugestao": 54.0,
-    "preco_tabela": 32.4
+    "preco_sugestao": 82.0,
+    "preco_tabela": 49.2
   },
   {
     "codigo": "14.1.1",
     "nome": "Petisco de Azatioprina para Cães",
-    "preco_sugestao": 65.0,
-    "preco_tabela": 39.0
+    "preco_sugestao": 75.0,
+    "preco_tabela": 45.0
   },
   {
     "codigo": "14.1.2",
     "nome": "Cápsulas de Azatioprina para Gatos",
-    "preco_sugestao": 74.0,
-    "preco_tabela": 44.4
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
+  },
+  {
+    "codigo": "14.2.1",
+    "nome": "Petisco de Cáscara Sagrada para Cães",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
+  },
+  {
+    "codigo": "14.2.2",
+    "nome": "Cápsulas de Cáscara Sagrada para Gatos",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "14.3",
+    "nome": "Cápsulas de Bromoprida",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "14.4",
+    "nome": "Cápsulas de Cimetidina",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "14.5.1",
+    "nome": "Cápsulas de Domperidona para Cães",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "14.5.2",
+    "nome": "Cápsulas de Domperidona para Gatos",
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
+  },
+  {
+    "codigo": "14.6",
+    "nome": "Cápsulas de Metoclopramida",
+    "preco_sugestao": 48.0,
+    "preco_tabela": 28.8
+  },
+  {
+    "codigo": "14.7",
+    "nome": "Cápsulas de Omeprazol",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
   },
   {
     "codigo": "14.10",
@@ -247,129 +1171,81 @@
   },
   {
     "codigo": "14.11",
-    "nome": "MACROVET",
-    "preco_sugestao": 82.0,
-    "preco_tabela": 49.2
-  },
-  {
-    "codigo": "14.12",
-    "nome": "Sachês de Psyllium",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "14.13",
-    "nome": "Suspensão de Budesonida para Cães",
-    "preco_sugestao": 87.0,
-    "preco_tabela": 52.2
-  },
-  {
-    "codigo": "14.14",
-    "nome": "Suspensão de Budesonida para Gatos",
-    "preco_sugestao": 67.0,
-    "preco_tabela": 40.2
-  },
-  {
-    "codigo": "14.16",
-    "nome": "Suspensão de Sucralfato",
-    "preco_sugestao": 73.0,
-    "preco_tabela": 43.8
-  },
-  {
-    "codigo": "14.2.1",
-    "nome": "Petisco de Cáscara Sagrada para Cães",
-    "preco_sugestao": 79.0,
-    "preco_tabela": 47.4
-  },
-  {
-    "codigo": "14.2.2",
-    "nome": "Cápsulas de Cáscara Sagrada para Gatos",
-    "preco_sugestao": 46.0,
-    "preco_tabela": 27.6
-  },
-  {
-    "codigo": "14.3",
-    "nome": "Cápsulas de Bromoprida",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
-  },
-  {
-    "codigo": "14.4",
-    "nome": "Cápsulas de Cimetidina",
-    "preco_sugestao": 65.0,
-    "preco_tabela": 39.0
-  },
-  {
-    "codigo": "14.5.1",
-    "nome": "Cápsulas de Domperidona para Cães",
-    "preco_sugestao": 81.0,
-    "preco_tabela": 48.6
-  },
-  {
-    "codigo": "14.5.2",
-    "nome": "Cápsulas de Domperidona para Gatos",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
-  },
-  {
-    "codigo": "14.6",
-    "nome": "Cápsulas de Metoclopramida",
-    "preco_sugestao": 63.0,
-    "preco_tabela": 37.8
-  },
-  {
-    "codigo": "14.7",
-    "nome": "Cápsulas de Omeprazol",
-    "preco_sugestao": 61.0,
-    "preco_tabela": 36.6
-  },
-  {
-    "codigo": "15.1",
-    "nome": "Cápsulas de Cranberry + Vitamina C",
-    "preco_sugestao": 58.0,
-    "preco_tabela": 34.8
-  },
-  {
-    "codigo": "15.2",
-    "nome": "Cápsulas vitamínicas para cães com DRC",
-    "preco_sugestao": 79.0,
-    "preco_tabela": 47.4
-  },
-  {
-    "codigo": "15.3",
-    "nome": "Pasta acidificante urinária",
-    "preco_sugestao": 70.0,
-    "preco_tabela": 42.0
-  },
-  {
-    "codigo": "15.7",
-    "nome": "Petiscos de Prazosina",
+    "nome": "MACROVET (Pasta oral)",
     "preco_sugestao": 60.0,
     "preco_tabela": 36.0
   },
   {
-    "codigo": "15.8",
-    "nome": "Pasta oral de Prazosina",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
+    "codigo": "14.12",
+    "nome": "Sachês de Psyllium",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
   },
   {
-    "codigo": "16.1.1",
-    "nome": "Cápsulas de SAMe para cães",
-    "preco_sugestao": 71.0,
-    "preco_tabela": 42.6
+    "codigo": "14.13",
+    "nome": "Suspensão de Budesonida para Cães",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
   },
   {
-    "codigo": "16.1.2",
-    "nome": "Cápsulas de SAMe para gatos",
+    "codigo": "14.14",
+    "nome": "Suspensão de Budesonida para Gatos",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
+  },
+  {
+    "codigo": "14.16",
+    "nome": "Suspensão de Sucralfato",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "15.1",
+    "nome": "Cápsulas de Cranberry + Vitamina C",
     "preco_sugestao": 55.0,
     "preco_tabela": 33.0
   },
   {
-    "codigo": "16.2",
-    "nome": "Suspensão de Silimarina + Colina",
+    "codigo": "15.2",
+    "nome": "Cápsulas vitamínicas para cães com DRC",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "15.3",
+    "nome": "Pasta acidificante urinária",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
+  },
+  {
+    "codigo": "15.7",
+    "nome": "Petiscos de Prazosina",
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
+  },
+  {
+    "codigo": "15.8",
+    "nome": "Pasta oral de Prazosina",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "16.1.1",
+    "nome": "Cápsulas de SAMe para Cães",
     "preco_sugestao": 80.0,
     "preco_tabela": 48.0
+  },
+  {
+    "codigo": "16.1.2",
+    "nome": "Cápsulas de SAMe para Gatos",
+    "preco_sugestao": 78.0,
+    "preco_tabela": 46.8
+  },
+  {
+    "codigo": "16.2",
+    "nome": "Suspensão de Silimarina + Colina",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
   },
   {
     "codigo": "16.3.1",
@@ -380,20 +1256,20 @@
   {
     "codigo": "16.4",
     "nome": "Pasta Oral para Lipidose Hepática Felina",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
+    "preco_sugestao": 62.0,
+    "preco_tabela": 37.2
   },
   {
     "codigo": "17.1",
     "nome": "Cápsulas Imunoestimulantes",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
   },
   {
     "codigo": "17.2",
     "nome": "Cápsulas de Timomodulina",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
   },
   {
     "codigo": "17.3",
@@ -403,39 +1279,21 @@
   },
   {
     "codigo": "17.4",
-    "nome": "Suspensão Imunomoduladora",
-    "preco_sugestao": 89.0,
-    "preco_tabela": 53.4
+    "nome": "Suspensão Imunomoduladora + Complexo Pharmo Pet Osteo",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
   },
   {
     "codigo": "18.1",
-    "nome": "Petiscos de Fenobarbital*",
-    "preco_sugestao": 78.0,
-    "preco_tabela": 46.8
-  },
-  {
-    "codigo": "18.10",
-    "nome": "Sachês para Tratamento de Coprofagia",
-    "preco_sugestao": 104.0,
-    "preco_tabela": 62.4
-  },
-  {
-    "codigo": "18.13",
-    "nome": "Petiscos de Selegilina",
-    "preco_sugestao": 104.0,
-    "preco_tabela": 62.4
-  },
-  {
-    "codigo": "18.14",
-    "nome": "Pasta Oral de Selegilina",
-    "preco_sugestao": 102.0,
-    "preco_tabela": 61.2
+    "nome": "Petiscos de Fenobarbital",
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
   },
   {
     "codigo": "18.2.1",
     "nome": "Cápsulas de Fluoxetina para cães",
-    "preco_sugestao": 59.0,
-    "preco_tabela": 35.4
+    "preco_sugestao": 50.0,
+    "preco_tabela": 30.0
   },
   {
     "codigo": "18.2.2",
@@ -445,21 +1303,21 @@
   },
   {
     "codigo": "18.3",
-    "nome": "Petiscos de Tramadol*",
-    "preco_sugestao": 81.0,
-    "preco_tabela": 48.6
+    "nome": "Petiscos de Tramadol",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
   },
   {
     "codigo": "18.4",
-    "nome": "Pasta Oral de Tramadol*",
-    "preco_sugestao": 77.0,
-    "preco_tabela": 46.2
+    "nome": "Pasta Oral de Tramadol",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
   },
   {
     "codigo": "18.5",
-    "nome": "Suspensão Anticonvulsivante de Gabapentina para cães*",
-    "preco_sugestao": 79.0,
-    "preco_tabela": 47.4
+    "nome": "Suspensão Anticonvulsivante de Gabapentina para cães",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
   },
   {
     "codigo": "18.6",
@@ -470,50 +1328,68 @@
   {
     "codigo": "18.7",
     "nome": "Suspensão Calmante",
-    "preco_sugestao": 81.0,
-    "preco_tabela": 48.6
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
   },
   {
     "codigo": "18.8",
-    "nome": "Cápsulas de Melatonina Cães",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
+    "nome": "Cápsulas de Melatonina para cães",
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
   },
   {
     "codigo": "18.8.1",
-    "nome": "Cápsulas de Melatonina Gatos",
+    "nome": "Cápsulas de Melatonina para gatos",
     "preco_sugestao": 52.0,
     "preco_tabela": 31.2
   },
   {
     "codigo": "18.9.1",
-    "nome": "Suspensão de Brometo de Potássio Para cães",
-    "preco_sugestao": 74.0,
-    "preco_tabela": 44.4
+    "nome": "Suspensão de Brometo de Potássio para cães",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
   },
   {
     "codigo": "18.9.2",
-    "nome": "Suspensão de Brometo de Potássio Para Gatos",
-    "preco_sugestao": 56.0,
-    "preco_tabela": 33.6
+    "nome": "Suspensão de Brometo de Potássio para gatos",
+    "preco_sugestao": 58.0,
+    "preco_tabela": 34.8
+  },
+  {
+    "codigo": "18.10",
+    "nome": "Sachês para Tratamento de Coprofagia",
+    "preco_sugestao": 60.0,
+    "preco_tabela": 36.0
+  },
+  {
+    "codigo": "18.13",
+    "nome": "Petiscos de Selegilina",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
+  },
+  {
+    "codigo": "18.14",
+    "nome": "Pasta Oral de Selegilina",
+    "preco_sugestao": 68.0,
+    "preco_tabela": 40.8
   },
   {
     "codigo": "19.1",
-    "nome": "Cápsulas de Sildenafil",
-    "preco_sugestao": 79.0,
-    "preco_tabela": 47.4
+    "nome": "Cápsulas de Sildenafil (Respiratória)",
+    "preco_sugestao": 65.0,
+    "preco_tabela": 39.0
   },
   {
     "codigo": "19.2.1",
     "nome": "Pasta de Aminofilina para cães",
-    "preco_sugestao": 59.0,
-    "preco_tabela": 35.4
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
   },
   {
     "codigo": "19.2.2",
     "nome": "Pasta de Aminofilina para gatos",
-    "preco_sugestao": 45.0,
-    "preco_tabela": 27.0
+    "preco_sugestao": 52.0,
+    "preco_tabela": 31.2
   },
   {
     "codigo": "19.3",
@@ -524,883 +1400,25 @@
   {
     "codigo": "19.4",
     "nome": "Suspensão Antitussígena",
-    "preco_sugestao": 80.0,
-    "preco_tabela": 48.0
+    "preco_sugestao": 55.0,
+    "preco_tabela": 33.0
   },
   {
     "codigo": "19.6",
-    "nome": "Colapso de Traqueia – Petiscos",
-    "preco_sugestao": 114.0,
-    "preco_tabela": 68.4
+    "nome": "Colapso de Traqueia - Petiscos",
+    "preco_sugestao": 70.0,
+    "preco_tabela": 42.0
   },
   {
     "codigo": "19.7",
     "nome": "Suspensão de N-Acetilcisteína",
-    "preco_sugestao": 87.0,
-    "preco_tabela": 52.2
-  },
-  {
-    "codigo": "19.8",
-    "nome": "Suspensão de Prednisolona",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
-  },
-  {
-    "codigo": "2.2",
-    "nome": "Cápsulas – Cetoconazol + Complexo Hepato Pharmo Pet",
-    "preco_sugestao": 97.0,
-    "preco_tabela": 58.2
-  },
-  {
-    "codigo": "2.4",
-    "nome": "Pasta Oral Feline – Itraconazol + Iodeto de Potássio + Complexo Dermaprotectvet Pharmo Pet",
-    "preco_sugestao": 66.0,
-    "preco_tabela": 39.6
-  },
-  {
-    "codigo": "2.5",
-    "nome": "Suspensão – Terbinafina + Complexo Biolipidvet Pharmo Pet",
-    "preco_sugestao": 100.0,
-    "preco_tabela": 60.0
-  },
-  {
-    "codigo": "3.10",
-    "nome": "Petiscos de Norfloxacina + Complexo Pharmo Pet Digest Forma farmacêutica: Petiscos mastigáveis",
-    "preco_sugestao": 54.0,
-    "preco_tabela": 32.4
-  },
-  {
-    "codigo": "3.11",
-    "nome": "Cápsulas de Rifampicina + Pharmo Pet Derma Forma farmacêutica: Cápsulas",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
-  },
-  {
-    "codigo": "3.3",
-    "nome": "Suspensão de Cefalexina + Complexo Pharmo Pet Protect Forma farmacêutica: Suspensão oral palatável",
-    "preco_sugestao": 78.0,
-    "preco_tabela": 46.8
-  },
-  {
-    "codigo": "3.4",
-    "nome": "Petiscos de Ciprofloxacino + Pharmo Pet Digest Forma farmacêutica: Petiscos mastigáveis",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
-  },
-  {
-    "codigo": "3.5",
-    "nome": "Cápsulas de Clindamicina + Complexo Pharmo Pet Osteo Forma farmacêutica: Cápsulas",
-    "preco_sugestao": 103.0,
-    "preco_tabela": 61.8
-  },
-  {
-    "codigo": "3.6",
-    "nome": "Cápsulas de Doxiciclina + Curcumina Fitossomada Pharmo Pet Recovery Forma farmacêutica: Cápsulas",
-    "preco_sugestao": 88.0,
-    "preco_tabela": 52.8
-  },
-  {
-    "codigo": "3.7",
-    "nome": "Suspensão de Enrofloxacina + Complexo Pharmo Pet Protect – Cães Forma farmacêutica: Suspensão oral palatável",
-    "preco_sugestao": 79.0,
-    "preco_tabela": 47.4
-  },
-  {
-    "codigo": "3.8",
-    "nome": "Suspensão de Enrofloxacina + Pharmo Pet Digest – Gatos Forma farmacêutica: Suspensão oral palatável",
-    "preco_sugestao": 71.0,
-    "preco_tabela": 42.6
-  },
-  {
-    "codigo": "3.9",
-    "nome": "Suspensão de Eritromicina + Pharmo Pet Mucosa Forma farmacêutica: Suspensão oral",
-    "preco_sugestao": 76.0,
-    "preco_tabela": 45.6
-  },
-  {
-    "codigo": "4.1.1",
-    "nome": "Creme antifúngico e antimicrobiano (Desonida + Gentamicina + Miconazol)",
-    "preco_sugestao": 51.0,
-    "preco_tabela": 30.6
-  },
-  {
-    "codigo": "4.1.13",
-    "nome": "Xampu de Triclosan",
-    "preco_sugestao": 66.0,
-    "preco_tabela": 39.6
-  },
-  {
-    "codigo": "4.1.2",
-    "nome": "Creme antifúngico (Clotrimazol + Dexametasona + Óleo de melaleuca)",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
-  },
-  {
-    "codigo": "4.1.3",
-    "nome": "Gel antifúngico (Cetoconazol + Tintura de barbatimão)",
-    "preco_sugestao": 60.0,
-    "preco_tabela": 36.0
-  },
-  {
-    "codigo": "4.1.4",
-    "nome": "Pomada antifúngica (Betametasona + Miconazol)",
-    "preco_sugestao": 61.0,
-    "preco_tabela": 36.6
-  },
-  {
-    "codigo": "4.1.5",
-    "nome": "Xampu com Ciclopirox Olamina (Malassezia)",
-    "preco_sugestao": 72.0,
-    "preco_tabela": 43.2
-  },
-  {
-    "codigo": "4.1.6",
-    "nome": "Xampu com Clorexidina e Cetoconazol",
-    "preco_sugestao": 75.0,
-    "preco_tabela": 45.0
-  },
-  {
-    "codigo": "4.1.7",
-    "nome": "Xampu com Clorexidina e Miconazol",
-    "preco_sugestao": 66.0,
-    "preco_tabela": 39.6
-  },
-  {
-    "codigo": "4.10.1",
-    "nome": "Petiscos de Deflazacort (dosagens por faixa)",
-    "preco_sugestao": 58.0,
-    "preco_tabela": 34.8
-  },
-  {
-    "codigo": "4.10.3",
-    "nome": "Cápsulas de Pentoxifilina",
-    "preco_sugestao": 58.0,
-    "preco_tabela": 34.8
-  },
-  {
-    "codigo": "4.10.4",
-    "nome": "Emulsão de Ciclosporina (uso oral)",
-    "preco_sugestao": 113.0,
-    "preco_tabela": 67.8
-  },
-  {
-    "codigo": "4.10.5",
-    "nome": "Xampu com Corticoide (Dexametasona)",
-    "preco_sugestao": 83.0,
-    "preco_tabela": 49.8
-  },
-  {
-    "codigo": "4.10.6",
-    "nome": "Xampu com Corticoide e D-pantenol (Betametasona)",
-    "preco_sugestao": 104.0,
-    "preco_tabela": 62.4
-  },
-  {
-    "codigo": "4.10.9",
-    "nome": "Spray para Dermatite das Dobras – Pharmo Pet",
-    "preco_sugestao": 41.0,
-    "preco_tabela": 24.6
-  },
-  {
-    "codigo": "4.2.1",
-    "nome": "Creme anti-inflamatório e cicatrizante com D-pantenol",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
-  },
-  {
-    "codigo": "4.2.12",
-    "nome": "Pomada (Clindamicina 1%)",
-    "preco_sugestao": 48.0,
-    "preco_tabela": 28.8
-  },
-  {
-    "codigo": "4.2.2",
-    "nome": "Creme cicatrizante e repelente (Alantoína + Clorexidina + Óxido de zinco + Citronela)",
-    "preco_sugestao": 61.0,
-    "preco_tabela": 36.6
-  },
-  {
-    "codigo": "4.2.3",
-    "nome": "Pomada cicatrizante com ácido bórico",
-    "preco_sugestao": 58.0,
-    "preco_tabela": 34.8
-  },
-  {
-    "codigo": "4.2.4",
-    "nome": "Pomada cicatrizante com sulfadiazina de prata",
-    "preco_sugestao": 66.0,
-    "preco_tabela": 39.6
-  },
-  {
-    "codigo": "4.2.6",
-    "nome": "Gel anti-inflamatório (Dexametasona + DMSO + Lidocaína + Arnica)",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "4.2.7",
-    "nome": "Solução anti-inflamatória (DMSO + Hidrocortisona acetato + Lidocaína)",
-    "preco_sugestao": 48.0,
-    "preco_tabela": 28.8
-  },
-  {
-    "codigo": "4.2.8",
-    "nome": "Loção anti-inflamatória (Hidrocortisona + Vitamina E + Camomila)",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "4.3.1",
-    "nome": "Antimicrobianos (tópicos)",
-    "preco_sugestao": 56.0,
-    "preco_tabela": 33.6
-  },
-  {
-    "codigo": "4.3.2",
-    "nome": "Pomada antimicrobiana com Tobramicina (Alantoína + Dexametasona)",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
-  },
-  {
-    "codigo": "4.3.3",
-    "nome": "Spray antimicrobiano com D-pantenol (Desonida + Gentamicina)",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "4.3.4",
-    "nome": "Pomada antimicrobiana (Alantoína + Neomicina + Óxido de zinco)",
-    "preco_sugestao": 55.0,
-    "preco_tabela": 33.0
-  },
-  {
-    "codigo": "4.4.12",
-    "nome": "Xampu com Piritionato de Zinco",
-    "preco_sugestao": 92.0,
-    "preco_tabela": 55.2
-  },
-  {
-    "codigo": "4.4.13",
-    "nome": "Xampu com Sulfeto de Selênio (controle oleosidade)",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
-  },
-  {
-    "codigo": "4.4.14",
-    "nome": "Xampu de Enxofre com Triclosan",
-    "preco_sugestao": 63.0,
-    "preco_tabela": 37.8
-  },
-  {
-    "codigo": "4.4.2",
-    "nome": "Creme com Ureia e Ácido Salicílico (Ceratolítico)",
-    "preco_sugestao": 53.0,
-    "preco_tabela": 31.8
-  },
-  {
-    "codigo": "4.4.4",
-    "nome": "Xampu anti seborreico (Sulfeto de Selênio)",
-    "preco_sugestao": 67.0,
-    "preco_tabela": 40.2
-  },
-  {
-    "codigo": "4.4.5",
-    "nome": "Xampu anti seborreico (Enxofre + Alcatrão)",
-    "preco_sugestao": 73.0,
-    "preco_tabela": 43.8
-  },
-  {
-    "codigo": "4.4.6",
-    "nome": "Xampu anti seborreico (Enxofre + Ácido salicílico + Irgasan)",
-    "preco_sugestao": 67.0,
-    "preco_tabela": 40.2
-  },
-  {
-    "codigo": "4.4.8",
-    "nome": "Xampu Seborreia oleosa para cães (Cetrimida)",
-    "preco_sugestao": 92.0,
-    "preco_tabela": 55.2
-  },
-  {
-    "codigo": "4.6.1",
-    "nome": "Xampu dessensibilizante (Alfa-bisabolol + Aloe + Calêndula)",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
-  },
-  {
-    "codigo": "4.6.2",
-    "nome": "Spray dessensibilizante (Ácido hialurônico + Alfa-bisabolol)",
     "preco_sugestao": 50.0,
     "preco_tabela": 30.0
   },
   {
-    "codigo": "4.7.10",
-    "nome": "Xampu com Tiabendazol (escabicida/acaricida)",
-    "preco_sugestao": 85.0,
-    "preco_tabela": 51.0
-  },
-  {
-    "codigo": "4.7.11",
-    "nome": "Spray antipulgas (óleo de neem)",
-    "preco_sugestao": 63.0,
-    "preco_tabela": 37.8
-  },
-  {
-    "codigo": "4.7.5",
-    "nome": "Repelente de ação combinada (Citronela + Neem)",
-    "preco_sugestao": 55.0,
-    "preco_tabela": 33.0
-  },
-  {
-    "codigo": "4.7.7",
-    "nome": "Pour-on com óleo de Neem",
-    "preco_sugestao": 37.0,
-    "preco_tabela": 22.2
-  },
-  {
-    "codigo": "4.7.8",
-    "nome": "Xampu antipulgas com óleo de Neem",
-    "preco_sugestao": 55.0,
-    "preco_tabela": 33.0
-  },
-  {
-    "codigo": "4.7.9",
-    "nome": "Suspensão de Nitempiram (Miíases / controle rápido)",
-    "preco_sugestao": 99.0,
-    "preco_tabela": 59.4
-  },
-  {
-    "codigo": "4.8.1",
-    "nome": "Filtro solar hidratante (FPS 30)",
-    "preco_sugestao": 56.0,
-    "preco_tabela": 33.6
-  },
-  {
-    "codigo": "4.8.2",
-    "nome": "Filtro solar com repelente (citronela)",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
-  },
-  {
-    "codigo": "4.8.3",
-    "nome": "Filtro solar spray (FPS 30)",
-    "preco_sugestao": 44.0,
-    "preco_tabela": 26.4
-  },
-  {
-    "codigo": "4.9.1",
-    "nome": "Creme para hiperqueratoses (Ureia 20% etc.)",
-    "preco_sugestao": 74.0,
-    "preco_tabela": 44.4
-  },
-  {
-    "codigo": "4.9.10",
-    "nome": "Solução dermatológica hidratante (não usar em gatos)",
-    "preco_sugestao": 40.0,
-    "preco_tabela": 24.0
-  },
-  {
-    "codigo": "4.9.2",
-    "nome": "Xampu Hidratante (D-pantenol etc.)",
-    "preco_sugestao": 58.0,
-    "preco_tabela": 34.8
-  },
-  {
-    "codigo": "4.9.3",
-    "nome": "Spray hidratante (equivalente 4.9.4)",
-    "preco_sugestao": 42.0,
-    "preco_tabela": 25.2
-  },
-  {
-    "codigo": "4.9.5",
-    "nome": "Spray hidratante com ácido lático",
-    "preco_sugestao": 45.0,
-    "preco_tabela": 27.0
-  },
-  {
-    "codigo": "4.9.8",
-    "nome": "Xampu hidratante para peles sensíveis",
-    "preco_sugestao": 73.0,
-    "preco_tabela": 43.8
-  },
-  {
-    "codigo": "5.1",
-    "nome": "Petisco Antioxidante",
-    "preco_sugestao": 116.0,
-    "preco_tabela": 69.6
-  },
-  {
-    "codigo": "5.10",
-    "nome": "Cápsulas de Complexo B – Gatos",
-    "preco_sugestao": 87.0,
-    "preco_tabela": 52.2
-  },
-  {
-    "codigo": "5.11",
-    "nome": "Cápsulas de Óleo de Linhaça",
-    "preco_sugestao": 53.0,
-    "preco_tabela": 31.8
-  },
-  {
-    "codigo": "5.12",
-    "nome": "Complexo Vitamínico com Dexametasona – Cães",
-    "preco_sugestao": 94.0,
-    "preco_tabela": 56.4
-  },
-  {
-    "codigo": "5.13",
-    "nome": "Complexo Vitamínico com Dexametasona – Gatos",
-    "preco_sugestao": 68.0,
-    "preco_tabela": 40.8
-  },
-  {
-    "codigo": "5.14",
-    "nome": "Cápsulas de Glucosamina + Condroitina",
-    "preco_sugestao": 97.0,
-    "preco_tabela": 58.2
-  },
-  {
-    "codigo": "5.15",
-    "nome": "Pasta Oral de Taurina + L-Carnitina (Felinos)",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "5.16",
-    "nome": "Cápsulas de Coenzima Q10",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "5.17",
-    "nome": "Petisco Hepatoprotetor (Silimarina + Colina)",
-    "preco_sugestao": 65.0,
-    "preco_tabela": 39.0
-  },
-  {
-    "codigo": "5.18",
-    "nome": "Cápsulas de Probióticos + Prebióticos",
-    "preco_sugestao": 85.0,
-    "preco_tabela": 51.0
-  },
-  {
-    "codigo": "5.19",
-    "nome": "Petisco Calmante (L-Teanina + Passiflora + Valeriana)",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
-  },
-  {
-    "codigo": "5.2",
-    "nome": "Petisco para Controle da Obesidade",
-    "preco_sugestao": 99.0,
-    "preco_tabela": 59.4
-  },
-  {
-    "codigo": "5.20",
-    "nome": "Cápsulas de Beta-Glucanas + Vitamina C",
-    "preco_sugestao": 64.0,
-    "preco_tabela": 38.4
-  },
-  {
-    "codigo": "5.21",
-    "nome": "Petisco Renal Support",
-    "preco_sugestao": 67.0,
-    "preco_tabela": 40.2
-  },
-  {
-    "codigo": "5.22",
-    "nome": "Cápsulas de Astaxantina + Vitamina E",
-    "preco_sugestao": 57.0,
-    "preco_tabela": 34.2
-  },
-  {
-    "codigo": "5.23",
-    "nome": "Cápsulas de L-Lisina",
-    "preco_sugestao": 51.0,
-    "preco_tabela": 30.6
-  },
-  {
-    "codigo": "5.24",
-    "nome": "Petisco Articular Avançado (UC-II + MSM)",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "5.25",
-    "nome": "Cápsulas de Spirulina + Chlorella",
-    "preco_sugestao": 49.0,
-    "preco_tabela": 29.4
-  },
-  {
-    "codigo": "5.26",
-    "nome": "Cápsulas de Biotina + Zinco + Colágeno",
-    "preco_sugestao": 98.0,
-    "preco_tabela": 58.8
-  },
-  {
-    "codigo": "5.27",
-    "nome": "Cápsulas de L-Triptofano + Magnésio",
-    "preco_sugestao": 46.0,
-    "preco_tabela": 27.6
-  },
-  {
-    "codigo": "5.28",
-    "nome": "Cápsulas de Curcumina + Piperina",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "5.29",
-    "nome": "Cápsulas de Luteína + Zeaxantina",
-    "preco_sugestao": 54.0,
-    "preco_tabela": 32.4
-  },
-  {
-    "codigo": "5.3",
-    "nome": "Petisco Polivitamínico para Cães",
-    "preco_sugestao": 92.0,
-    "preco_tabela": 55.2
-  },
-  {
-    "codigo": "5.30",
-    "nome": "Petisco Detox Hepático",
-    "preco_sugestao": 53.0,
-    "preco_tabela": 31.8
-  },
-  {
-    "codigo": "5.31",
-    "nome": "Cápsulas de Ômega 3 + Vitamina D3",
-    "preco_sugestao": 59.0,
-    "preco_tabela": 35.4
-  },
-  {
-    "codigo": "5.32",
-    "nome": "Pasta Oral Multivitamínica",
-    "preco_sugestao": 88.0,
-    "preco_tabela": 52.8
-  },
-  {
-    "codigo": "5.4",
-    "nome": "Cápsulas Antienvelhecimento",
-    "preco_sugestao": 92.0,
-    "preco_tabela": 55.2
-  },
-  {
-    "codigo": "5.5",
-    "nome": "Petisco para Queda de Pelos",
-    "preco_sugestao": 94.0,
-    "preco_tabela": 56.4
-  },
-  {
-    "codigo": "5.6",
-    "nome": "Cápsulas de Agaricus blazei (Cogumelo do Sol)",
-    "preco_sugestao": 65.0,
-    "preco_tabela": 39.0
-  },
-  {
-    "codigo": "5.7",
-    "nome": "Nutracêutico Fitoterápico para Cães",
-    "preco_sugestao": 58.0,
-    "preco_tabela": 34.8
-  },
-  {
-    "codigo": "5.8",
-    "nome": "Nutracêutico Fitoterápico para Gatos",
-    "preco_sugestao": 53.0,
-    "preco_tabela": 31.8
-  },
-  {
-    "codigo": "5.9",
-    "nome": "Cápsulas de Complexo B – Cães",
-    "preco_sugestao": 108.0,
-    "preco_tabela": 64.8
-  },
-  {
-    "codigo": "6.2",
-    "nome": "Petisco Antibiótico Periodontal – Amoxicilina + Clavulanato de Potássio",
-    "preco_sugestao": 67.0,
-    "preco_tabela": 40.2
-  },
-  {
-    "codigo": "6.3",
-    "nome": "Enxaguatório Bucal de Clorexidina + Malva",
-    "preco_sugestao": 46.0,
-    "preco_tabela": 27.6
-  },
-  {
-    "codigo": "6.4",
-    "nome": "Gel Dental de Clorexidina + Calêndula",
-    "preco_sugestao": 44.0,
-    "preco_tabela": 26.4
-  },
-  {
-    "codigo": "6.5",
-    "nome": "Gel Oral Antisséptico – Clorexidina + Própolis + Aloe vera",
-    "preco_sugestao": 39.0,
-    "preco_tabela": 23.4
-  },
-  {
-    "codigo": "6.6",
-    "nome": "Gel de Triancinolona + Triclosan – Tratamento de Aftas e Estomatites",
-    "preco_sugestao": 38.0,
-    "preco_tabela": 22.8
-  },
-  {
-    "codigo": "6.7",
-    "nome": "Solução Bucal Antisséptica – Malva + Própolis",
-    "preco_sugestao": 41.0,
-    "preco_tabela": 24.6
-  },
-  {
-    "codigo": "7.1",
-    "nome": "Gel Otológico Antimicrobiano – Clotrimazol + Gentamicina + Dexametasona",
-    "preco_sugestao": 40.0,
-    "preco_tabela": 24.0
-  },
-  {
-    "codigo": "7.10",
-    "nome": "Solução Otológica Antibacteriana e Antifúngica – Ácido Lático + Cetoconazol",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "7.11",
-    "nome": "Gel Otológico com Ciprofloxacino e Betametasona",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "7.12",
-    "nome": "Solução Antifúngica com Clorexidina e Terbinafina",
-    "preco_sugestao": 37.0,
-    "preco_tabela": 22.2
-  },
-  {
-    "codigo": "7.13",
-    "nome": "Gel Otológico Calmante e Regenerador com Aloe vera e Calêndula",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "7.14",
-    "nome": "Gel Antisséptico de Manutenção com Própolis e Melaleuca",
-    "preco_sugestao": 38.0,
-    "preco_tabela": 22.8
-  },
-  {
-    "codigo": "7.15",
-    "nome": "Solução Secante com Álcool Isopropílico e Hamamelis",
-    "preco_sugestao": 45.0,
-    "preco_tabela": 27.0
-  },
-  {
-    "codigo": "7.17",
-    "nome": "Gel Otológico Trissinérgico Antimicrobiano e Cicatrizante",
-    "preco_sugestao": 39.0,
-    "preco_tabela": 23.4
-  },
-  {
-    "codigo": "7.18",
-    "nome": "Solução Antiparasitária Otológica com Ivermectina e Própolis",
-    "preco_sugestao": 39.0,
-    "preco_tabela": 23.4
-  },
-  {
-    "codigo": "7.2",
-    "nome": "Gel Anti-inflamatório Auricular – Arnica + Hamamelis + DMSO",
-    "preco_sugestao": 38.0,
-    "preco_tabela": 22.8
-  },
-  {
-    "codigo": "7.20",
-    "nome": "Solução Otológica Calmante e Refrescante",
-    "preco_sugestao": 49.0,
-    "preco_tabela": 29.4
-  },
-  {
-    "codigo": "7.3",
-    "nome": "Solução de Limpeza Ácida com Aloe vera + Calêndula",
-    "preco_sugestao": 49.0,
-    "preco_tabela": 29.4
-  },
-  {
-    "codigo": "7.5",
-    "nome": "Solução Ceruminolítica Ácida – Ácido Lático + Ácido Salicílico",
-    "preco_sugestao": 34.0,
-    "preco_tabela": 20.4
-  },
-  {
-    "codigo": "7.6",
-    "nome": "Solução Otológica Antisséptica – Clorexidina + Cetoconazol",
-    "preco_sugestao": 38.0,
-    "preco_tabela": 22.8
-  },
-  {
-    "codigo": "7.7",
-    "nome": "Solução Otológica Antisséptica – Clorexidina",
-    "preco_sugestao": 40.0,
-    "preco_tabela": 24.0
-  },
-  {
-    "codigo": "8.1",
-    "nome": "Cápsulas de Fembendazol",
-    "preco_sugestao": 74.0,
-    "preco_tabela": 44.4
-  },
-  {
-    "codigo": "8.2",
-    "nome": "Cápsulas de Ivermectina",
-    "preco_sugestao": 47.0,
-    "preco_tabela": 28.2
-  },
-  {
-    "codigo": "8.3",
-    "nome": "Cápsulas de Metronidazol",
-    "preco_sugestao": 59.0,
-    "preco_tabela": 35.4
-  },
-  {
-    "codigo": "8.4",
-    "nome": "Suspensão de Albendazol + Praziquantel",
-    "preco_sugestao": 51.0,
-    "preco_tabela": 30.6
-  },
-  {
-    "codigo": "8.5",
-    "nome": "Cápsulas Vermífugas Combinadas",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "9.1",
-    "nome": "Petiscos de Carprofeno",
-    "preco_sugestao": 65.0,
-    "preco_tabela": 39.0
-  },
-  {
-    "codigo": "09.1.2",
-    "nome": "Pasta de Carprofeno para Gatos",
-    "preco_sugestao": 43.0,
-    "preco_tabela": 25.8
-  },
-  {
-    "codigo": "9.10",
-    "nome": "Gel Relaxante Muscular",
-    "preco_sugestao": 38.0,
-    "preco_tabela": 22.8
-  },
-  {
-    "codigo": "9.11",
-    "nome": "Regenerador Articular Completo",
-    "preco_sugestao": 84.0,
-    "preco_tabela": 50.4
-  },
-  {
-    "codigo": "9.12",
-    "nome": "Regenerador Articular de Condroitina e Glucosamina com MSM",
-    "preco_sugestao": 75.0,
-    "preco_tabela": 45.0
-  },
-  {
-    "codigo": "9.13",
-    "nome": "Regenerador Articular com Colágeno Bioidêntico Tipo II",
-    "preco_sugestao": 69.0,
-    "preco_tabela": 41.4
-  },
-  {
-    "codigo": "9.14",
-    "nome": "Regenerador Articular Cães",
-    "preco_sugestao": 74.0,
-    "preco_tabela": 44.4
-  },
-  {
-    "codigo": "9.15",
-    "nome": "Regenerador Articular Cães",
-    "preco_sugestao": 59.0,
-    "preco_tabela": 35.4
-  },
-  {
-    "codigo": "9.16",
-    "nome": "Regenerador Articular Cães com MSM e Vitamina C",
-    "preco_sugestao": 63.0,
-    "preco_tabela": 37.8
-  },
-  {
-    "codigo": "9.18.",
-    "nome": "Artropatias com Presença de Dor fase pó",
-    "preco_sugestao": 196.0,
-    "preco_tabela": 117.6
-  },
-  {
-    "codigo": "9.18.1",
-    "nome": "Artropatias com Presença de Dor fase petisco",
-    "preco_sugestao": 77.0,
-    "preco_tabela": 46.2
-  },
-  {
-    "codigo": "9.19",
-    "nome": "Suspensão de Firocoxibe",
-    "preco_sugestao": 135.0,
-    "preco_tabela": 81.0
-  },
-  {
-    "codigo": "9.2",
-    "nome": "Petiscos de Garra do Diabo",
-    "preco_sugestao": 89.0,
-    "preco_tabela": 53.4
-  },
-  {
-    "codigo": "9.20",
-    "nome": "Petiscos de Diacereína",
-    "preco_sugestao": 78.0,
-    "preco_tabela": 46.8
-  },
-  {
-    "codigo": "9.3",
-    "nome": "Petiscos de Colágeno Bioidêntico Tipo II",
-    "preco_sugestao": 54.0,
-    "preco_tabela": 32.4
-  },
-  {
-    "codigo": "9.5",
-    "nome": "Suplemento para Osteopenia",
-    "preco_sugestao": 194.0,
-    "preco_tabela": 116.4
-  },
-  {
-    "codigo": "9.8",
-    "nome": "Cápsulas de Meloxicam",
-    "preco_sugestao": 44.0,
-    "preco_tabela": 26.4
-  },
-  {
-    "codigo": "9.9",
-    "nome": "Gel Anti-inflamatório Tópico",
-    "preco_sugestao": 46.0,
-    "preco_tabela": 27.6
-  },
-  {
-    "codigo": "10.5.2",
-    "nome": "Petiscos Nutracêuticos para Pacientes em Quimioterapia Associal com",
-    "preco_sugestao": 78.0,
-    "preco_tabela": 46.8
-  },
-  {
-    "codigo": "4.2.12.2",
-    "nome": "Pomada (Clindamicina 1%)",
+    "codigo": "19.8",
+    "nome": "Suspensão de Prednisolona",
     "preco_sugestao": 48.0,
     "preco_tabela": 28.8
-  },
-  {
-    "codigo": "4.6.1.2",
-    "nome": "Xampu dessensibilizante (Alfa-bisabolol + Aloe + Calêndula)",
-    "preco_sugestao": 52.0,
-    "preco_tabela": 31.2
-  },
-  {
-    "codigo": "9.18",
-    "nome": "Artropatias com Presença de Dor fase pó",
-    "preco_sugestao": 79.0,
-    "preco_tabela": 47.4
   }
 ]
