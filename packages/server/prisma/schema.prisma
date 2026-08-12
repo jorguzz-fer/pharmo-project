@@ -193,6 +193,11 @@ model Orcamento {
   link_pagamento   String?
   data_pagamento   DateTime?
   metodo_pagamento MetodoPagamento?
+  // Token para a página pública do tutor (acesso sem login)
+  token_publico    String?          @unique
+  // Identificadores do gateway de pagamento
+  gateway          String? // "mercadopago"
+  gateway_ref      String? // ID da preferência/pagamento no gateway
   created_at       DateTime         @default(now())
   updated_at       DateTime         @updatedAt
 

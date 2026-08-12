@@ -1,13 +1,15 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
-import { notificationService } from '../services/notification.service';
+import { mercadoPagoService } from '../services/mercadopago.service';
+import { confirmarPagamento } from '../services/pagamento.service';
+import { gerarCobranca } from '../services/cobranca.service';
 
 const prisma = new PrismaClient();
 
 export class PaymentController {
 
-    // 1. Gera Link de Pagamento (Simulação Mercado Pago)
+    /** POST /api/pagamentos/gerar — cria a cobrança no gateway e devolve o link */
     async generateLink(req: Request, res: Response) {
         const schema = z.object({
             orcamentoId: z.string().uuid(),
@@ -15,168 +17,119 @@ export class PaymentController {
 
         try {
             const { orcamentoId } = schema.parse(req.body);
+            const resultado = await gerarCobranca(orcamentoId);
 
-            const orcamento = await prisma.orcamento.findUnique({
-                where: { id: orcamentoId },
-                include: { prescricao: { include: { tutor: true } } }
-            });
-
-            if (!orcamento) {
-                return res.status(404).json({ error: 'Orçamento não encontrado' });
+            if (!resultado.ok) {
+                return res.status(resultado.status).json({
+                    success: false,
+                    error: resultado.motivo,
+                });
             }
-
-            if (orcamento.status_pagamento === 'PAID') {
-                return res.status(400).json({ error: 'Orçamento já pago' });
-            }
-
-            // MOCK Gateway Integration
-            const transactionId = `txn_${Date.now()}`;
-            const fakePaymentLink = `https://pay.pharmo.com.br/${transactionId}`;
-            const fakePixCode = `00020126580014BR.GOV.BCB.PIX0136valid-pix-key-1235204000053039865802BR5913Pharmo Pet6008Sao Paulo62070503***6304`;
-
-            // Update Orcamento with Link
-            await prisma.orcamento.update({
-                where: { id: orcamentoId },
-                data: {
-                    link_pagamento: fakePaymentLink,
-                    status_pagamento: 'PENDING'
-                }
-            });
 
             return res.json({
                 success: true,
-                link: fakePaymentLink,
-                pix_code: fakePixCode,
-                transaction_id: transactionId,
-                expires_in: '30 minutes'
+                link: resultado.link,
+                gateway: 'mercadopago',
+                referencia: resultado.referencia,
             });
-
         } catch (error) {
             if (error instanceof z.ZodError) {
                 return res.status(400).json({ error: (error as any).errors });
             }
+            console.error('❌ Erro ao gerar cobrança:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
     }
 
-    // 2. Webhook de Confirmação
+    /**
+     * POST /api/pagamentos/webhook/mercadopago
+     * O Mercado Pago avisa que algo mudou; a confirmação vem da consulta ao
+     * gateway, nunca do corpo da notificação.
+     */
+    async webhookMercadoPago(req: Request, res: Response) {
+        const dataId = String(req.body?.data?.id ?? req.query['data.id'] ?? '');
+        const tipo = String(req.body?.type ?? req.query.type ?? '');
+
+        const assinaturaValida = mercadoPagoService.verificarAssinatura({
+            assinatura: req.headers['x-signature'] as string | undefined,
+            requestId: req.headers['x-request-id'] as string | undefined,
+            dataId,
+        });
+
+        if (!assinaturaValida) {
+            console.warn('[WEBHOOK MP] Assinatura inválida — notificação descartada');
+            return res.status(401).send('assinatura inválida');
+        }
+
+        // Só pagamento interessa; os demais eventos são reconhecidos e ignorados
+        if (tipo && tipo !== 'payment') {
+            return res.status(200).send('OK');
+        }
+
+        if (!dataId) {
+            return res.status(400).send('sem id de pagamento');
+        }
+
+        const pagamento = await mercadoPagoService.consultarPagamento(dataId);
+
+        if (!pagamento.encontrado) {
+            console.warn(`[WEBHOOK MP] Pagamento ${dataId} não pôde ser consultado: ${pagamento.motivo}`);
+            // 500 faz o Mercado Pago tentar de novo, que é o comportamento desejado
+            return res.status(500).send('falha ao consultar pagamento');
+        }
+
+        if (!pagamento.aprovado || !pagamento.orcamento_id) {
+            return res.status(200).send('OK');
+        }
+
+        const metodo = pagamento.metodo === 'credit_card' ? 'CREDIT_CARD'
+            : pagamento.metodo === 'debit_card' ? 'DEBIT_CARD'
+                : 'PIX';
+
+        await prisma.orcamento.updateMany({
+            where: { id: pagamento.orcamento_id },
+            data: { gateway: 'mercadopago', gateway_ref: dataId },
+        });
+
+        await confirmarPagamento(pagamento.orcamento_id, metodo);
+        return res.status(200).send('OK');
+    }
+
+    /**
+     * POST /api/pagamentos/webhook
+     * Endpoint genérico legado. Fora de produção serve para simular a
+     * confirmação; com o gateway configurado, só o webhook assinado do
+     * Mercado Pago confirma pagamento.
+     */
     async webhook(req: Request, res: Response) {
-        // In real scenario, validate Gateway Signature here
-        const { transaction_id, status, orcamento_id } = req.body;
+        const { status, orcamento_id } = req.body;
 
-        console.log(`[WEBHOOK] Received update for ${orcamento_id} (Tx: ${transaction_id}): ${status}`);
-
-        if (status === 'approved') {
-            // Confirm Payment Logic
-            const updatedOrcamento = await prisma.$transaction(async (tx) => {
-                // 1. Update Payment Status
-                const orc = await tx.orcamento.update({
-                    where: { id: orcamento_id },
-                    data: {
-                        status_pagamento: 'PAID',
-                        data_pagamento: new Date(),
-                        metodo_pagamento: 'PIX'
-                    },
-                    include: {
-                        prescricao: {
-                            include: {
-                                tutor: true,
-                                animal: true
-                            }
-                        }
-                    }
-                });
-
-                // 2. Create or Update Order for Production
-                const existingPedido = await tx.pedido.findUnique({
-                    where: { orcamento_id: orcamento_id }
-                });
-
-                let pedido;
-                if (existingPedido) {
-                    pedido = await tx.pedido.update({
-                        where: { id: existingPedido.id },
-                        data: { status_producao: 'PAGAMENTO_CONFIRMADO' }
-                    });
-                } else {
-                    pedido = await tx.pedido.create({
-                        data: {
-                            orcamento_id: orcamento_id,
-                            status_producao: 'PAGAMENTO_CONFIRMADO'
-                        }
-                    });
-                }
-
-                // 3. Send to Production (PrismaFive Integration)
-                const { PrismaFiveService } = await import('../services/prismaFive.service');
-                const prismaFiveService = new PrismaFiveService();
-
-                const osId = await prismaFiveService.sendOrderToProduction(
-                    pedido.id,
-                    {
-                        medicamento: orc.prescricao.medicamento,
-                        dosagem: orc.prescricao.dosagem,
-                        quantidade: orc.prescricao.quantidade,
-                        tutor: orc.prescricao.tutor.nome,
-                        animal: orc.prescricao.animal.nome
-                    }
-                );
-
-                // 4. Update Order Status to EM_PRODUCAO
-                await tx.pedido.update({
-                    where: { id: pedido.id },
-                    data: {
-                        status_producao: 'EM_PRODUCAO',
-                        data_producao: new Date(),
-                        observacoes: `OS PrismaFive: ${osId}`
-                    }
-                });
-
-                // 5. Create Follow-up for 3 days from now
-                const followUpDate = new Date();
-                followUpDate.setDate(followUpDate.getDate() + 3);
-
-                await tx.followUp.create({
-                    data: {
-                        pedido_id: pedido.id,
-                        mensagem: `Verificar status de produção - ${orc.prescricao.medicamento}`,
-                        data_contato: followUpDate,
-                        realizado: false
-                    }
-                });
-
-                return orc;
+        if (mercadoPagoService.configurado) {
+            console.warn('[WEBHOOK] Chamada ao endpoint genérico recusada: gateway configurado');
+            return res.status(409).json({
+                error: 'Gateway configurado — use /api/pagamentos/webhook/mercadopago',
             });
+        }
 
-            // Mock sending WhatsApp Notification
-            if (updatedOrcamento?.prescricao?.tutor?.telefone) {
-                await notificationService.notifyPaymentConfirmed(
-                    updatedOrcamento.prescricao.tutor.telefone,
-                    updatedOrcamento.prescricao.tutor.nome,
-                    updatedOrcamento.prescricao_id.slice(0, 8) // Short ID for display
-                );
-            }
-
-            console.log(`[WEBHOOK] ✅ Payment confirmed and order sent to production for ${orcamento_id}`);
+        if (status === 'approved' && orcamento_id) {
+            await confirmarPagamento(orcamento_id, 'PIX');
         }
 
         return res.status(200).send('OK');
     }
 
-    // 3. Status Check
+    /** GET /api/pagamentos/:id/status */
     async checkStatus(req: Request, res: Response) {
         const { id } = req.params;
 
         try {
-            const orcamento = await prisma.orcamento.findUnique({
-                where: { id }
-            });
-
+            const orcamento = await prisma.orcamento.findUnique({ where: { id } });
             if (!orcamento) return res.status(404).json({ error: 'Not found' });
 
             return res.json({
                 status: orcamento.status_pagamento,
-                paid_at: orcamento.data_pagamento
+                paid_at: orcamento.data_pagamento,
+                link: orcamento.link_pagamento,
             });
         } catch (error) {
             return res.status(500).json({ error: 'Internal server error' });

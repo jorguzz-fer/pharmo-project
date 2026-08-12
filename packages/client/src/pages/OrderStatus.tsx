@@ -3,6 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { CheckCircle, Clock, Package, Truck, AlertCircle, Copy } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
 
+function getBaseUrl() {
+    let url = import.meta.env.VITE_API_URL || 'https://phamopet-backend-api.en9jpc.easypanel.host';
+    if (url.endsWith('/')) url = url.slice(0, -1);
+    if (!url.endsWith('/api')) url = `${url}/api`;
+    return url;
+}
+
 type OrderStatus = {
     orcamento: {
         id: string;
@@ -52,7 +59,7 @@ export function OrderStatus() {
     useEffect(() => {
         const fetchOrderStatus = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/prescricoes/${id}/status`, {
+                const response = await fetch(`${getBaseUrl()}/prescricoes/${id}/status`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.ok) {
