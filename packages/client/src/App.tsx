@@ -27,6 +27,7 @@ import { ClinicDashboard } from './pages/clinic/ClinicDashboard';
 import { ClinicPrescriptions } from './pages/clinic/ClinicPrescriptions';
 import { ClinicVeterinarians } from './pages/clinic/ClinicVeterinarians';
 import { ClinicLayout } from './layouts/ClinicLayout';
+import { PublicOrder } from './pages/PublicOrder';
 
 function ProtectedRoute({ children, role }: { children: React.ReactNode, role?: 'VET' | 'ADMIN' }) {
   const { isAuthenticated, user } = useAuthStore();
@@ -48,6 +49,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Página do tutor — sem login, acessada pelo token do orçamento */}
+        <Route path="/receita/:token" element={<PublicOrder />} />
+
         {/* Public Routes */}
         <Route path="/" element={<Navigate to="/veterinario/login" />} />
         <Route path="/login" element={<Navigate to="/veterinario/login" />} /> {/* Backward compatibility */}

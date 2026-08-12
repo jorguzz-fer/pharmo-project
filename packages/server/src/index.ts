@@ -17,6 +17,7 @@ import validacaoClinicaRoutes from './routes/validacaoClinica.routes';
 import produtoRoutes from './routes/produto.routes';
 import insumoRoutes from './routes/insumo.routes';
 import precificacaoRoutes from './routes/precificacao.routes';
+import publicoRoutes from './routes/publico.routes';
 
 // Try to load .env file (optional - Easypanel uses system env vars)
 dotenv.config();
@@ -66,6 +67,7 @@ app.use('/api/validacao', validacaoClinicaRoutes);
 app.use('/api/produtos', produtoRoutes);
 app.use('/api', insumoRoutes);
 app.use('/api', precificacaoRoutes);
+app.use('/api/publico', publicoRoutes);
 
 app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });

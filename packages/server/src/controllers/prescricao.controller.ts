@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
+import { randomBytes } from 'crypto';
 import { notificationService } from '../services/notification.service';
+import { gerarCobranca } from '../services/cobranca.service';
 
 const prisma = new PrismaClient();
 
@@ -174,6 +176,8 @@ export class PrescricaoController {
                         prescricao_id: prescricao.id,
                         valor_total: valorTotal,
                         status_pagamento: 'PENDING',
+                        // Token da página pública que o tutor abre sem login
+                        token_publico: randomBytes(16).toString('hex'),
                     },
                 });
 
@@ -249,8 +253,19 @@ export class PrescricaoController {
                 return res.status(404).json({ error: 'Prescrição não encontrada' });
             }
 
-            const link = prescricao.orcamento?.link_pagamento
-                || `${process.env.FRONTEND_URL || ''}/pedidos/${prescricao.id}`;
+            // Prepara a cobrança antes de enviar: o tutor abre o link já podendo pagar
+            let avisoCobranca: string | null = null;
+            if (prescricao.orcamento && prescricao.orcamento.status_pagamento !== 'PAID') {
+                const cobranca = await gerarCobranca(prescricao.orcamento.id);
+                if (!cobranca.ok) avisoCobranca = cobranca.motivo ?? null;
+            }
+
+            // O link é sempre o da página do tutor, não o do checkout: ali ele vê a
+            // receita, o valor e o botão de pagar, e pode voltar depois.
+            const token = prescricao.orcamento?.token_publico;
+            const link = token
+                ? `${process.env.FRONTEND_URL || ''}/receita/${token}`
+                : `${process.env.FRONTEND_URL || ''}/pedidos/${prescricao.id}`;
 
             const envio = await notificationService.notifyPrescriptionCreated(
                 prescricao.tutor.telefone,
@@ -271,6 +286,7 @@ export class PrescricaoController {
                 enviado: envio.enviado,
                 canal: envio.enviado ? 'whatsapp' : null,
                 motivo: envio.motivo ?? null,
+                aviso_cobranca: avisoCobranca,
                 link,
                 message: envio.enviado
                     ? 'Prescrição enviada por WhatsApp ao tutor'
