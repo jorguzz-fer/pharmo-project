@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '../store/auth';
 
 function getBaseUrl() {
     let url = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
@@ -81,8 +82,35 @@ export interface PrincipioAtivoCreateInput {
 
 class PrincipioAtivoService {
     private getAuthHeader() {
-        const token = localStorage.getItem('token');
+        const token = useAuthStore.getState().token;
         return token ? { Authorization: `Bearer ${token}` } : {};
+    }
+
+    /**
+     * Tenta identificar o princípio ativo a partir do nome comercial do produto.
+     * Usado pela validação de dose: sem princípio ativo não há range terapêutico.
+     * Retorna null quando não há correspondência confiável.
+     */
+    async resolverPorNome(nomeProduto: string): Promise<PrincipioAtivo | null> {
+        const palavras = nomeProduto
+            .replace(/[()+,-]/g, ' ')
+            .split(/\s+/)
+            .filter(p => p.length >= 4);
+
+        for (const palavra of palavras) {
+            try {
+                const encontrados = await this.listarTodos({ busca: palavra, ativo: true });
+                const exato = encontrados.find(
+                    p => p.nome.toLowerCase() === palavra.toLowerCase()
+                );
+                if (exato) return exato;
+                if (encontrados.length === 1) return encontrados[0];
+            } catch {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     async listarTodos(filtros?: PrincipioAtivoFilters): Promise<PrincipioAtivo[]> {

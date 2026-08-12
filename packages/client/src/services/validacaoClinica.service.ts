@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '../store/auth';
 
 function getBaseUrl() {
     let url = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
@@ -77,7 +78,8 @@ export interface LogCiencia {
 
 class ValidacaoClinicaService {
     private getAuthHeader() {
-        const token = localStorage.getItem('token');
+        // O token vive no store de auth (zustand/persist), não numa chave "token" solta
+        const token = useAuthStore.getState().token;
         return token ? { Authorization: `Bearer ${token}` } : {};
     }
 

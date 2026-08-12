@@ -1,8 +1,23 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
+import { notificationService } from '../services/notification.service';
 
 const prisma = new PrismaClient();
+
+const medicamentoSchema = z.object({
+    codigo_medicamento: z.string().nullish(),
+    medicamento: z.string().min(1),
+    dosagem: z.string(),
+    forma_farmaceutica: z.string().min(1),
+    quantidade: z.string(),
+    observacoes: z.string().nullish(),
+    preco_sugestao: z.number().nonnegative().nullish(),
+    preco_tabela: z.number().nonnegative().nullish(),
+    is_magistral: z.boolean().optional(),
+});
+
+type MedicamentoInput = z.infer<typeof medicamentoSchema>;
 
 export class PrescricaoController {
     async create(req: Request, res: Response) {
@@ -11,11 +26,14 @@ export class PrescricaoController {
             tutor_id: z.string().uuid(),
             animal_id: z.string().uuid(),
             doenca: z.string().optional(),
-            medicamento: z.string(),
-            dosagem: z.string(),
-            forma_farmaceutica: z.string(),
-            quantidade: z.string(),
             observacoes: z.string().optional(),
+            // Lista completa de medicamentos da prescrição
+            medicamentos: z.array(medicamentoSchema).min(1).optional(),
+            // Campos legados (prescrição de medicamento único)
+            medicamento: z.string().optional(),
+            dosagem: z.string().optional(),
+            forma_farmaceutica: z.string().optional(),
+            quantidade: z.string().optional(),
         });
 
         // MOCK: Lista de Medicamentos Controlados
@@ -23,6 +41,24 @@ export class PrescricaoController {
 
         try {
             const data = schema.parse(req.body);
+
+            // Normaliza: aceita a lista nova ou o formato legado de medicamento único
+            let medicamentos: MedicamentoInput[];
+            if (data.medicamentos?.length) {
+                medicamentos = data.medicamentos;
+            } else if (data.medicamento && data.forma_farmaceutica) {
+                medicamentos = [{
+                    medicamento: data.medicamento,
+                    dosagem: data.dosagem ?? '',
+                    forma_farmaceutica: data.forma_farmaceutica,
+                    quantidade: data.quantidade ?? '',
+                    observacoes: data.observacoes,
+                }];
+            } else {
+                return res.status(400).json({
+                    error: 'Informe ao menos um medicamento (campo "medicamentos").',
+                });
+            }
 
             // Validate that veterinario exists
             const vet = await prisma.veterinario.findUnique({
@@ -57,14 +93,21 @@ export class PrescricaoController {
                 });
             }
 
-            // Validação de Receita Controlada
-            const isControlled = CONTROLLED_SUBSTANCES.some(sub =>
-                data.medicamento.toLowerCase().includes(sub.toLowerCase())
+            // Validação de Receita Controlada (verifica todos os medicamentos)
+            const isControlled = medicamentos.some(med =>
+                CONTROLLED_SUBSTANCES.some(sub =>
+                    med.medicamento.toLowerCase().includes(sub.toLowerCase())
+                )
             );
 
             if (isControlled) {
-                // Exige número de notificação nas observações
-                if (!data.observacoes || !data.observacoes.toLowerCase().includes('notificação')) {
+                // Exige número de notificação nas observações (da prescrição ou de algum item)
+                const textoObservacoes = [
+                    data.observacoes,
+                    ...medicamentos.map(m => m.observacoes),
+                ].filter(Boolean).join(' ').toLowerCase();
+
+                if (!textoObservacoes.includes('notificação')) {
                     return res.status(400).json({
                         error: 'Para medicamentos controlados, é obrigatório informar o número da Notificação de Receita nas observações.'
                     });
@@ -76,22 +119,60 @@ export class PrescricaoController {
                 where: { veterinario_id: data.veterinario_id, status: 'ativo' },
             });
 
-            // Create Prescricao + Orcamento (Mock Logic for price)
-            const mockPrice = 150.00 + (Math.random() * 100); // 150 - 250
+            // Valor do orçamento = soma dos preços praticados nos itens.
+            // Um item sem preço torna o total incompleto — melhor recusar do que
+            // gravar um orçamento que não corresponde ao que foi prescrito.
+            const semPreco = medicamentos.filter(
+                m => m.preco_sugestao === undefined || m.preco_sugestao === null
+            );
+            if (semPreco.length > 0) {
+                return res.status(400).json({
+                    error: `Sem preço para: ${semPreco.map(m => m.medicamento).join(', ')}. Refaça o orçamento antes de salvar.`,
+                    code: 'PRECO_AUSENTE',
+                });
+            }
+            const valorTotal = medicamentos.reduce(
+                (soma, m) => soma + Number(m.preco_sugestao ?? 0), 0
+            );
+
+            const primeiro = medicamentos[0];
 
             const result = await prisma.$transaction(async (tx) => {
                 const prescricao = await tx.prescricao.create({
                     data: {
-                        ...data,
+                        veterinario_id: data.veterinario_id,
+                        tutor_id: data.tutor_id,
+                        animal_id: data.animal_id,
+                        doenca: data.doenca || null,
+                        observacoes: data.observacoes,
+                        // Campos legados: espelham o primeiro item, para compatibilidade
+                        medicamento: primeiro.medicamento,
+                        dosagem: primeiro.dosagem,
+                        forma_farmaceutica: primeiro.forma_farmaceutica,
+                        quantidade: primeiro.quantidade,
                         clinica_id: clinicaVet?.clinica_id || null,
                         status: 'DRAFT', // Starts as draft
+                        medicamentos: {
+                            create: medicamentos.map(m => ({
+                                codigo_medicamento: m.codigo_medicamento ?? null,
+                                medicamento: m.medicamento,
+                                dosagem: m.dosagem,
+                                forma_farmaceutica: m.forma_farmaceutica,
+                                quantidade: m.quantidade,
+                                observacoes: m.observacoes ?? null,
+                                preco_sugestao: m.preco_sugestao ?? null,
+                                preco_tabela: m.preco_tabela ?? null,
+                                is_magistral: m.is_magistral ?? false,
+                            })),
+                        },
                     },
+                    include: { medicamentos: true },
                 });
 
                 const orcamento = await tx.orcamento.create({
                     data: {
                         prescricao_id: prescricao.id,
-                        valor_total: mockPrice,
+                        valor_total: valorTotal,
                         status_pagamento: 'PENDING',
                     },
                 });
@@ -159,16 +240,44 @@ export class PrescricaoController {
         const { id } = req.params;
 
         try {
-            const prescricao = await prisma.prescricao.update({
+            const prescricao = await prisma.prescricao.findUnique({
                 where: { id },
-                data: { status: 'SENT' }
+                include: { tutor: true, orcamento: true },
             });
 
-            // Mock sending Logic (WhatsApp integration comes later)
-            console.log(`[WHATSAPP MOCK] Sending prescription ${id} to client...`);
+            if (!prescricao) {
+                return res.status(404).json({ error: 'Prescrição não encontrada' });
+            }
 
-            return res.json({ success: true, message: 'Prescrição enviada com sucesso', prescricao });
+            const link = prescricao.orcamento?.link_pagamento
+                || `${process.env.FRONTEND_URL || ''}/pedidos/${prescricao.id}`;
+
+            const envio = await notificationService.notifyPrescriptionCreated(
+                prescricao.tutor.telefone,
+                prescricao.tutor.nome,
+                link
+            );
+
+            // Só marca como enviada se de fato saiu
+            if (envio.enviado) {
+                await prisma.prescricao.update({
+                    where: { id },
+                    data: { status: 'SENT' },
+                });
+            }
+
+            return res.json({
+                success: true,
+                enviado: envio.enviado,
+                canal: envio.enviado ? 'whatsapp' : null,
+                motivo: envio.motivo ?? null,
+                link,
+                message: envio.enviado
+                    ? 'Prescrição enviada por WhatsApp ao tutor'
+                    : `Prescrição registrada, mas não enviada: ${envio.motivo}`,
+            });
         } catch (error) {
+            console.error('❌ Erro ao enviar prescrição:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
     }

@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, MessageCircle, Send, X, Loader2, Bot, FlaskConical } from 'lucide-react';
-import { usePrescriptionStore } from '../../../store/prescription';
+import { usePrescriptionStore, type CienciaPendente } from '../../../store/prescription';
 import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
 import { formaFarmaceuticaService, insumoService, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { api } from '../../../services/api';
 import { MagistralBuilder } from '../components/MagistralBuilder';
+import { CienciaModal } from '../../../components/CienciaModal';
+import { validacaoClinicaService, type ValidacaoResultado } from '../../../services/validacaoClinica.service';
+import { principioAtivoService } from '../../../services/principioAtivo.service';
 
 type MedForm = {
     codigo?: string;
@@ -36,9 +39,14 @@ type AiMessage = {
 };
 
 export function StepMedication() {
-    const { medications, addMedication, removeMedication, setStep, animal } = usePrescriptionStore();
+    const { medications, addMedication, removeMedication, setStep, animal, doenca, setDoenca } = usePrescriptionStore();
     const { register, handleSubmit, reset, setValue } = useForm<MedForm>();
     const [showForm, setShowForm] = useState(medications.length === 0);
+
+    // Validação clínica de dose por peso
+    const [validacao, setValidacao] = useState<ValidacaoResultado | null>(null);
+    const [pendente, setPendente] = useState<{ dados: MedForm; principio_ativo_id: string } | null>(null);
+    const [validando, setValidando] = useState(false);
 
     // Catalog search state
     const [catalogSearchTerm, setCatalogSearchTerm] = useState('');
@@ -205,7 +213,7 @@ export function StepMedication() {
     // ============================================================
     // FORM SUBMISSION
     // ============================================================
-    const onSubmit = (data: MedForm) => {
+    const adicionarAoCarrinho = (data: MedForm, extras?: { principio_ativo_id?: string; ciencia?: CienciaPendente }) => {
         addMedication({
             ...data,
             dosage: data.dosagem_mg_kg || '',
@@ -213,8 +221,79 @@ export function StepMedication() {
             preco_tabela: data.preco_tabela,
             controlado: controladoInfo?.controlado || false,
             lista_controle: controladoInfo?.substancias?.[0]?.lista || undefined,
+            principio_ativo_id: extras?.principio_ativo_id,
+            ciencia: extras?.ciencia,
         });
         resetForm();
+    };
+
+    /**
+     * Antes de adicionar, confere a dose contra o range terapêutico da espécie/peso.
+     * Sem princípio ativo mapeado ou sem range cadastrado, segue sem bloquear —
+     * a validação é uma rede de segurança, não um impedimento à prescrição.
+     */
+    const onSubmit = async (data: MedForm) => {
+        if (!animal?.id) {
+            adicionarAoCarrinho(data);
+            return;
+        }
+
+        setValidando(true);
+        try {
+            const principio = await principioAtivoService.resolverPorNome(data.drug);
+
+            if (!principio) {
+                adicionarAoCarrinho(data);
+                return;
+            }
+
+            const resultado = await validacaoClinicaService.validarDosagem({
+                principio_ativo_id: principio.id,
+                animal_id: animal.id,
+                dosagem_mg_kg: parseFloat(data.dosagem_mg_kg),
+                frequencia_horas: parseInt(data.frequencia_horas),
+                duracao_dias: parseInt(data.duracao_dias),
+            });
+
+            if (resultado.requer_ciencia) {
+                // Abre o modal: o medicamento só entra depois da justificativa
+                setValidacao(resultado);
+                setPendente({ dados: data, principio_ativo_id: principio.id });
+                return;
+            }
+
+            adicionarAoCarrinho(data, { principio_ativo_id: principio.id });
+        } catch (error) {
+            console.error('Falha na validação de dose:', error);
+            adicionarAoCarrinho(data);
+        } finally {
+            setValidando(false);
+        }
+    };
+
+    const handleCienciaAceite = (motivo: string) => {
+        if (!pendente || !validacao) return;
+
+        const pesoAnimal = Number(animal?.peso ?? animal?.weight ?? 0);
+        adicionarAoCarrinho(pendente.dados, {
+            principio_ativo_id: pendente.principio_ativo_id,
+            ciencia: {
+                principio_ativo_id: pendente.principio_ativo_id,
+                dosagem_prescrita_mg_kg: validacao.dose_mg_kg,
+                peso_animal_kg: pesoAnimal,
+                dose_min_esperada_mg_kg: validacao.range_encontrado?.dose_min_mg_kg ?? 0,
+                dose_max_esperada_mg_kg: validacao.range_encontrado?.dose_max_mg_kg ?? 0,
+                motivo,
+            },
+        });
+
+        setValidacao(null);
+        setPendente(null);
+    };
+
+    const handleCienciaCancelar = () => {
+        setValidacao(null);
+        setPendente(null);
     };
 
     const resetForm = () => {
@@ -282,7 +361,32 @@ export function StepMedication() {
                 />
             )}
 
+            {/* Ciência de dose fora do range terapêutico */}
+            {validacao && (
+                <CienciaModal
+                    validacao={validacao}
+                    onAccept={handleCienciaAceite}
+                    onCancel={handleCienciaCancelar}
+                />
+            )}
+
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                {/* Doença / indicação da prescrição */}
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Doença / Indicação
+                    </label>
+                    <input
+                        value={doenca}
+                        onChange={(e) => setDoenca(e.target.value)}
+                        placeholder="Ex: Otite bacteriana, doença renal crônica..."
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                        Fica registrada na prescrição e alimenta os relatórios por doença.
+                    </p>
+                </div>
+
                 {/* Action Buttons: AI Assistant + Magistral Builder */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                     {/* AI Assistant Banner */}
@@ -742,10 +846,10 @@ export function StepMedication() {
                         <div className="flex gap-3">
                             <button
                                 type="submit"
-                                disabled={!selectedProduto}
+                                disabled={!selectedProduto || validando}
                                 className="flex-1 px-4 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
-                                Adicionar
+                                {validando ? 'Validando dose...' : 'Adicionar'}
                             </button>
                             {medications.length > 0 && (
                                 <button

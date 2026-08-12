@@ -74,8 +74,8 @@ export class ValidacaoClinicaController {
                 });
             }
 
-            // Pegar veterinário do token
-            const veterinario_id = (req as any).user?.id;
+            // Pegar veterinário do token (authMiddleware preenche req.userId)
+            const veterinario_id = req.userId;
             if (!veterinario_id) {
                 return res.status(401).json({
                     success: false,
@@ -182,7 +182,7 @@ export class ValidacaoClinicaController {
      */
     async relatorioLogsCiencia(req: Request, res: Response) {
         try {
-            if ((req as any).user?.role !== 'ADMIN') {
+            if (req.userRole !== 'ADMIN') {
                 return res.status(403).json({
                     success: false,
                     error: 'Acesso negado. Apenas administradores podem acessar este relatório.'
