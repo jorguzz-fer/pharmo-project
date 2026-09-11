@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export type MagistralIngrediente = {
     codigo_interno: number;
@@ -44,6 +45,8 @@ type Medication = {
     id?: string;
     codigo?: string;
     dosagem_mg_kg?: string;
+    frequencia_horas?: string;
+    duracao_dias?: string;
     principio_ativo_id?: string;
     drug: string;
     dosage: string;
@@ -57,6 +60,19 @@ type Medication = {
     // Magistral fields
     is_magistral?: boolean;
     magistral_breakdown?: MagistralBreakdown;
+    /**
+     * Ingredientes como o veterinário os informou no Formulador, incluindo a
+     * posologia (dias/frequência). O breakdown devolvido pelo servidor não
+     * carrega esses campos, então guardamos aqui para reabrir em edição.
+     */
+    magistral_ingredientes?: Array<{
+        codigo_interno: number;
+        descricao: string;
+        dosagem_mg: number;
+        quantidade: number;
+        dias?: number;
+        frequencia_horas?: number;
+    }>;
     // Validação clínica
     ciencia?: CienciaPendente;
 };
@@ -73,24 +89,45 @@ interface PrescriptionState {
     setAnimal: (animal: PrescriptionState['animal']) => void;
     setDoenca: (doenca: string) => void;
     addMedication: (medication: Medication) => void;
+    updateMedication: (index: number, medication: Medication) => void;
     removeMedication: (index: number) => void;
     setMedications: (medications: Medication[]) => void;
     reset: () => void;
 }
 
-export const usePrescriptionStore = create<PrescriptionState>((set) => ({
-    step: 1,
-    tutor: null,
-    animal: null,
-    doenca: '',
-    medications: [],
+/**
+ * Estado da prescrição em andamento.
+ *
+ * Persistido em sessionStorage ("memória da prescrição"): o veterinário pode
+ * voltar etapas, recarregar a página ou reabrir um item para editar sem perder
+ * o que já preencheu. A sessão limpa ao fechar a aba, e `reset()` zera tudo ao
+ * concluir a prescrição — evitando dados velhos numa próxima receita.
+ */
+export const usePrescriptionStore = create<PrescriptionState>()(
+    persist(
+        (set) => ({
+            step: 1,
+            tutor: null,
+            animal: null,
+            doenca: '',
+            medications: [],
 
-    setStep: (step) => set({ step }),
-    setTutor: (tutor) => set({ tutor }),
-    setAnimal: (animal) => set({ animal }),
-    setDoenca: (doenca) => set({ doenca }),
-    addMedication: (medication) => set((state) => ({ medications: [...state.medications, medication] })),
-    removeMedication: (index) => set((state) => ({ medications: state.medications.filter((_, i) => i !== index) })),
-    setMedications: (medications) => set({ medications }),
-    reset: () => set({ step: 1, tutor: null, animal: null, doenca: '', medications: [] }),
-}));
+            setStep: (step) => set({ step }),
+            setTutor: (tutor) => set({ tutor }),
+            setAnimal: (animal) => set({ animal }),
+            setDoenca: (doenca) => set({ doenca }),
+            addMedication: (medication) => set((state) => ({ medications: [...state.medications, medication] })),
+            updateMedication: (index, medication) =>
+                set((state) => ({
+                    medications: state.medications.map((m, i) => (i === index ? medication : m)),
+                })),
+            removeMedication: (index) => set((state) => ({ medications: state.medications.filter((_, i) => i !== index) })),
+            setMedications: (medications) => set({ medications }),
+            reset: () => set({ step: 1, tutor: null, animal: null, doenca: '', medications: [] }),
+        }),
+        {
+            name: 'pharmo-prescricao-rascunho',
+            storage: createJSONStorage(() => sessionStorage),
+        }
+    )
+);
