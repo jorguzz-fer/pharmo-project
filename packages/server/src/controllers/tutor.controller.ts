@@ -12,6 +12,8 @@ export class TutorController {
             email: z.string().email().optional().or(z.literal('')),
             telefone: z.string().optional(),
             endereco: z.string().optional(),
+            entrega_na_clinica: z.boolean().optional(),
+            endereco_entrega: z.string().optional(),
         });
 
         try {
@@ -28,6 +30,8 @@ export class TutorController {
                     telefone: data.telefone,
                     ...(data.email ? { email: data.email } : {}),
                     ...(data.endereco ? { endereco: data.endereco } : {}),
+                    ...(data.entrega_na_clinica !== undefined ? { entrega_na_clinica: data.entrega_na_clinica } : {}),
+                    ...(data.endereco_entrega ? { endereco_entrega: data.endereco_entrega } : {}),
                 },
                 create: {
                     ...data,

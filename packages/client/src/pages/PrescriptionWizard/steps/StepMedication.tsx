@@ -6,7 +6,7 @@ import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
 import { formaFarmaceuticaService, insumoService, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { api } from '../../../services/api';
-import { MagistralBuilder, type IngredienteForm } from '../components/MagistralBuilder';
+import { MagistralBuilder, type IngredienteForm, type PosologiaFormulacao } from '../components/MagistralBuilder';
 import { CienciaModal } from '../../../components/CienciaModal';
 import { validacaoClinicaService, type ValidacaoResultado } from '../../../services/validacaoClinica.service';
 import { principioAtivoService } from '../../../services/principioAtivo.service';
@@ -374,6 +374,7 @@ export function StepMedication() {
         is_magistral: boolean;
         magistral_breakdown: any;
         ingredientes: IngredienteForm[];
+        posologia: PosologiaFormulacao;
         observations: string;
     }) => {
         const med = {
@@ -389,6 +390,7 @@ export function StepMedication() {
             is_magistral: true,
             magistral_breakdown: dados.magistral_breakdown,
             magistral_ingredientes: dados.ingredientes,
+            magistral_posologia: dados.posologia,
         };
         if (editingIndex !== null) {
             updateMedication(editingIndex, med);
@@ -425,7 +427,8 @@ export function StepMedication() {
                         editingIndex !== null && medications[editingIndex]?.is_magistral
                             ? {
                                 nomeFormulacao: medications[editingIndex].drug,
-                                forma: medications[editingIndex].form,
+                                // A forma é guardada como "FORMA (AROMA)"; o aroma volta pelo próprio campo
+                                forma: medications[editingIndex].form.replace(/\s*\(.*\)$/, ''),
                                 observacoes: medications[editingIndex].observations,
                                 ingredientes: (
                                     medications[editingIndex].magistral_ingredientes
@@ -435,10 +438,8 @@ export function StepMedication() {
                                     codigo_interno: i.codigo_interno,
                                     descricao: i.descricao,
                                     dosagem_mg: i.dosagem_mg,
-                                    quantidade: i.quantidade,
-                                    dias: i.dias,
-                                    frequencia_horas: i.frequencia_horas,
                                 })),
+                                ...medications[editingIndex].magistral_posologia,
                             }
                             : undefined
                     }
@@ -648,6 +649,11 @@ export function StepMedication() {
                                         {med.codigo && (
                                             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono">
                                                 {med.codigo}
+                                            </span>
+                                        )}
+                                        {med.magistral_posologia?.uso_continuo && (
+                                            <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">
+                                                USO CONTÍNUO
                                             </span>
                                         )}
                                         {med.controlado && (

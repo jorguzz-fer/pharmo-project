@@ -188,9 +188,14 @@ export function StepReview() {
                     {enviado ? 'Prescrição Enviada!' : 'Prescrição Registrada'}
                 </h2>
                 {enviado ? (
-                    <p className="text-gray-500 mb-8">
-                        O link de pagamento e a receita foram enviados para o WhatsApp do tutor ({tutor?.phone || tutor?.telefone}).
-                    </p>
+                    <div className="mb-8 space-y-3">
+                        <p className="text-gray-500">
+                            O link de pagamento e a receita foram enviados para o WhatsApp do tutor ({tutor?.phone || tutor?.telefone}).
+                        </p>
+                        <p className="text-sm text-green-800 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                            Seu pedido está <strong>em análise</strong>. Nossos analistas entrarão em contato em breve pelo WhatsApp.
+                        </p>
+                    </div>
                 ) : (
                     <div className="mb-8 space-y-2">
                         <p className="text-gray-600">
@@ -281,6 +286,11 @@ export function StepReview() {
                                             {med.codigo && (
                                                 <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-mono">
                                                     {med.codigo}
+                                                </span>
+                                            )}
+                                            {med.magistral_posologia?.uso_continuo && (
+                                                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">
+                                                    USO CONTÍNUO
                                                 </span>
                                             )}
                                         </div>
