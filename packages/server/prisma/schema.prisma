@@ -89,9 +89,9 @@ model Tutor {
   email      String?
   telefone   String?
   endereco   String?
-  /** Entrega na clínica parceira em vez do endereço do tutor */
+  /// Entrega na clínica parceira em vez do endereço do tutor
   entrega_na_clinica Boolean @default(false)
-  /** Endereço completo de entrega, quando não for na clínica */
+  /// Endereço completo de entrega, quando não for na clínica
   endereco_entrega   String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
