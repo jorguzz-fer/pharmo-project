@@ -140,7 +140,23 @@ export function MagistralBuilder({ clinicaId, initial, onCancel, onConfirm }: Ma
         return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
     }, [searchTerm]);
 
-    // Recalcular preço sempre que ingredientes/forma mudarem
+    // ---- Calculadora de posologia (prévia em tempo real) ----
+    // Declarada antes dos efeitos: quantidadeCalculada entra na lista de
+    // dependências abaixo, que é avaliada durante o render.
+    const doseInformada = parseFloat(dosagemAtual);
+    const diasInformados = parseInt(diasTratamento, 10);
+    const horasInformadas = parseInt(frequenciaHoras, 10);
+
+    const dosagemMgCalculada = doseInformada > 0
+        ? (unidadeAtual === 'g' ? doseInformada * 1000 : doseInformada)
+        : 0;
+    const dosesPorDia = horasInformadas > 0 ? 24 / horasInformadas : 0;
+    const quantidadeCalculada = diasInformados > 0 && dosesPorDia > 0
+        ? Math.round(diasInformados * dosesPorDia)
+        : 0;
+    const posologiaCompleta = quantidadeCalculada > 0;
+
+    // Recalcular preço sempre que ingredientes/forma/posologia mudarem
     useEffect(() => {
         if (ingredientes.length === 0 || !formaSelecionada || quantidadeCalculada <= 0) {
             setResultado(null);
@@ -185,20 +201,6 @@ export function MagistralBuilder({ clinicaId, initial, onCancel, onConfirm }: Ma
         setSearchResults([]);
         setShowDropdown(false);
     };
-
-    // ---- Calculadora de posologia (prévia em tempo real) ----
-    const doseInformada = parseFloat(dosagemAtual);
-    const diasInformados = parseInt(diasTratamento, 10);
-    const horasInformadas = parseInt(frequenciaHoras, 10);
-
-    const dosagemMgCalculada = doseInformada > 0
-        ? (unidadeAtual === 'g' ? doseInformada * 1000 : doseInformada)
-        : 0;
-    const dosesPorDia = horasInformadas > 0 ? 24 / horasInformadas : 0;
-    const quantidadeCalculada = diasInformados > 0 && dosesPorDia > 0
-        ? Math.round(diasInformados * dosesPorDia)
-        : 0;
-    const posologiaCompleta = quantidadeCalculada > 0;
 
     const handleAddIngrediente = () => {
         if (!insumoSelecionado) return;
