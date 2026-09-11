@@ -61,18 +61,25 @@ type Medication = {
     is_magistral?: boolean;
     magistral_breakdown?: MagistralBreakdown;
     /**
-     * Ingredientes como o veterinário os informou no Formulador, incluindo a
-     * posologia (dias/frequência). O breakdown devolvido pelo servidor não
-     * carrega esses campos, então guardamos aqui para reabrir em edição.
+     * Ingredientes como o veterinário os informou no Formulador. O breakdown
+     * devolvido pelo servidor não carrega a dose original, então guardamos
+     * aqui para reabrir a fórmula em edição.
      */
     magistral_ingredientes?: Array<{
         codigo_interno: number;
         descricao: string;
         dosagem_mg: number;
-        quantidade: number;
+    }>;
+    /**
+     * Posologia da formulação. Vale para a fórmula inteira, não por ingrediente:
+     * todos os princípios ativos compõem a mesma cápsula/dose.
+     */
+    magistral_posologia?: {
         dias?: number;
         frequencia_horas?: number;
-    }>;
+        aroma?: string;
+        uso_continuo?: boolean;
+    };
     // Validação clínica
     ciencia?: CienciaPendente;
 };

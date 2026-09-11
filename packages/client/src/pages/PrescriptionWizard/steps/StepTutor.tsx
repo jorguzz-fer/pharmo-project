@@ -8,13 +8,16 @@ type TutorForm = {
     cpf: string;
     name: string;
     phone: string;
+    entrega_na_clinica: boolean;
+    endereco_entrega: string;
 };
 
 export function StepTutor() {
     const { setTutor, setStep, tutor } = usePrescriptionStore();
-    const { register, handleSubmit, setValue } = useForm<TutorForm>({
+    const { register, handleSubmit, setValue, watch } = useForm<TutorForm>({
         defaultValues: tutor || {}
     });
+    const entregaNaClinica = watch('entrega_na_clinica');
     const [isLoading, setIsLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchCpf, setSearchCpf] = useState('');
@@ -22,18 +25,14 @@ export function StepTutor() {
     const onSubmit = async (data: TutorForm) => {
         setIsLoading(true);
         try {
-            // Check if we already have an ID (from search)
-            if (tutor?.id && tutor.cpf === data.cpf) {
-                setTutor({ ...tutor, ...data });
-                setStep(2);
-                return;
-            }
-
-            // Otherwise create new tutor
+            // Sempre grava: o endpoint é um upsert por CPF, então um tutor já
+            // cadastrado tem os dados de entrega atualizados em vez de ignorados.
             const tutorData = {
                 nome: data.name,
                 cpf: data.cpf,
                 telefone: data.phone,
+                entrega_na_clinica: Boolean(data.entrega_na_clinica),
+                endereco_entrega: data.entrega_na_clinica ? undefined : data.endereco_entrega,
                 // email is optional
             };
 
@@ -82,6 +81,8 @@ export function StepTutor() {
                 setValue('cpf', found.cpf);
                 setValue('name', found.nome);
                 setValue('phone', found.telefone);
+                setValue('entrega_na_clinica', Boolean(found.entrega_na_clinica));
+                setValue('endereco_entrega', found.endereco_entrega || '');
                 setTutor({ ...found, name: found.nome, phone: found.telefone }); // Map to frontend format
             } else {
                 alert('Tutor não encontrado. Preencha os dados para cadastrar.');
@@ -160,6 +161,33 @@ export function StepTutor() {
                                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 outline-none"
                             />
                         </div>
+                    </div>
+
+                    {/* Entrega: na clínica parceira ou no endereço do tutor */}
+                    <div className="mt-6 border-t border-gray-100 pt-5">
+                        <h3 className="text-sm font-semibold text-gray-900 mb-3">Entrega</h3>
+                        <label className="flex items-center gap-2 text-sm text-gray-700 mb-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                {...register('entrega_na_clinica')}
+                                className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                            />
+                            Entregar na clínica
+                        </label>
+
+                        {!entregaNaClinica && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Endereço de entrega
+                                </label>
+                                <textarea
+                                    {...register('endereco_entrega')}
+                                    rows={2}
+                                    placeholder="Rua, número, complemento, bairro, cidade/UF e CEP"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 outline-none"
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex justify-end pt-4">
