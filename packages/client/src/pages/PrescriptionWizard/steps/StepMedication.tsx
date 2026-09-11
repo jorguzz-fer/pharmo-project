@@ -677,12 +677,6 @@ export function StepMedication() {
                                                 <DollarSign className="w-3.5 h-3.5 inline -mt-0.5" />
                                                 {med.is_magistral ? 'Valor final' : 'Cliente'}: {formatPrice(med.preco_sugestao)}
                                             </span>
-                                            {!med.is_magistral && (
-                                                <span className="text-blue-700 font-medium">
-                                                    <DollarSign className="w-3.5 h-3.5 inline -mt-0.5" />
-                                                    Clinica: {formatPrice(med.preco_tabela)}
-                                                </span>
-                                            )}
                                             {med.is_magistral && med.magistral_breakdown && (
                                                 <span className="text-gray-500 text-xs">
                                                     ({med.magistral_breakdown.ingredientes.length} ingrediente{med.magistral_breakdown.ingredientes.length > 1 ? 's' : ''})
@@ -779,9 +773,6 @@ export function StepMedication() {
                                                     <p className="text-sm font-bold text-green-700">
                                                         {formatPrice(produto.preco_sugestao)}
                                                     </p>
-                                                    <p className="text-xs text-gray-500">
-                                                        Clinica: {formatPrice(produto.preco_tabela)}
-                                                    </p>
                                                 </div>
                                             </div>
                                         </button>
@@ -811,9 +802,6 @@ export function StepMedication() {
                                         <div className="text-right">
                                             <p className="text-sm font-bold text-green-800">
                                                 {formatPrice(selectedProduto.preco_sugestao)}
-                                            </p>
-                                            <p className="text-xs text-green-700">
-                                                Clinica: {formatPrice(selectedProduto.preco_tabela)}
                                             </p>
                                         </div>
                                     </div>

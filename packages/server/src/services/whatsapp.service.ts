@@ -4,6 +4,24 @@ export interface EnvioResultado {
     motivo?: string;
 }
 
+/** Número da PharmoPet usado quando nada é configurado no ambiente. */
+const PHARMOPET_WHATSAPP_PADRAO = '+55 12 3354-7297';
+
+/**
+ * WhatsApp central da PharmoPet — destino de tudo que a farmácia precisa receber:
+ * cópia das prescrições enviadas e dúvidas clínicas encaminhadas pelo assistente.
+ *
+ * Lido do ambiente a cada chamada para permitir trocar o número sem redeploy.
+ * PHARMACIST_WHATSAPP é aceito por compatibilidade com a configuração anterior.
+ */
+export function getPharmoPetWhatsapp(): string {
+    return (
+        process.env.PHARMOPET_WHATSAPP ||
+        process.env.PHARMACIST_WHATSAPP ||
+        PHARMOPET_WHATSAPP_PADRAO
+    );
+}
+
 /**
  * Integração com a WhatsApp Cloud API (Meta).
  *
@@ -93,6 +111,27 @@ export class WhatsappService {
             `🔔 Dúvida de posologia encaminhada${origem}\n\n` +
             `A IA não encontrou base segura para responder:\n"${pergunta}"\n\n` +
             `Responda o quanto antes para retornarmos ao solicitante.`;
+        return this.sendText(to, message);
+    }
+
+    /**
+     * Avisa a farmácia que uma prescrição foi enviada ao tutor, para que a
+     * operação já acompanhe o pedido sem depender do retorno do tutor.
+     */
+    async sendPharmacyPrescriptionCopy(
+        to: string,
+        dados: { tutor: string; animal: string; veterinario: string; valor?: number | null; link: string }
+    ): Promise<EnvioResultado> {
+        const valor =
+            dados.valor != null
+                ? `\nValor: R$ ${Number(dados.valor).toFixed(2).replace('.', ',')}`
+                : '';
+        const message =
+            `📋 Nova prescrição enviada ao tutor\n\n` +
+            `Tutor: ${dados.tutor}\n` +
+            `Paciente: ${dados.animal}\n` +
+            `Veterinário: ${dados.veterinario}${valor}\n\n` +
+            `Receita: ${dados.link}`;
         return this.sendText(to, message);
     }
 }

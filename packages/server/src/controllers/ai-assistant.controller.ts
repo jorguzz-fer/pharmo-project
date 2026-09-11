@@ -8,7 +8,7 @@ import {
     SEM_BASE_TOKEN,
     MENSAGEM_ENCAMINHAMENTO,
 } from '../services/ai-assistant.service';
-import { whatsappService } from '../services/whatsapp.service';
+import { whatsappService, getPharmoPetWhatsapp } from '../services/whatsapp.service';
 
 const prisma = new PrismaClient();
 
@@ -18,11 +18,7 @@ const prisma = new PrismaClient();
  * continua recebendo a mensagem de encaminhamento.
  */
 async function avisarFarmaceutico(pergunta: string, veterinarioId?: string) {
-    const destino = process.env.PHARMACIST_WHATSAPP;
-    if (!destino) {
-        console.warn('[ASSISTENTE] PHARMACIST_WHATSAPP não configurado — dúvida não encaminhada:', pergunta);
-        return;
-    }
+    const destino = getPharmoPetWhatsapp();
 
     let nomeVet: string | undefined;
     if (veterinarioId) {

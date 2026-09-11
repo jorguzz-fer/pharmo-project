@@ -246,7 +246,7 @@ export class PrescricaoController {
         try {
             const prescricao = await prisma.prescricao.findUnique({
                 where: { id },
-                include: { tutor: true, orcamento: true },
+                include: { tutor: true, orcamento: true, animal: true, veterinario: true },
             });
 
             if (!prescricao) {
@@ -279,6 +279,21 @@ export class PrescricaoController {
                     where: { id },
                     data: { status: 'SENT' },
                 });
+
+                // A farmácia recebe a cópia em paralelo: uma falha aqui não pode
+                // afetar o envio ao tutor, que já aconteceu.
+                notificationService
+                    .notifyPharmacyNewPrescription({
+                        tutor: prescricao.tutor.nome,
+                        animal: prescricao.animal.nome,
+                        veterinario: `${prescricao.veterinario.nome} (CRMV ${prescricao.veterinario.crv})`,
+                        valor: prescricao.orcamento ? Number(prescricao.orcamento.valor_total) : null,
+                        link,
+                    })
+                    .then((r) => {
+                        if (!r.enviado) console.warn('[PRESCRICAO] Cópia à farmácia não enviada:', r.motivo);
+                    })
+                    .catch((err) => console.error('[PRESCRICAO] Erro ao avisar a farmácia:', err));
             }
 
             return res.json({
