@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, ArrowRight, Plus, Trash2, Sparkles, Search, DollarSign, MessageCircle, Send, X, Loader2, Bot, FlaskConical } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plus, Trash2, Pencil, Search, DollarSign, MessageCircle, Send, X, Loader2, Bot, FlaskConical } from 'lucide-react';
 import { usePrescriptionStore, type CienciaPendente } from '../../../store/prescription';
 import { produtoService } from '../../../services/produto.service';
 import type { Produto } from '../../../services/produto.service';
 import { formaFarmaceuticaService, insumoService, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { api } from '../../../services/api';
-import { MagistralBuilder } from '../components/MagistralBuilder';
+import { MagistralBuilder, type IngredienteForm } from '../components/MagistralBuilder';
 import { CienciaModal } from '../../../components/CienciaModal';
 import { validacaoClinicaService, type ValidacaoResultado } from '../../../services/validacaoClinica.service';
 import { principioAtivoService } from '../../../services/principioAtivo.service';
@@ -39,9 +39,11 @@ type AiMessage = {
 };
 
 export function StepMedication() {
-    const { medications, addMedication, removeMedication, setStep, animal, doenca, setDoenca } = usePrescriptionStore();
+    const { medications, addMedication, updateMedication, removeMedication, setStep, animal, doenca, setDoenca } = usePrescriptionStore();
     const { register, handleSubmit, reset, setValue } = useForm<MedForm>();
     const [showForm, setShowForm] = useState(medications.length === 0);
+    // Índice do medicamento em edição (null = adicionando um novo)
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     // Validação clínica de dose por peso
     const [validacao, setValidacao] = useState<ValidacaoResultado | null>(null);
@@ -214,7 +216,7 @@ export function StepMedication() {
     // FORM SUBMISSION
     // ============================================================
     const adicionarAoCarrinho = (data: MedForm, extras?: { principio_ativo_id?: string; ciencia?: CienciaPendente }) => {
-        addMedication({
+        const med = {
             ...data,
             dosage: data.dosagem_mg_kg || '',
             preco_sugestao: data.preco_sugestao,
@@ -223,7 +225,12 @@ export function StepMedication() {
             lista_controle: controladoInfo?.substancias?.[0]?.lista || undefined,
             principio_ativo_id: extras?.principio_ativo_id,
             ciencia: extras?.ciencia,
-        });
+        };
+        if (editingIndex !== null) {
+            updateMedication(editingIndex, med);
+        } else {
+            addMedication(med);
+        }
         resetForm();
     };
 
@@ -303,6 +310,56 @@ export function StepMedication() {
         setCatalogResults([]);
         setShowForm(false);
         setControladoInfo(null);
+        setEditingIndex(null);
+    };
+
+    /**
+     * Reabre um medicamento já adicionado para edição (ex.: inserir uma observação).
+     * Magistrais reabrem o Formulador; itens de catálogo voltam para o formulário.
+     */
+    const handleEditMedication = (index: number) => {
+        const med = medications[index];
+        if (!med) return;
+
+        if (med.is_magistral) {
+            setEditingIndex(index);
+            setShowMagistral(true);
+            return;
+        }
+
+        setEditingIndex(index);
+        setShowForm(true);
+        setShowAssistant(false);
+
+        // Reconstrói o produto selecionado para renderizar os campos de dose
+        setSelectedProduto({
+            id: med.id || '',
+            codigo: med.codigo || '',
+            nome: med.drug,
+            preco_sugestao: Number(med.preco_sugestao ?? 0),
+            preco_tabela: Number(med.preco_tabela ?? 0),
+            ativo: true,
+            created_at: '',
+            updated_at: '',
+        });
+        setCatalogSearchTerm(med.drug);
+        setControladoInfo(
+            med.controlado
+                ? { controlado: true, substancias: [{ nome: med.drug, lista: med.lista_controle || '' }] }
+                : null
+        );
+
+        setValue('codigo', med.codigo || '');
+        setValue('drug', med.drug);
+        setValue('principio_ativo_id', med.principio_ativo_id || '');
+        setValue('dosagem_mg_kg', med.dosagem_mg_kg || med.dosage || '');
+        setValue('frequencia_horas', med.frequencia_horas || '');
+        setValue('duracao_dias', med.duracao_dias || '');
+        setValue('form', med.form);
+        setValue('amount', med.amount);
+        setValue('observations', med.observations || '');
+        setValue('preco_sugestao', med.preco_sugestao);
+        setValue('preco_tabela', med.preco_tabela);
     };
 
     const handleMagistralConfirm = (dados: {
@@ -316,9 +373,10 @@ export function StepMedication() {
         lista_controle?: string;
         is_magistral: boolean;
         magistral_breakdown: any;
+        ingredientes: IngredienteForm[];
         observations: string;
     }) => {
-        addMedication({
+        const med = {
             drug: dados.drug,
             dosage: dados.dosage,
             form: dados.form,
@@ -330,7 +388,14 @@ export function StepMedication() {
             lista_controle: dados.lista_controle,
             is_magistral: true,
             magistral_breakdown: dados.magistral_breakdown,
-        });
+            magistral_ingredientes: dados.ingredientes,
+        };
+        if (editingIndex !== null) {
+            updateMedication(editingIndex, med);
+            setEditingIndex(null);
+        } else {
+            addMedication(med);
+        }
         setShowMagistral(false);
     };
 
@@ -356,7 +421,28 @@ export function StepMedication() {
             {showMagistral && (
                 <MagistralBuilder
                     clinicaId={vetClinicaId}
-                    onCancel={() => setShowMagistral(false)}
+                    initial={
+                        editingIndex !== null && medications[editingIndex]?.is_magistral
+                            ? {
+                                nomeFormulacao: medications[editingIndex].drug,
+                                forma: medications[editingIndex].form,
+                                observacoes: medications[editingIndex].observations,
+                                ingredientes: (
+                                    medications[editingIndex].magistral_ingredientes
+                                    ?? medications[editingIndex].magistral_breakdown?.ingredientes
+                                    ?? []
+                                ).map((i: any) => ({
+                                    codigo_interno: i.codigo_interno,
+                                    descricao: i.descricao,
+                                    dosagem_mg: i.dosagem_mg,
+                                    quantidade: i.quantidade,
+                                    dias: i.dias,
+                                    frequencia_horas: i.frequencia_horas,
+                                })),
+                            }
+                            : undefined
+                    }
+                    onCancel={() => { setShowMagistral(false); setEditingIndex(null); }}
                     onConfirm={handleMagistralConfirm}
                 />
             )}
@@ -608,13 +694,24 @@ export function StepMedication() {
                                         <p className="text-sm text-gray-600 mt-2 italic">"{med.observations}"</p>
                                     )}
                                 </div>
-                                <button
-                                    type="button"
-                                    onClick={() => removeMedication(index)}
-                                    className="ml-4 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
+                                <div className="ml-4 flex items-center gap-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleEditMedication(index)}
+                                        className="p-2 text-gray-500 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors"
+                                        title="Editar medicamento"
+                                    >
+                                        <Pencil className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeMedication(index)}
+                                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                        title="Remover medicamento"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -635,7 +732,7 @@ export function StepMedication() {
                 {/* Medication form */}
                 {showForm && (
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 border-t pt-4">
-                        <h3 className="font-semibold text-gray-900">Novo Medicamento</h3>
+                        <h3 className="font-semibold text-gray-900">{editingIndex !== null ? 'Editar Medicamento' : 'Novo Medicamento'}</h3>
 
                         {/* ============ CATALOG SEARCH ============ */}
                         <div className="relative">
@@ -849,9 +946,9 @@ export function StepMedication() {
                                 disabled={!selectedProduto || validando}
                                 className="flex-1 px-4 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
-                                {validando ? 'Validando dose...' : 'Adicionar'}
+                                {validando ? 'Validando dose...' : editingIndex !== null ? 'Salvar alterações' : 'Adicionar'}
                             </button>
-                            {medications.length > 0 && (
+                            {(medications.length > 0 || editingIndex !== null) && (
                                 <button
                                     type="button"
                                     onClick={resetForm}

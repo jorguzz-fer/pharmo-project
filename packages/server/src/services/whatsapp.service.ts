@@ -81,6 +81,20 @@ export class WhatsappService {
         const message = `Olá ${tutorName}, confirmamos o pagamento do seu pedido #${orderId}. Em breve iniciaremos a manipulação! 🐾`;
         return this.sendText(to, message);
     }
+
+    /**
+     * Encaminha ao farmacêutico responsável uma dúvida que a IA não conseguiu
+     * responder com segurança (evita alucinação de posologia). Requisito da
+     * reunião de 11/09: "sobe um WhatsApp pra gente e a gente entra na conversa".
+     */
+    async sendPharmacistAlert(to: string, pergunta: string, veterinario?: string): Promise<EnvioResultado> {
+        const origem = veterinario ? ` (veterinário: ${veterinario})` : '';
+        const message =
+            `🔔 Dúvida de posologia encaminhada${origem}\n\n` +
+            `A IA não encontrou base segura para responder:\n"${pergunta}"\n\n` +
+            `Responda o quanto antes para retornarmos ao solicitante.`;
+        return this.sendText(to, message);
+    }
 }
 
 export const whatsappService = new WhatsappService();

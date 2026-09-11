@@ -3,15 +3,44 @@ import { Plus, Trash2, X, Search, Loader2, AlertTriangle, Info, FlaskConical } f
 import { insumoService, formaFarmaceuticaService, type InsumoFarmaceutico, type FormaFarmaceutica } from '../../../services/insumo.service';
 import { precificacaoService, type PrecificacaoResultado } from '../../../services/precificacao.service';
 
-interface IngredienteForm {
+export interface IngredienteForm {
     codigo_interno: number;
     descricao: string;
+    /** Dose por administração, em mg (o motor calcula o peso total em gramas) */
     dosagem_mg: number;
+    /** Total de doses/unidades = dias × doses por dia */
     quantidade: number;
+    // Posologia de origem — guardada para exibição/edição, não entra no cálculo
+    dias?: number;
+    frequencia_horas?: number;
 }
+
+/**
+ * Calculadora de posologia (conforme planilha PharmoPet).
+ *
+ *   dose_g       = unidade === 'g' ? valor : valor / 1000
+ *   doses_dia    = 24 / frequência_horas      (24h→1, 12h→2, 8h→3, 6h→4)
+ *   quantidade   = dias × doses_dia
+ *   total_gramas = dose_g × quantidade
+ *
+ * Ex.: Benzafibrato 25mg, 8/8h, 30 dias → 0,025g × 90 doses = 2,250g
+ */
+const FREQUENCIAS = [
+    { horas: 24, label: '24h (1x ao dia)' },
+    { horas: 12, label: '12h (2x ao dia)' },
+    { horas: 8, label: '8h (3x ao dia)' },
+    { horas: 6, label: '6h (4x ao dia)' },
+];
 
 interface MagistralBuilderProps {
     clinicaId?: string;
+    /** Dados iniciais ao reabrir uma fórmula já adicionada (modo edição). */
+    initial?: {
+        nomeFormulacao?: string;
+        forma?: string;
+        observacoes?: string;
+        ingredientes?: IngredienteForm[];
+    };
     onCancel: () => void;
     onConfirm: (dados: {
         drug: string;
@@ -24,14 +53,17 @@ interface MagistralBuilderProps {
         lista_controle?: string;
         is_magistral: boolean;
         magistral_breakdown: PrecificacaoResultado;
+        /** Ingredientes com a posologia informada — permite reabrir para edição */
+        ingredientes: IngredienteForm[];
         observations: string;
     }) => void;
 }
 
-export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBuilderProps) {
-    const [ingredientes, setIngredientes] = useState<IngredienteForm[]>([]);
+export function MagistralBuilder({ clinicaId, initial, onCancel, onConfirm }: MagistralBuilderProps) {
+    const isEditing = Boolean(initial);
+    const [ingredientes, setIngredientes] = useState<IngredienteForm[]>(initial?.ingredientes ?? []);
     const [formas, setFormas] = useState<FormaFarmaceutica[]>([]);
-    const [formaSelecionada, setFormaSelecionada] = useState('');
+    const [formaSelecionada, setFormaSelecionada] = useState(initial?.forma ?? '');
 
     // Busca de insumos
     const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +71,9 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
     const [showDropdown, setShowDropdown] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
     const [dosagemAtual, setDosagemAtual] = useState('');
-    const [quantidadeAtual, setQuantidadeAtual] = useState('');
+    const [unidadeAtual, setUnidadeAtual] = useState<'mg' | 'g'>('mg');
+    const [diasAtual, setDiasAtual] = useState('');
+    const [frequenciaAtual, setFrequenciaAtual] = useState('');
     const [insumoSelecionado, setInsumoSelecionado] = useState<InsumoFarmaceutico | null>(null);
 
     // Precificação
@@ -48,8 +82,8 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
     const [erro, setErro] = useState<string | null>(null);
 
     // Campo nome da formulação
-    const [nomeFormulacao, setNomeFormulacao] = useState('');
-    const [observacoes, setObservacoes] = useState('');
+    const [nomeFormulacao, setNomeFormulacao] = useState(initial?.nomeFormulacao ?? '');
+    const [observacoes, setObservacoes] = useState(initial?.observacoes ?? '');
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -124,12 +158,26 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
         setShowDropdown(false);
     };
 
+    // ---- Calculadora de posologia (prévia em tempo real) ----
+    const doseInformada = parseFloat(dosagemAtual);
+    const diasInformados = parseInt(diasAtual, 10);
+    const horasInformadas = parseInt(frequenciaAtual, 10);
+
+    const dosagemMgCalculada = doseInformada > 0
+        ? (unidadeAtual === 'g' ? doseInformada * 1000 : doseInformada)
+        : 0;
+    const dosesPorDia = horasInformadas > 0 ? 24 / horasInformadas : 0;
+    const quantidadeCalculada = diasInformados > 0 && dosesPorDia > 0
+        ? Math.round(diasInformados * dosesPorDia)
+        : 0;
+    const totalGramasCalculado = (dosagemMgCalculada * quantidadeCalculada) / 1000;
+    const posologiaCompleta = dosagemMgCalculada > 0 && quantidadeCalculada > 0;
+
     const handleAddIngrediente = () => {
         if (!insumoSelecionado) return;
-        const dosagem = parseFloat(dosagemAtual);
-        const quantidade = parseInt(quantidadeAtual, 10);
-        if (!dosagem || dosagem <= 0) return alert('Dosagem inválida');
-        if (!quantidade || quantidade <= 0) return alert('Quantidade inválida');
+        if (!(dosagemMgCalculada > 0)) return alert('Informe a dose por administração');
+        if (!(diasInformados > 0)) return alert('Informe o tempo de tratamento em dias');
+        if (!(dosesPorDia > 0)) return alert('Selecione a frequência');
 
         // Evitar duplicação
         if (ingredientes.some(i => i.codigo_interno === insumoSelecionado.codigo_interno)) {
@@ -139,14 +187,18 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
         setIngredientes(prev => [...prev, {
             codigo_interno: insumoSelecionado.codigo_interno,
             descricao: insumoSelecionado.descricao,
-            dosagem_mg: dosagem,
-            quantidade,
+            dosagem_mg: dosagemMgCalculada,
+            quantidade: quantidadeCalculada,
+            dias: diasInformados,
+            frequencia_horas: horasInformadas,
         }]);
         // Reset
         setInsumoSelecionado(null);
         setSearchTerm('');
         setDosagemAtual('');
-        setQuantidadeAtual('');
+        setUnidadeAtual('mg');
+        setDiasAtual('');
+        setFrequenciaAtual('');
     };
 
     const handleRemoveIngrediente = (codigo: number) => {
@@ -171,13 +223,20 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
             drug: nomeFormulacao.trim(),
             form: formaSelecionada,
             amount: `${qtdReferencia} ${formaSelecionada.toLowerCase().includes('cáps') ? 'cápsulas' : formaSelecionada.toLowerCase().includes('biscoito') ? 'biscoitos' : 'doses'}`,
-            dosage: ingredientes.map(i => `${i.descricao} ${i.dosagem_mg}mg`).join(' + '),
+            dosage: ingredientes
+                .map(i => {
+                    const freq = i.frequencia_horas ? ` a cada ${i.frequencia_horas}h` : '';
+                    const dias = i.dias ? ` por ${i.dias} dias` : '';
+                    return `${i.descricao} ${i.dosagem_mg}mg${freq}${dias}`;
+                })
+                .join(' + '),
             preco_sugestao: resultado.valor_final,
             preco_tabela: resultado.subtotal,
             controlado: temControlado,
             lista_controle: listaControle || undefined,
             is_magistral: true,
             magistral_breakdown: resultado,
+            ingredientes,
             observations: observacoes,
         });
     };
@@ -281,42 +340,76 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
                             )}
                         </div>
 
-                        {/* Dosagem + quantidade + botão */}
+                        {/* Calculadora de posologia: dose + frequência + dias → doses totais */}
                         <div className="grid grid-cols-12 gap-2">
-                            <div className="col-span-4">
-                                <label className="text-xs text-gray-600">Dosagem (mg) por unidade</label>
+                            <div className="col-span-3">
+                                <label className="text-xs text-gray-600">Dose por administração</label>
                                 <input
                                     type="number"
-                                    step="0.01"
+                                    step="0.001"
                                     value={dosagemAtual}
                                     onChange={(e) => setDosagemAtual(e.target.value)}
-                                    placeholder="Ex: 20"
+                                    placeholder="Ex: 25"
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                                     disabled={!insumoSelecionado}
                                 />
                             </div>
-                            <div className="col-span-4">
-                                <label className="text-xs text-gray-600">Qtd (cáps/doses)</label>
+                            <div className="col-span-2">
+                                <label className="text-xs text-gray-600">Unidade</label>
+                                <select
+                                    value={unidadeAtual}
+                                    onChange={(e) => setUnidadeAtual(e.target.value as 'mg' | 'g')}
+                                    className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm"
+                                    disabled={!insumoSelecionado}
+                                >
+                                    <option value="mg">mg</option>
+                                    <option value="g">g</option>
+                                </select>
+                            </div>
+                            <div className="col-span-3">
+                                <label className="text-xs text-gray-600">Frequência</label>
+                                <select
+                                    value={frequenciaAtual}
+                                    onChange={(e) => setFrequenciaAtual(e.target.value)}
+                                    className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm"
+                                    disabled={!insumoSelecionado}
+                                >
+                                    <option value="">Selecione</option>
+                                    {FREQUENCIAS.map(f => (
+                                        <option key={f.horas} value={f.horas}>{f.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-span-2">
+                                <label className="text-xs text-gray-600">Dias</label>
                                 <input
                                     type="number"
                                     step="1"
-                                    value={quantidadeAtual}
-                                    onChange={(e) => setQuantidadeAtual(e.target.value)}
-                                    placeholder="Ex: 60"
+                                    value={diasAtual}
+                                    onChange={(e) => setDiasAtual(e.target.value)}
+                                    placeholder="Ex: 30"
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                                     disabled={!insumoSelecionado}
                                 />
                             </div>
-                            <div className="col-span-4 flex items-end">
+                            <div className="col-span-2 flex items-end">
                                 <button
                                     onClick={handleAddIngrediente}
-                                    disabled={!insumoSelecionado || !dosagemAtual || !quantidadeAtual}
+                                    disabled={!insumoSelecionado || !posologiaCompleta}
                                     className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                                 >
                                     Adicionar
                                 </button>
                             </div>
                         </div>
+
+                        {/* Prévia do cálculo — espelha a planilha de posologia */}
+                        {posologiaCompleta && (
+                            <div className="mt-3 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-2 text-sm text-indigo-900 flex flex-wrap gap-x-4 gap-y-1">
+                                <span><strong>{quantidadeCalculada}</strong> doses ({diasInformados} dias × {dosesPorDia}x/dia)</span>
+                                <span>Total do princípio ativo: <strong>{totalGramasCalculado.toFixed(3).replace('.', ',')} g</strong></span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Lista de ingredientes adicionados */}
@@ -325,7 +418,8 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
                             <h4 className="font-semibold text-gray-800 mb-2">Ingredientes ({ingredientes.length})</h4>
                             <div className="space-y-2">
                                 {ingredientes.map(ing => {
-                                    const resultadoIng = resultado?.ingredientes.find(r => r.codigo_interno === ing.codigo_interno);
+                                    // O custo unitário por princípio ativo não é exibido ao veterinário
+                                    // (decisão de negócio PharmoPet): ele vê apenas o valor final da fórmula.
                                     return (
                                         <div key={ing.codigo_interno} className="flex items-center justify-between bg-white border border-gray-200 rounded-lg p-3">
                                             <div className="flex items-center gap-3">
@@ -333,16 +427,14 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
                                                 <div>
                                                     <div className="font-medium text-gray-900">{ing.descricao}</div>
                                                     <div className="text-xs text-gray-500">
-                                                        {ing.dosagem_mg}mg × {ing.quantidade} = {((ing.dosagem_mg * ing.quantidade) / 1000).toFixed(2)}g total
+                                                        {ing.dosagem_mg}mg
+                                                        {ing.frequencia_horas ? ` a cada ${ing.frequencia_horas}h` : ''}
+                                                        {ing.dias ? ` por ${ing.dias} dias` : ''}
+                                                        {' · '}{ing.quantidade} doses = {((ing.dosagem_mg * ing.quantidade) / 1000).toFixed(3).replace('.', ',')}g total
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                {resultadoIng && (
-                                                    <span className="text-sm font-semibold text-green-700">
-                                                        R$ {resultadoIng.custo_ingrediente.toFixed(2).replace('.', ',')}
-                                                    </span>
-                                                )}
                                                 <button onClick={() => handleRemoveIngrediente(ing.codigo_interno)} className="text-red-500 hover:bg-red-50 p-1 rounded">
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
@@ -382,52 +474,17 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
                         />
                     </div>
 
-                    {/* Breakdown do preço */}
+                    {/* Valor final da fórmula — o detalhamento de custos (matéria prima,
+                        taxas, embalagens) não é exibido ao veterinário por decisão de
+                        negócio PharmoPet. O cálculo completo segue no backend/pedido. */}
                     {resultado && (
                         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4">
-                            <h4 className="font-bold text-indigo-900 mb-3 flex items-center gap-2">
-                                Detalhamento do preço
-                                {calculando && <Loader2 className="w-4 h-4 animate-spin" />}
-                            </h4>
-                            <div className="space-y-1 text-sm">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Matéria prima</span>
-                                    <span className="font-medium">R$ {resultado.total_materia_prima.toFixed(2).replace('.', ',')}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Taxa de manipulação</span>
-                                    <span className="font-medium">R$ {resultado.taxa_manipulacao.toFixed(2).replace('.', ',')}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Embalagens</span>
-                                    <span className="font-medium">R$ {resultado.custo_embalagens.toFixed(2).replace('.', ',')}</span>
-                                </div>
-                                <div className="flex justify-between border-t border-indigo-200 pt-1 mt-1">
-                                    <span className="font-medium text-gray-700">Subtotal</span>
-                                    <span className="font-semibold">R$ {resultado.subtotal.toFixed(2).replace('.', ',')}</span>
-                                </div>
-                                {resultado.desconto_parceiro_pct > 0 && (
-                                    <div className="flex justify-between text-green-700">
-                                        <span>Desconto parceiro ({(resultado.desconto_parceiro_pct * 100).toFixed(0)}%)</span>
-                                        <span className="font-medium">- R$ {resultado.desconto_valor.toFixed(2).replace('.', ',')}</span>
-                                    </div>
-                                )}
-                                {resultado.adicional_entrega > 0 && (
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">+ Entrega</span>
-                                        <span className="font-medium">R$ {resultado.adicional_entrega.toFixed(2).replace('.', ',')}</span>
-                                    </div>
-                                )}
-                                {resultado.adicional_biscoito > 0 && (
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">+ Biscoito</span>
-                                        <span className="font-medium">R$ {resultado.adicional_biscoito.toFixed(2).replace('.', ',')}</span>
-                                    </div>
-                                )}
-                                <div className="flex justify-between border-t-2 border-indigo-300 pt-2 mt-2">
-                                    <span className="font-bold text-indigo-900">VALOR FINAL</span>
-                                    <span className="font-bold text-xl text-indigo-700">R$ {resultado.valor_final.toFixed(2).replace('.', ',')}</span>
-                                </div>
+                            <div className="flex justify-between items-center">
+                                <span className="font-bold text-indigo-900 flex items-center gap-2">
+                                    Valor final
+                                    {calculando && <Loader2 className="w-4 h-4 animate-spin" />}
+                                </span>
+                                <span className="font-bold text-2xl text-indigo-700">R$ {resultado.valor_final.toFixed(2).replace('.', ',')}</span>
                             </div>
                         </div>
                     )}
@@ -446,7 +503,7 @@ export function MagistralBuilder({ clinicaId, onCancel, onConfirm }: MagistralBu
                         disabled={!canConfirm}
                         className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-lg shadow-md hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                        Adicionar à prescrição
+                        {isEditing ? 'Salvar alterações' : 'Adicionar à prescrição'}
                     </button>
                 </div>
             </div>

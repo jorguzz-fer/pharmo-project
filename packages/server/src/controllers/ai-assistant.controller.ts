@@ -5,9 +5,38 @@ import {
     searchMedications,
     searchPrincipiosAtivos,
     generateRecommendation,
+    SEM_BASE_TOKEN,
+    MENSAGEM_ENCAMINHAMENTO,
 } from '../services/ai-assistant.service';
+import { whatsappService } from '../services/whatsapp.service';
 
 const prisma = new PrismaClient();
+
+/**
+ * Avisa o farmacêutico responsável por WhatsApp sobre uma dúvida sem base.
+ * Nunca derruba a requisição: a falha no aviso é registrada, e o veterinário
+ * continua recebendo a mensagem de encaminhamento.
+ */
+async function avisarFarmaceutico(pergunta: string, veterinarioId?: string) {
+    const destino = process.env.PHARMACIST_WHATSAPP;
+    if (!destino) {
+        console.warn('[ASSISTENTE] PHARMACIST_WHATSAPP não configurado — dúvida não encaminhada:', pergunta);
+        return;
+    }
+
+    let nomeVet: string | undefined;
+    if (veterinarioId) {
+        const vet = await prisma.veterinario
+            .findUnique({ where: { id: veterinarioId }, select: { nome: true, crv: true } })
+            .catch(() => null);
+        if (vet) nomeVet = `${vet.nome} (CRMV ${vet.crv})`;
+    }
+
+    const resultado = await whatsappService.sendPharmacistAlert(destino, pergunta, nomeVet);
+    if (!resultado.enviado) {
+        console.error('[ASSISTENTE] Falha ao avisar farmacêutico:', resultado.motivo);
+    }
+}
 
 export class AiAssistantController {
     async consultar(req: Request, res: Response) {
@@ -37,8 +66,22 @@ export class AiAssistantController {
             // Step 3: Generate AI recommendation with combined context
             const resposta = await generateRecommendation(pergunta, medicamentosFiltrados, principiosAtivos);
 
+            // Step 4: Sem base suficiente, a IA não arrisca uma posologia — a dúvida
+            // vai para o farmacêutico e o veterinário recebe o aviso de encaminhamento.
+            const semMaterial = medicamentosFiltrados.length === 0 && principiosAtivos.length === 0;
+            if (resposta.includes(SEM_BASE_TOKEN) || semMaterial) {
+                await avisarFarmaceutico(pergunta, req.userId);
+                return res.json({
+                    resposta: MENSAGEM_ENCAMINHAMENTO,
+                    encaminhado_farmaceutico: true,
+                    medicamentos: [],
+                    principios_ativos: [],
+                });
+            }
+
             return res.json({
                 resposta,
+                encaminhado_farmaceutico: false,
                 medicamentos: medicamentosFiltrados.map(m => ({
                     id: m.id,
                     codigo: m.codigo,

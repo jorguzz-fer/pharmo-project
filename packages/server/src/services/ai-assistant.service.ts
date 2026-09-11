@@ -7,6 +7,18 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+/**
+ * Token que a IA retorna quando o material fornecido não é suficiente para
+ * responder com segurança. O controller detecta e encaminha ao farmacêutico,
+ * evitando que a IA "alucine" uma posologia. (Requisito da reunião 11/09.)
+ */
+export const SEM_BASE_TOKEN = 'NECESSITA_FARMACEUTICO';
+
+/** Mensagem exibida ao veterinário quando a dúvida é encaminhada ao farmacêutico. */
+export const MENSAGEM_ENCAMINHAMENTO =
+    'Não encontrei essa informação com segurança no material disponível. ' +
+    'Sua dúvida foi encaminhada ao farmacêutico responsável — assim que possível retornaremos por aqui.';
+
 export interface MedicamentoResult {
     id: string;
     codigo: string;
@@ -177,14 +189,12 @@ ${p.contraindicacoes ? `Contraindicações: ${p.contraindicacoes}` : ''}
     const systemPrompt = `Você é um assistente veterinário especializado em medicamentos magistrais da PharmoPet.
 Seu papel é ajudar veterinários a encontrar o medicamento magistral mais adequado para cada caso clínico.
 
-REGRAS IMPORTANTES:
-- Baseie suas recomendações EXCLUSIVAMENTE nos medicamentos do catálogo fornecido abaixo
-- Nunca invente medicamentos ou dosagens que não estejam no catálogo
-- Sempre inclua o código do medicamento (ex: 7.1) para facilitar a prescrição quando disponível
-- Seja conciso e direto nas recomendações
-- Se não encontrar medicamentos adequados no catálogo, diga claramente
-- Considere a espécie do animal ao recomendar
-- Mencione contraindicações quando relevante
+REGRAS IMPORTANTES (siga rigorosamente):
+- Baseie suas respostas ESTRITA e EXCLUSIVAMENTE no material fornecido abaixo (catálogo de fórmulas e bulário de princípios ativos).
+- NUNCA invente, deduza ou complete medicamentos, dosagens, posologias ou vias que não estejam explicitamente no material. Não use conhecimento externo.
+- Se o material fornecido NÃO contiver informação suficiente para responder à pergunta com segurança — especialmente sobre posologia/dose — NÃO tente adivinhar. Nesse caso, responda EXCLUSIVAMENTE com o token: ${SEM_BASE_TOKEN}
+- Sempre inclua o código do medicamento (ex: 7.1) para facilitar a prescrição quando disponível.
+- Seja conciso e direto. Considere a espécie do animal. Mencione contraindicações quando constarem no material.
 
 CATÁLOGO DE FÓRMULAS MAGISTRAIS:
 ${medContext || 'Nenhuma fórmula magistral encontrada para esta busca.'}
