@@ -307,11 +307,6 @@ export function StepReview() {
                                                 {med.is_magistral ? 'Valor final: ' : 'Venda: '}
                                                 R$ {Number(med.preco_sugestao || 0).toFixed(2).replace('.', ',')}
                                             </span>
-                                            {!med.is_magistral && med.preco_tabela !== undefined && (
-                                                <span className="text-blue-700 font-medium">
-                                                    Clínica: R$ {Number(med.preco_tabela || 0).toFixed(2).replace('.', ',')}
-                                                </span>
-                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -323,14 +318,9 @@ export function StepReview() {
                         <p>Data: {new Date().toLocaleDateString()}</p>
                         <div className="text-right">
                             {medications.some(m => m.preco_sugestao) ? (
-                                <>
-                                    <p className="font-bold text-gray-900 text-lg">
-                                        Total Cliente: R$ {medications.reduce((sum, m) => sum + Number(m.preco_sugestao || 0), 0).toFixed(2).replace('.', ',')}
-                                    </p>
-                                    <p className="text-sm text-blue-600 font-medium">
-                                        Total Clínica: R$ {medications.reduce((sum, m) => sum + Number(m.preco_tabela || 0), 0).toFixed(2).replace('.', ',')}
-                                    </p>
-                                </>
+                                <p className="font-bold text-gray-900 text-lg">
+                                    Total: R$ {medications.reduce((sum, m) => sum + Number(m.preco_sugestao || 0), 0).toFixed(2).replace('.', ',')}
+                                </p>
                             ) : (
                                 <p className="font-bold text-gray-900 text-lg">Orçamento: Calculado...</p>
                             )}

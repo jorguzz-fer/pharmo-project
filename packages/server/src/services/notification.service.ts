@@ -1,4 +1,4 @@
-import { whatsappService, type EnvioResultado } from './whatsapp.service';
+import { whatsappService, getPharmoPetWhatsapp, type EnvioResultado } from './whatsapp.service';
 
 class NotificationService {
     async notifyPrescriptionCreated(
@@ -21,6 +21,20 @@ class NotificationService {
             return { enviado: false, motivo: 'Tutor não tem telefone cadastrado' };
         }
         return whatsappService.sendPaymentConfirmation(tutorPhone, tutorName, orderId);
+    }
+
+    /**
+     * Manda para o WhatsApp da PharmoPet a cópia de uma prescrição recém-enviada.
+     * É um aviso paralelo: nunca interfere no envio ao tutor.
+     */
+    async notifyPharmacyNewPrescription(dados: {
+        tutor: string;
+        animal: string;
+        veterinario: string;
+        valor?: number | null;
+        link: string;
+    }): Promise<EnvioResultado> {
+        return whatsappService.sendPharmacyPrescriptionCopy(getPharmoPetWhatsapp(), dados);
     }
 }
 
