@@ -32,7 +32,14 @@ export class ClinicaService {
                 responsavel_legal: data.responsavel_legal,
                 cpf_responsavel: data.cpf_responsavel,
                 observacoes_internas: data.observacoes_internas || null,
-                status: data.status || 'PENDENTE'
+                status: data.status || 'PENDENTE',
+                // Condições comerciais usadas na precificação. Ausente vira null,
+                // que o motor lê como zero — por isso o formulário avisa.
+                taxa_manipulacao: data.taxa_manipulacao ?? null,
+                custo_embalagens: data.custo_embalagens ?? null,
+                desconto_parceiro: data.desconto_parceiro ?? null,
+                adicional_entrega: data.adicional_entrega ?? null,
+                adicional_biscoito: data.adicional_biscoito ?? null
             }
         });
     }

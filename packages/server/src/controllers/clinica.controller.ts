@@ -23,7 +23,14 @@ export class ClinicaController {
             estado: z.string().length(2).optional(),
             responsavel_legal: z.string().min(3),
             cpf_responsavel: z.string(),
-            observacoes_internas: z.string().optional()
+            observacoes_internas: z.string().optional(),
+            // Condições comerciais: opcionais no cadastro, mas quem não preencher
+            // fica com tudo zerado no motor de precificação.
+            taxa_manipulacao: z.number().min(0).nullable().optional(),
+            custo_embalagens: z.number().min(0).nullable().optional(),
+            desconto_parceiro: z.number().min(0).max(1, 'Desconto deve estar entre 0 e 1 (0,4 = 40%)').nullable().optional(),
+            adicional_entrega: z.number().min(0).nullable().optional(),
+            adicional_biscoito: z.number().min(0).nullable().optional()
         });
 
         try {

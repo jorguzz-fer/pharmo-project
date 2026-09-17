@@ -2,12 +2,21 @@
  * Seed V3: Insumos Farmacêuticos + Formas Farmacêuticas + Controlados + Regras de Exceção
  *
  * Uso: npx tsx src/scripts/seed-v3.ts
+ *
+ * Insumo já cadastrado tem custo, custo de referência e markup preservados: esses
+ * campos são mantidos pelo admin em Admin > Insumos, e recarregar a base não pode
+ * desfazer uma correção de preço. Os demais campos continuam sendo atualizados.
+ * Para forçar os valores do arquivo:
+ *   SEED_SOBRESCREVER_CUSTOS=true npx tsx src/scripts/seed-v3.ts
  */
 import fs from 'fs';
 import path from 'path';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+/** Escape para recarregar a base inteira a partir do arquivo, preços inclusive. */
+const sobrescreverCustos = process.env.SEED_SOBRESCREVER_CUSTOS === 'true';
 
 function loadJson(filename: string) {
   const filePath = path.resolve(__dirname, '../../data', filename);
@@ -32,7 +41,7 @@ async function seedFormas() {
   console.log(`   ✅ Inseridas: ${ins} | Já existiam: ${skip}`);
 }
 
-async function seedInsumos() {
+export async function seedInsumos() {
   const insumos: Array<{
     codigo_interno: number;
     descricao: string;
@@ -45,27 +54,46 @@ async function seedInsumos() {
   }> = loadJson('insumos.json');
   if (!insumos.length) return;
   console.log(`\n🧪 Insumos Farmacêuticos: ${insumos.length}`);
-  let ins = 0, upd = 0, err = 0;
+  if (sobrescreverCustos) {
+    console.log('   ⚠️  SEED_SOBRESCREVER_CUSTOS=true — custo, custo de referência e markup do arquivo vão sobrepor o que foi editado no painel');
+  }
+
+  let ins = 0, upd = 0, err = 0, preservados = 0;
   for (const item of insumos) {
     try {
       const existing = await prisma.insumoFarmaceutico.findUnique({
         where: { codigo_interno: item.codigo_interno },
       });
-      const data = {
-        descricao: item.descricao,
+      const precos = {
         valor_custo: item.valor_custo,
         custo_referencia: item.custo_referencia,
         markup: item.markup,
+      };
+      const data = {
+        descricao: item.descricao,
         un_manipulacao: item.un_manipulacao,
         estoque: item.estoque,
         calculo_tipo: item.calculo_tipo,
       };
       if (existing) {
-        await prisma.insumoFarmaceutico.update({ where: { id: existing.id }, data });
+        // O painel é a fonte de verdade dos preços depois da carga inicial:
+        // o admin corrige o custo quando compra por outro valor, e uma
+        // recarga da base não pode desfazer isso.
+        const mudouPreco =
+          Number(existing.valor_custo) !== item.valor_custo ||
+          Number(existing.custo_referencia) !== item.custo_referencia ||
+          Number(existing.markup) !== item.markup;
+
+        if (mudouPreco && !sobrescreverCustos) preservados++;
+
+        await prisma.insumoFarmaceutico.update({
+          where: { id: existing.id },
+          data: sobrescreverCustos ? { ...data, ...precos } : data,
+        });
         upd++;
       } else {
         await prisma.insumoFarmaceutico.create({
-          data: { codigo_interno: item.codigo_interno, ...data },
+          data: { codigo_interno: item.codigo_interno, ...data, ...precos },
         });
         ins++;
       }
@@ -75,6 +103,10 @@ async function seedInsumos() {
     }
   }
   console.log(`   ✅ Inseridos: ${ins} | Atualizados: ${upd} | Erros: ${err}`);
+  if (preservados > 0) {
+    console.log(`   🔒 Preços mantidos como estão no painel em ${preservados} insumo(s) — o arquivo trazia valor diferente`);
+    console.log('      Para forçar os valores do arquivo: SEED_SOBRESCREVER_CUSTOS=true npx tsx src/scripts/seed-v3.ts');
+  }
 }
 
 async function seedControlados() {
@@ -196,8 +228,12 @@ async function main() {
   await prisma.$disconnect();
 }
 
-main().catch(async (e) => {
-  console.error(e);
-  await prisma.$disconnect();
-  process.exit(1);
-});
+// Só executa quando chamado direto pela linha de comando; ao ser importado
+// (pelos testes) o módulo apenas expõe as funções.
+if (require.main === module) {
+  main().catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
+}

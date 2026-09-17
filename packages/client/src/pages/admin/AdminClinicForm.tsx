@@ -3,6 +3,61 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { clinicService, type ClinicaFormData } from '../../services/clinicService';
 
+/**
+ * Condições comerciais do parceiro. Ficam separadas do restante do formulário
+ * porque são numéricas (e o desconto é digitado em %, gravado entre 0 e 1).
+ */
+const CONDICOES_VAZIAS = {
+    taxa_manipulacao: '',
+    custo_embalagens: '',
+    desconto_parceiro: '',
+    adicional_entrega: '',
+    adicional_biscoito: '',
+};
+
+type CondicoesForm = typeof CONDICOES_VAZIAS;
+
+const CAMPOS_COMERCIAIS: { name: keyof CondicoesForm; label: string; hint: string; step: string; max?: string }[] = [
+    {
+        name: 'taxa_manipulacao',
+        label: 'Taxa de Manipulação (R$)',
+        hint: 'Valor fixo cobrado por manipulação',
+        step: '0.01',
+    },
+    {
+        name: 'custo_embalagens',
+        label: 'Custo de Embalagens (R$)',
+        hint: 'Custo fixo de embalagem por pedido',
+        step: '0.01',
+    },
+    {
+        name: 'desconto_parceiro',
+        label: 'Desconto Parceiro (%)',
+        hint: 'Percentual sobre o subtotal (ex: 10 = 10%)',
+        step: '0.1',
+        max: '100',
+    },
+    {
+        name: 'adicional_entrega',
+        label: 'Adicional Entrega (R$)',
+        hint: 'Taxa adicional para entrega',
+        step: '0.01',
+    },
+    {
+        name: 'adicional_biscoito',
+        label: 'Adicional Biscoito (R$)',
+        hint: 'Taxa adicional para forma biscoito/petisco',
+        step: '0.01',
+    },
+];
+
+/** Texto do input para número, aceitando vírgula como separador decimal. */
+function paraNumero(valor: string): number | undefined {
+    if (!valor.trim()) return undefined;
+    const n = parseFloat(valor.replace(',', '.'));
+    return Number.isFinite(n) ? n : undefined;
+}
+
 export function AdminClinicForm() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -27,6 +82,7 @@ export function AdminClinicForm() {
         cpf_responsavel: '',
         observacoes_internas: ''
     });
+    const [comercialData, setComercialData] = useState<CondicoesForm>(CONDICOES_VAZIAS);
 
     useEffect(() => {
         if (id) {
@@ -56,6 +112,13 @@ export function AdminClinicForm() {
                 cpf_responsavel: clinic.cpf_responsavel,
                 observacoes_internas: clinic.observacoes_internas || ''
             });
+            setComercialData({
+                taxa_manipulacao: clinic.taxa_manipulacao != null ? String(clinic.taxa_manipulacao) : '',
+                custo_embalagens: clinic.custo_embalagens != null ? String(clinic.custo_embalagens) : '',
+                desconto_parceiro: clinic.desconto_parceiro != null ? String(Number(clinic.desconto_parceiro) * 100) : '',
+                adicional_entrega: clinic.adicional_entrega != null ? String(clinic.adicional_entrega) : '',
+                adicional_biscoito: clinic.adicional_biscoito != null ? String(clinic.adicional_biscoito) : '',
+            });
         } catch (error) {
             console.error('Error loading clinic:', error);
         }
@@ -63,13 +126,31 @@ export function AdminClinicForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const desconto = paraNumero(comercialData.desconto_parceiro);
+        if (desconto !== undefined && (desconto < 0 || desconto > 100)) {
+            alert('O desconto deve estar entre 0 e 100%');
+            return;
+        }
+
+        // Campo em branco vira null: a clínica fica sem aquela condição, e o
+        // motor de precificação trata como zero.
+        const condicoes = {
+            taxa_manipulacao: paraNumero(comercialData.taxa_manipulacao) ?? null,
+            custo_embalagens: paraNumero(comercialData.custo_embalagens) ?? null,
+            desconto_parceiro: desconto !== undefined ? desconto / 100 : null,
+            adicional_entrega: paraNumero(comercialData.adicional_entrega) ?? null,
+            adicional_biscoito: paraNumero(comercialData.adicional_biscoito) ?? null,
+        };
+
         setLoading(true);
 
         try {
+            const payload = { ...formData, ...condicoes };
             if (id) {
-                await clinicService.update(id, formData);
+                await clinicService.update(id, payload);
             } else {
-                await clinicService.create(formData);
+                await clinicService.create(payload);
             }
             navigate('/admin/clinicas');
         } catch (error: any) {
@@ -92,6 +173,13 @@ export function AdminClinicForm() {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleComercialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setComercialData({
+            ...comercialData,
             [e.target.name]: e.target.value
         });
     };
@@ -394,6 +482,43 @@ export function AdminClinicForm() {
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                             />
                         </div>
+                    </div>
+                </div>
+
+                {/* Commercial Conditions */}
+                <div className="bg-white rounded-lg shadow p-6 space-y-4">
+                    <div>
+                        <h3 className="font-semibold text-lg mb-1">Condições Comerciais</h3>
+                        <p className="text-sm text-gray-500">
+                            Taxas, desconto e adicionais deste parceiro, usados no motor de precificação.
+                        </p>
+                    </div>
+
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800">
+                        Campo em branco vale <strong>zero</strong> no cálculo — sem desconto, sem frete, sem taxa.
+                        O preço sai mesmo assim, então preencha o que já estiver acordado.
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {CAMPOS_COMERCIAIS.map((campo) => (
+                            <div key={campo.name}>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    {campo.label}
+                                </label>
+                                <input
+                                    type="number"
+                                    name={campo.name}
+                                    value={comercialData[campo.name]}
+                                    onChange={handleComercialChange}
+                                    step={campo.step}
+                                    min="0"
+                                    max={campo.max}
+                                    placeholder="0,00"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                />
+                                <p className="mt-1 text-xs text-gray-500">{campo.hint}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

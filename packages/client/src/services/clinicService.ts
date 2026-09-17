@@ -51,6 +51,12 @@ export interface ClinicaFormData {
     responsavel_legal: string;
     cpf_responsavel: string;
     observacoes_internas?: string;
+    // Condições comerciais (precificação por parceiro)
+    taxa_manipulacao?: number | null;
+    custo_embalagens?: number | null;
+    desconto_parceiro?: number | null;
+    adicional_entrega?: number | null;
+    adicional_biscoito?: number | null;
 }
 
 export interface ClinicaFilters {
