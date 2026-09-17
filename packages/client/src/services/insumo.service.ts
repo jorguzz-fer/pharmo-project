@@ -56,6 +56,27 @@ export interface RegraExcecao {
   descricao: string | null;
 }
 
+/** Campos editáveis de um insumo no painel. */
+export interface InsumoFormData {
+  codigo_interno: number;
+  descricao: string;
+  valor_custo: number;
+  custo_referencia: number;
+  markup: number;
+  un_manipulacao: string;
+  estoque: number;
+  calculo_tipo: string;
+  controlado: boolean;
+  lista_controle?: string | null;
+}
+
+/** Listas da Portaria 344 usadas no cadastro, mais o marcador de antimicrobiano. */
+export const LISTAS_CONTROLE = ['A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2', 'C3', 'C4', 'C5', 'ANTIMICROBIANO'];
+
+export const UNIDADES_MANIPULACAO = ['mg', 'ml', 'g'];
+
+export const TIPOS_CALCULO = ['Cápsula', 'Percentual', 'Sem cálculo'];
+
 export const insumoService = {
   async buscar(busca: string, page = 1, limit = 20, somenteDisponivel = false) {
     const params = new URLSearchParams();
@@ -87,6 +108,27 @@ export const insumoService = {
 
   async listarControlados() {
     const response = await axios.get(`${API_URL}/insumos/controlados`, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async criar(data: InsumoFormData): Promise<InsumoFarmaceutico> {
+    const response = await axios.post(`${API_URL}/insumos`, data, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async atualizar(id: string, data: InsumoFormData): Promise<InsumoFarmaceutico> {
+    const response = await axios.put(`${API_URL}/insumos/${id}`, data, {
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  async inativar(id: string) {
+    const response = await axios.delete(`${API_URL}/insumos/${id}`, {
       headers: getAuthHeader(),
     });
     return response.data;

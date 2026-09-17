@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Search, FlaskConical, Shield, Ban, Plus, Trash2, X, Loader2, Calculator } from 'lucide-react';
-import { insumoService, regraExcecaoService, formaFarmaceuticaService } from '../../services/insumo.service';
-import type { InsumoFarmaceutico, FormaFarmaceutica, RegraExcecao } from '../../services/insumo.service';
+import { Search, FlaskConical, Shield, Ban, Plus, Trash2, X, Loader2, Calculator, Pencil, Save } from 'lucide-react';
+import {
+    insumoService,
+    regraExcecaoService,
+    formaFarmaceuticaService,
+    LISTAS_CONTROLE,
+    UNIDADES_MANIPULACAO,
+    TIPOS_CALCULO,
+} from '../../services/insumo.service';
+import type { InsumoFarmaceutico, FormaFarmaceutica, RegraExcecao, InsumoFormData } from '../../services/insumo.service';
 import { precificacaoService } from '../../services/precificacao.service';
 import type { CondicoesComerciaisInput, OrigemCondicao, PrecificacaoResultado } from '../../services/precificacao.service';
 import { clinicService } from '../../services/clinicService';
@@ -15,6 +22,37 @@ type SimIngrediente = {
     dosagem_mg: string;
     quantidade: string;
 };
+
+/** Formulário de insumo: tudo texto enquanto o admin digita, convertido na hora de salvar. */
+const INSUMO_FORM_VAZIO = {
+    codigo_interno: '',
+    descricao: '',
+    valor_custo: '',
+    custo_referencia: '',
+    markup: '',
+    un_manipulacao: 'mg',
+    estoque: '',
+    calculo_tipo: 'Cápsula',
+    controlado: false,
+    lista_controle: '',
+};
+
+type InsumoForm = typeof INSUMO_FORM_VAZIO;
+
+function insumoParaForm(insumo: InsumoFarmaceutico): InsumoForm {
+    return {
+        codigo_interno: String(insumo.codigo_interno),
+        descricao: insumo.descricao,
+        valor_custo: String(insumo.valor_custo),
+        custo_referencia: String(insumo.custo_referencia),
+        markup: String(insumo.markup),
+        un_manipulacao: insumo.un_manipulacao || 'mg',
+        estoque: String(insumo.estoque),
+        calculo_tipo: insumo.calculo_tipo || 'Cápsula',
+        controlado: insumo.controlado,
+        lista_controle: insumo.lista_controle || '',
+    };
+}
 
 const CONDICOES_VAZIAS = {
     taxa_manipulacao: '',
@@ -101,6 +139,21 @@ export function AdminInsumos() {
     const [searchInsumo, setSearchInsumo] = useState('');
     const [insumoResults, setInsumoResults] = useState<InsumoFarmaceutico[]>([]);
     const [selectedInsumo, setSelectedInsumo] = useState<InsumoFarmaceutico | null>(null);
+
+    // Cadastro de insumo (criar/editar)
+    const [showInsumoForm, setShowInsumoForm] = useState(false);
+    const [insumoEditando, setInsumoEditando] = useState<InsumoFarmaceutico | null>(null);
+    const [insumoForm, setInsumoForm] = useState<InsumoForm>(INSUMO_FORM_VAZIO);
+    const [insumoFormErro, setInsumoFormErro] = useState<string | null>(null);
+    const [salvandoInsumo, setSalvandoInsumo] = useState(false);
+
+    // Cadastro de controlado (incluir/editar)
+    const [showControladoForm, setShowControladoForm] = useState(false);
+    const [controladoAlvo, setControladoAlvo] = useState<InsumoFarmaceutico | null>(null);
+    const [controladoLista, setControladoLista] = useState('');
+    const [controladoBusca, setControladoBusca] = useState('');
+    const [controladoResultados, setControladoResultados] = useState<InsumoFarmaceutico[]>([]);
+    const [salvandoControlado, setSalvandoControlado] = useState(false);
 
     // Simulador de preço
     const [simIngredientes, setSimIngredientes] = useState<SimIngrediente[]>([]);
@@ -341,19 +394,175 @@ export function AdminInsumos() {
         );
     };
 
-    const handleToggleControlado = async (insumo: InsumoFarmaceutico) => {
-        const novoEstado = !insumo.controlado;
-        let lista = '';
-        if (novoEstado) {
-            lista = prompt('Informe a lista de controle (ex: C1, B1, A2, ANTIMICROBIANO):') || '';
-            if (!lista) return;
+    /** Extrai a mensagem da API, preferindo os detalhes de validação quando existirem. */
+    const mensagemErro = (error: unknown, padrao: string) => {
+        const corpo = (error as { response?: { data?: { error?: string; detalhes?: string[] } } })?.response?.data;
+        if (corpo?.detalhes?.length) return corpo.detalhes.join('; ');
+        if (corpo?.error) return corpo.error;
+        return error instanceof Error ? error.message : padrao;
+    };
+
+    // --- Cadastro de insumo ---
+
+    const abrirNovoInsumo = () => {
+        setInsumoEditando(null);
+        setInsumoForm(INSUMO_FORM_VAZIO);
+        setInsumoFormErro(null);
+        setShowInsumoForm(true);
+    };
+
+    const abrirEdicaoInsumo = (insumo: InsumoFarmaceutico) => {
+        setInsumoEditando(insumo);
+        setInsumoForm(insumoParaForm(insumo));
+        setInsumoFormErro(null);
+        setShowInsumoForm(true);
+    };
+
+    const fecharInsumoForm = () => {
+        setShowInsumoForm(false);
+        setInsumoEditando(null);
+        setInsumoFormErro(null);
+    };
+
+    const handleInsumoFormChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+        const { name, value, type } = e.target;
+        const checked = (e.target as HTMLInputElement).checked;
+        setInsumoForm((atual) => ({
+            ...atual,
+            [name]: type === 'checkbox' ? checked : value,
+            // Desmarcar controlado limpa a lista, como o servidor faz ao salvar
+            ...(name === 'controlado' && !checked ? { lista_controle: '' } : {}),
+        }));
+    };
+
+    const handleSalvarInsumo = async () => {
+        setInsumoFormErro(null);
+
+        const codigo = paraNumero(insumoForm.codigo_interno);
+        const valor_custo = paraNumero(insumoForm.valor_custo);
+        const custo_referencia = paraNumero(insumoForm.custo_referencia);
+        const markup = paraNumero(insumoForm.markup);
+        const estoque = paraNumero(insumoForm.estoque);
+
+        if (!codigo || !Number.isInteger(codigo) || codigo <= 0) {
+            setInsumoFormErro('Informe o código interno (número inteiro positivo)');
+            return;
         }
+        if (insumoForm.descricao.trim().length < 2) {
+            setInsumoFormErro('Informe a descrição do insumo');
+            return;
+        }
+        if (valor_custo === undefined || custo_referencia === undefined || markup === undefined || estoque === undefined) {
+            setInsumoFormErro('Preencha custo, custo de referência, markup e estoque');
+            return;
+        }
+        if (valor_custo < 0 || custo_referencia < 0 || markup < 0 || estoque < 0) {
+            setInsumoFormErro('Custo, markup e estoque não podem ser negativos');
+            return;
+        }
+        if (insumoForm.controlado && !insumoForm.lista_controle) {
+            setInsumoFormErro('Selecione a lista de controle');
+            return;
+        }
+
+        const payload: InsumoFormData = {
+            codigo_interno: codigo,
+            descricao: insumoForm.descricao.trim(),
+            valor_custo,
+            custo_referencia,
+            markup,
+            un_manipulacao: insumoForm.un_manipulacao,
+            estoque,
+            calculo_tipo: insumoForm.calculo_tipo,
+            controlado: insumoForm.controlado,
+            lista_controle: insumoForm.controlado ? insumoForm.lista_controle : null,
+        };
+
         try {
-            await insumoService.toggleControlado(insumo.id, novoEstado, lista);
+            setSalvandoInsumo(true);
+            if (insumoEditando) {
+                await insumoService.atualizar(insumoEditando.id, payload);
+            } else {
+                await insumoService.criar(payload);
+            }
+            fecharInsumoForm();
             if (activeTab === 'controlados') loadControlados();
             else loadInsumos();
-        } catch (error: any) {
-            alert(error?.response?.data?.error || 'Erro ao atualizar');
+        } catch (error) {
+            setInsumoFormErro(mensagemErro(error, 'Erro ao salvar o insumo'));
+        } finally {
+            setSalvandoInsumo(false);
+        }
+    };
+
+    const handleExcluirInsumo = async (insumo: InsumoFarmaceutico) => {
+        if (!confirm(`Remover "${insumo.descricao}" da base ativa?\n\nO histórico é preservado e o insumo deixa de aparecer nas buscas e no cálculo de preço.`)) return;
+        try {
+            await insumoService.inativar(insumo.id);
+            if (activeTab === 'controlados') loadControlados();
+            else loadInsumos();
+        } catch (error) {
+            alert(mensagemErro(error, 'Erro ao remover o insumo'));
+        }
+    };
+
+    // --- Cadastro de controlado ---
+
+    const abrirIncluirControlado = () => {
+        setControladoAlvo(null);
+        setControladoLista('');
+        setControladoBusca('');
+        setControladoResultados([]);
+        setShowControladoForm(true);
+    };
+
+    const abrirEditarControlado = (insumo: InsumoFarmaceutico) => {
+        setControladoAlvo(insumo);
+        setControladoLista(insumo.lista_controle || '');
+        setControladoBusca('');
+        setControladoResultados([]);
+        setShowControladoForm(true);
+    };
+
+    const handleBuscarInsumoControlado = async () => {
+        if (controladoBusca.trim().length < 2) return;
+        try {
+            const data = await insumoService.buscar(controladoBusca, 1, 10);
+            setControladoResultados(data.data);
+        } catch (error) {
+            console.error('Erro ao buscar insumo:', error);
+        }
+    };
+
+    const handleSalvarControlado = async () => {
+        if (!controladoAlvo || !controladoLista) {
+            alert('Selecione o insumo e a lista de controle');
+            return;
+        }
+        try {
+            setSalvandoControlado(true);
+            await insumoService.toggleControlado(controladoAlvo.id, true, controladoLista);
+            setShowControladoForm(false);
+            setControladoAlvo(null);
+            if (activeTab === 'controlados') loadControlados();
+            else loadInsumos();
+        } catch (error) {
+            alert(mensagemErro(error, 'Erro ao salvar o controle'));
+        } finally {
+            setSalvandoControlado(false);
+        }
+    };
+
+    const handleRemoverControlado = async (insumo: InsumoFarmaceutico) => {
+        if (!confirm(`Remover "${insumo.descricao}" da lista de controlados?\n\nO insumo continua na base — só deixa de exigir receituário especial.`)) return;
+        try {
+            await insumoService.toggleControlado(insumo.id, false);
+            if (activeTab === 'controlados') loadControlados();
+            else loadInsumos();
+        } catch (error) {
+            alert(mensagemErro(error, 'Erro ao remover o controle'));
         }
     };
 
@@ -476,6 +685,14 @@ export function AdminInsumos() {
                         <button type="submit" className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700">
                             Buscar
                         </button>
+                        <button
+                            type="button"
+                            onClick={abrirNovoInsumo}
+                            className="flex items-center gap-2 px-4 py-2 border border-teal-600 text-teal-700 rounded-lg hover:bg-teal-50 whitespace-nowrap"
+                        >
+                            <Plus className="w-4 h-4" />
+                            Novo Insumo
+                        </button>
                     </form>
 
                     {loading ? (
@@ -525,17 +742,33 @@ export function AdminInsumos() {
                                                         <span className="text-xs text-gray-400">-</span>
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3 text-center">
-                                                    <button
-                                                        onClick={() => handleToggleControlado(insumo)}
-                                                        className={`text-xs px-2 py-1 rounded ${insumo.controlado
-                                                            ? 'bg-red-50 text-red-600 hover:bg-red-100'
-                                                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
-                                                        }`}
-                                                        title={insumo.controlado ? 'Remover controle' : 'Marcar como controlado'}
-                                                    >
-                                                        <Shield className="w-3 h-3 inline" />
-                                                    </button>
+                                                <td className="px-4 py-3">
+                                                    <div className="flex items-center justify-center gap-1">
+                                                        <button
+                                                            onClick={() => abrirEdicaoInsumo(insumo)}
+                                                            className="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-teal-700"
+                                                            title="Editar insumo"
+                                                        >
+                                                            <Pencil className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => insumo.controlado ? handleRemoverControlado(insumo) : abrirEditarControlado(insumo)}
+                                                            className={`p-1.5 rounded ${insumo.controlado
+                                                                ? 'text-red-600 hover:bg-red-50'
+                                                                : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'
+                                                            }`}
+                                                            title={insumo.controlado ? 'Remover da lista de controlados' : 'Marcar como controlado'}
+                                                        >
+                                                            <Shield className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleExcluirInsumo(insumo)}
+                                                            className="p-1.5 rounded text-gray-500 hover:bg-red-50 hover:text-red-600"
+                                                            title="Remover da base ativa"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -573,6 +806,16 @@ export function AdminInsumos() {
             {/* Tab: Controlados */}
             {activeTab === 'controlados' && (
                 <div className="space-y-4">
+                    <div className="flex justify-end">
+                        <button
+                            onClick={abrirIncluirControlado}
+                            className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+                        >
+                            <Plus className="w-4 h-4" />
+                            Incluir Controlado
+                        </button>
+                    </div>
+
                     {loading ? (
                         <div className="flex justify-center py-12">
                             <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
@@ -621,14 +864,30 @@ export function AdminInsumos() {
                                                         <span className="text-xs text-gray-400">-</span>
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3 text-center">
-                                                    <button
-                                                        onClick={() => handleToggleControlado(insumo)}
-                                                        className="text-xs px-2 py-1 rounded bg-red-50 text-red-600 hover:bg-red-100"
-                                                        title="Remover controle"
-                                                    >
-                                                        Remover
-                                                    </button>
+                                                <td className="px-4 py-3">
+                                                    <div className="flex items-center justify-center gap-1">
+                                                        <button
+                                                            onClick={() => abrirEditarControlado(insumo)}
+                                                            className="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-teal-700"
+                                                            title="Alterar a lista de controle"
+                                                        >
+                                                            <Shield className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => abrirEdicaoInsumo(insumo)}
+                                                            className="p-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-teal-700"
+                                                            title="Editar insumo"
+                                                        >
+                                                            <Pencil className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleRemoverControlado(insumo)}
+                                                            className="p-1.5 rounded text-gray-500 hover:bg-red-50 hover:text-red-600"
+                                                            title="Remover da lista de controlados"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -1091,6 +1350,295 @@ export function AdminInsumos() {
                             )}
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* Modal: Novo / Editar Insumo */}
+            {showInsumoForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                        <div className="flex justify-between items-center px-6 py-4 border-b sticky top-0 bg-white">
+                            <h3 className="text-lg font-semibold">
+                                {insumoEditando ? 'Editar Insumo' : 'Novo Insumo'}
+                            </h3>
+                            <button onClick={fecharInsumoForm}>
+                                <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                            </button>
+                        </div>
+
+                        <div className="p-6 space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Código Interno</label>
+                                    <input
+                                        type="number"
+                                        name="codigo_interno"
+                                        value={insumoForm.codigo_interno}
+                                        onChange={handleInsumoFormChange}
+                                        step="1"
+                                        min="1"
+                                        placeholder="665"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                    <p className="mt-1 text-xs text-gray-500">Código do sistema PharmoPet</p>
+                                </div>
+                                <div className="sm:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                                    <input
+                                        type="text"
+                                        name="descricao"
+                                        value={insumoForm.descricao}
+                                        onChange={handleInsumoFormChange}
+                                        placeholder="Gabapentina"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Custo (R$)</label>
+                                    <input
+                                        type="number"
+                                        name="valor_custo"
+                                        value={insumoForm.valor_custo}
+                                        onChange={handleInsumoFormChange}
+                                        step="0.00001"
+                                        min="0"
+                                        placeholder="0,00"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                    <p className="mt-1 text-xs text-gray-500">Custo da última compra, por {insumoForm.un_manipulacao === 'ml' ? 'ml' : 'grama'}</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Custo de Referência (R$)</label>
+                                    <input
+                                        type="number"
+                                        name="custo_referencia"
+                                        value={insumoForm.custo_referencia}
+                                        onChange={handleInsumoFormChange}
+                                        step="0.00001"
+                                        min="0"
+                                        placeholder="0,00"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                    <p className="mt-1 text-xs text-gray-500">O cálculo usa o maior entre os dois</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Markup</label>
+                                    <input
+                                        type="number"
+                                        name="markup"
+                                        value={insumoForm.markup}
+                                        onChange={handleInsumoFormChange}
+                                        step="0.01"
+                                        min="0"
+                                        placeholder="648"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                    <p className="mt-1 text-xs text-gray-500">Em centésimos: 648 = 6,48x</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Unidade</label>
+                                    <select
+                                        name="un_manipulacao"
+                                        value={insumoForm.un_manipulacao}
+                                        onChange={handleInsumoFormChange}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    >
+                                        {UNIDADES_MANIPULACAO.map((u) => (
+                                            <option key={u} value={u}>{u}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Estoque</label>
+                                    <input
+                                        type="number"
+                                        name="estoque"
+                                        value={insumoForm.estoque}
+                                        onChange={handleInsumoFormChange}
+                                        step="0.0001"
+                                        min="0"
+                                        placeholder="0"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                    <p className="mt-1 text-xs text-gray-500">Zero marca o insumo como indisponível</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Cálculo</label>
+                                    <select
+                                        name="calculo_tipo"
+                                        value={insumoForm.calculo_tipo}
+                                        onChange={handleInsumoFormChange}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    >
+                                        {TIPOS_CALCULO.map((t) => (
+                                            <option key={t} value={t}>{t}</option>
+                                        ))}
+                                        {/* Preserva um valor vindo da base que não esteja na lista */}
+                                        {insumoForm.calculo_tipo && !TIPOS_CALCULO.includes(insumoForm.calculo_tipo) && (
+                                            <option value={insumoForm.calculo_tipo}>{insumoForm.calculo_tipo}</option>
+                                        )}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="pt-2 border-t space-y-3">
+                                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                                    <input
+                                        type="checkbox"
+                                        name="controlado"
+                                        checked={insumoForm.controlado}
+                                        onChange={handleInsumoFormChange}
+                                        className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                                    />
+                                    Substância controlada
+                                </label>
+                                {insumoForm.controlado && (
+                                    <div className="sm:w-1/2">
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Lista de Controle</label>
+                                        <select
+                                            name="lista_controle"
+                                            value={insumoForm.lista_controle}
+                                            onChange={handleInsumoFormChange}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                        >
+                                            <option value="">Selecione a lista...</option>
+                                            {LISTAS_CONTROLE.map((l) => (
+                                                <option key={l} value={l}>{l}</option>
+                                            ))}
+                                            {insumoForm.lista_controle && !LISTAS_CONTROLE.includes(insumoForm.lista_controle) && (
+                                                <option value={insumoForm.lista_controle}>{insumoForm.lista_controle}</option>
+                                            )}
+                                        </select>
+                                    </div>
+                                )}
+                            </div>
+
+                            {insumoFormErro && (
+                                <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                                    {insumoFormErro}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="px-6 py-4 border-t flex justify-end gap-2 sticky bottom-0 bg-white">
+                            <button onClick={fecharInsumoForm} className="px-4 py-2 border rounded-lg hover:bg-gray-50 text-sm">
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleSalvarInsumo}
+                                disabled={salvandoInsumo}
+                                className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 text-sm"
+                            >
+                                {salvandoInsumo ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                                {salvandoInsumo ? 'Salvando...' : 'Salvar'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal: Incluir / Editar Controlado */}
+            {showControladoForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 space-y-4">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-lg font-semibold">
+                                {controladoAlvo?.controlado ? 'Alterar Lista de Controle' : 'Incluir Controlado'}
+                            </h3>
+                            <button onClick={() => { setShowControladoForm(false); setControladoAlvo(null); }}>
+                                <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                            </button>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Insumo</label>
+                            {controladoAlvo ? (
+                                <div className="flex items-center justify-between p-3 bg-teal-50 border border-teal-200 rounded-lg">
+                                    <span className="text-sm font-medium">
+                                        [{controladoAlvo.codigo_interno}] {controladoAlvo.descricao}
+                                    </span>
+                                    <button onClick={() => setControladoAlvo(null)} className="text-gray-400 hover:text-gray-600">
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="space-y-2">
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            value={controladoBusca}
+                                            onChange={(e) => setControladoBusca(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleBuscarInsumoControlado()}
+                                            placeholder="Buscar insumo por nome ou código..."
+                                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                        />
+                                        <button onClick={handleBuscarInsumoControlado} className="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+                                            <Search className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                    {controladoResultados.length > 0 && (
+                                        <div className="max-h-40 overflow-y-auto border rounded-lg divide-y">
+                                            {controladoResultados.map((ins) => (
+                                                <button
+                                                    key={ins.id}
+                                                    onClick={() => { setControladoAlvo(ins); setControladoLista(ins.lista_controle || ''); setControladoResultados([]); }}
+                                                    className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
+                                                >
+                                                    [{ins.codigo_interno}] {ins.descricao}
+                                                    {ins.controlado && (
+                                                        <span className="ml-2 text-xs text-amber-600">já controlado ({ins.lista_controle})</span>
+                                                    )}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Lista de Controle</label>
+                            <select
+                                value={controladoLista}
+                                onChange={(e) => setControladoLista(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                            >
+                                <option value="">Selecione a lista...</option>
+                                {LISTAS_CONTROLE.map((l) => (
+                                    <option key={l} value={l}>{l}</option>
+                                ))}
+                                {controladoLista && !LISTAS_CONTROLE.includes(controladoLista) && (
+                                    <option value={controladoLista}>{controladoLista}</option>
+                                )}
+                            </select>
+                            <p className="mt-1 text-xs text-gray-500">
+                                Define o alerta de receituário especial que o veterinário vê na prescrição.
+                            </p>
+                        </div>
+
+                        <div className="flex justify-end gap-2 pt-2">
+                            <button
+                                onClick={() => { setShowControladoForm(false); setControladoAlvo(null); }}
+                                className="px-4 py-2 border rounded-lg hover:bg-gray-50 text-sm"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleSalvarControlado}
+                                disabled={!controladoAlvo || !controladoLista || salvandoControlado}
+                                className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 text-sm"
+                            >
+                                {salvandoControlado ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                                {salvandoControlado ? 'Salvando...' : 'Salvar'}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
