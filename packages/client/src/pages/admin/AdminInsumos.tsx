@@ -1,9 +1,82 @@
 import { useState, useEffect } from 'react';
-import { Search, FlaskConical, Shield, Ban, Plus, Trash2, X, Loader2 } from 'lucide-react';
+import { Search, FlaskConical, Shield, Ban, Plus, Trash2, X, Loader2, Calculator } from 'lucide-react';
 import { insumoService, regraExcecaoService, formaFarmaceuticaService } from '../../services/insumo.service';
 import type { InsumoFarmaceutico, FormaFarmaceutica, RegraExcecao } from '../../services/insumo.service';
+import { precificacaoService } from '../../services/precificacao.service';
+import type { CondicoesComerciaisInput, OrigemCondicao, PrecificacaoResultado } from '../../services/precificacao.service';
+import { clinicService } from '../../services/clinicService';
+import type { Clinica } from '../../services/clinicService';
 
-type Tab = 'insumos' | 'controlados' | 'excecoes';
+type Tab = 'insumos' | 'controlados' | 'excecoes' | 'precificacao';
+
+/** Ingrediente montado no simulador: o insumo escolhido + dosagem e quantidade digitadas. */
+type SimIngrediente = {
+    insumo: InsumoFarmaceutico;
+    dosagem_mg: string;
+    quantidade: string;
+};
+
+const CONDICOES_VAZIAS = {
+    taxa_manipulacao: '',
+    custo_embalagens: '',
+    desconto_parceiro: '',
+    adicional_entrega: '',
+    adicional_biscoito: '',
+};
+
+type CondicoesForm = typeof CONDICOES_VAZIAS;
+
+/** Campos editáveis do cálculo, na mesma ordem em que entram na fórmula. */
+const CAMPOS_SIMULADOR: {
+    name: keyof CondicoesForm;
+    label: string;
+    hint: string;
+    step: string;
+    max?: string;
+}[] = [
+    {
+        name: 'taxa_manipulacao',
+        label: 'Taxa de Manipulação (R$)',
+        hint: 'Valor fixo cobrado por manipulação',
+        step: '0.01',
+    },
+    {
+        name: 'custo_embalagens',
+        label: 'Taxa de Embalagem (R$)',
+        hint: 'Custo fixo de embalagem por pedido',
+        step: '0.01',
+    },
+    {
+        name: 'desconto_parceiro',
+        label: 'Desconto (%)',
+        hint: 'Aplicado sobre o subtotal (ex: 40 = 40%)',
+        step: '0.1',
+        max: '100',
+    },
+    {
+        name: 'adicional_entrega',
+        label: 'Frete / Entrega (R$)',
+        hint: 'Somado depois do desconto',
+        step: '0.01',
+    },
+    {
+        name: 'adicional_biscoito',
+        label: 'Adicional Biscoito (R$)',
+        hint: 'Só entra quando a forma é biscoito/petisco',
+        step: '0.01',
+    },
+];
+
+/** Converte o texto do input em número, aceitando vírgula como separador decimal. */
+function paraNumero(valor: string): number | undefined {
+    if (!valor.trim()) return undefined;
+    const n = parseFloat(valor.replace(',', '.'));
+    return Number.isFinite(n) ? n : undefined;
+}
+
+function moeda(valor: number): string {
+    return `R$ ${valor.toFixed(2).replace('.', ',')}`;
+}
 
 export function AdminInsumos() {
     const [activeTab, setActiveTab] = useState<Tab>('insumos');
@@ -29,10 +102,23 @@ export function AdminInsumos() {
     const [insumoResults, setInsumoResults] = useState<InsumoFarmaceutico[]>([]);
     const [selectedInsumo, setSelectedInsumo] = useState<InsumoFarmaceutico | null>(null);
 
+    // Simulador de preço
+    const [simIngredientes, setSimIngredientes] = useState<SimIngrediente[]>([]);
+    const [simBusca, setSimBusca] = useState('');
+    const [simResultadosBusca, setSimResultadosBusca] = useState<InsumoFarmaceutico[]>([]);
+    const [simForma, setSimForma] = useState('');
+    const [simCondicoes, setSimCondicoes] = useState<CondicoesForm>(CONDICOES_VAZIAS);
+    const [simClinicas, setSimClinicas] = useState<Clinica[]>([]);
+    const [simClinicaId, setSimClinicaId] = useState('');
+    const [simResultado, setSimResultado] = useState<PrecificacaoResultado | null>(null);
+    const [simErro, setSimErro] = useState<string | null>(null);
+    const [simCalculando, setSimCalculando] = useState(false);
+
     useEffect(() => {
         if (activeTab === 'insumos') loadInsumos();
         if (activeTab === 'controlados') loadControlados();
         if (activeTab === 'excecoes') { loadExcecoes(); loadFormas(); }
+        if (activeTab === 'precificacao') { loadFormas(); loadClinicas(); }
     }, [activeTab]);
 
     useEffect(() => {
@@ -86,10 +172,173 @@ export function AdminInsumos() {
         }
     };
 
+    const loadClinicas = async () => {
+        try {
+            const data = await clinicService.getAll();
+            setSimClinicas(data);
+        } catch (error) {
+            console.error('Erro ao carregar clínicas:', error);
+        }
+    };
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         setPage(1);
         loadInsumos();
+    };
+
+    // --- Simulador de preço ---
+
+    const handleSimBuscarInsumo = async () => {
+        if (simBusca.trim().length < 2) return;
+        try {
+            const data = await insumoService.buscar(simBusca, 1, 10);
+            setSimResultadosBusca(data.data);
+        } catch (error) {
+            console.error('Erro ao buscar insumo:', error);
+        }
+    };
+
+    const handleSimAddIngrediente = (insumo: InsumoFarmaceutico) => {
+        if (simIngredientes.some((i) => i.insumo.codigo_interno === insumo.codigo_interno)) {
+            alert('Este insumo já está na formulação');
+            return;
+        }
+        setSimIngredientes((atual) => [...atual, { insumo, dosagem_mg: '', quantidade: '30' }]);
+        setSimResultadosBusca([]);
+        setSimBusca('');
+    };
+
+    const handleSimIngredienteChange = (codigo: number, campo: 'dosagem_mg' | 'quantidade', valor: string) => {
+        setSimIngredientes((atual) =>
+            atual.map((i) => (i.insumo.codigo_interno === codigo ? { ...i, [campo]: valor } : i))
+        );
+    };
+
+    const handleSimRemoveIngrediente = (codigo: number) => {
+        setSimIngredientes((atual) => atual.filter((i) => i.insumo.codigo_interno !== codigo));
+    };
+
+    const handleSimCondicaoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setSimCondicoes((atual) => ({ ...atual, [name]: value }));
+    };
+
+    /** Traz as condições cadastradas da clínica para os campos, como ponto de partida. */
+    const handleSimCarregarClinica = (clinicaId: string) => {
+        setSimClinicaId(clinicaId);
+        if (!clinicaId) {
+            setSimCondicoes(CONDICOES_VAZIAS);
+            return;
+        }
+        const clinica = simClinicas.find((c) => c.id === clinicaId);
+        if (!clinica) return;
+        setSimCondicoes({
+            taxa_manipulacao: clinica.taxa_manipulacao != null ? String(clinica.taxa_manipulacao) : '',
+            custo_embalagens: clinica.custo_embalagens != null ? String(clinica.custo_embalagens) : '',
+            desconto_parceiro: clinica.desconto_parceiro != null ? String(Number(clinica.desconto_parceiro) * 100) : '',
+            adicional_entrega: clinica.adicional_entrega != null ? String(clinica.adicional_entrega) : '',
+            adicional_biscoito: clinica.adicional_biscoito != null ? String(clinica.adicional_biscoito) : '',
+        });
+    };
+
+    const handleSimLimpar = () => {
+        setSimIngredientes([]);
+        setSimCondicoes(CONDICOES_VAZIAS);
+        setSimClinicaId('');
+        setSimForma('');
+        setSimResultado(null);
+        setSimErro(null);
+    };
+
+    const handleSimCalcular = async () => {
+        setSimErro(null);
+
+        if (simIngredientes.length === 0) {
+            setSimErro('Adicione pelo menos um insumo à formulação');
+            return;
+        }
+        if (!simForma) {
+            setSimErro('Selecione a forma farmacêutica');
+            return;
+        }
+
+        const ingredientes = [];
+        for (const item of simIngredientes) {
+            const dosagem_mg = paraNumero(item.dosagem_mg);
+            const quantidade = paraNumero(item.quantidade);
+            if (!dosagem_mg || dosagem_mg <= 0) {
+                setSimErro(`Informe a dosagem (mg) de ${item.insumo.descricao}`);
+                return;
+            }
+            if (!quantidade || quantidade <= 0 || !Number.isInteger(quantidade)) {
+                setSimErro(`Informe a quantidade (número inteiro de doses) de ${item.insumo.descricao}`);
+                return;
+            }
+            ingredientes.push({ codigo_interno: item.insumo.codigo_interno, dosagem_mg, quantidade });
+        }
+
+        // Só vai para a API o que foi digitado: o resto continua vindo do cadastro da clínica.
+        const condicoes: CondicoesComerciaisInput = {};
+        const taxa_manipulacao = paraNumero(simCondicoes.taxa_manipulacao);
+        if (taxa_manipulacao !== undefined) condicoes.taxa_manipulacao = taxa_manipulacao;
+        const custo_embalagens = paraNumero(simCondicoes.custo_embalagens);
+        if (custo_embalagens !== undefined) condicoes.custo_embalagens = custo_embalagens;
+        const desconto = paraNumero(simCondicoes.desconto_parceiro);
+        if (desconto !== undefined) condicoes.desconto_parceiro = desconto / 100;
+        const adicional_entrega = paraNumero(simCondicoes.adicional_entrega);
+        if (adicional_entrega !== undefined) condicoes.adicional_entrega = adicional_entrega;
+        const adicional_biscoito = paraNumero(simCondicoes.adicional_biscoito);
+        if (adicional_biscoito !== undefined) condicoes.adicional_biscoito = adicional_biscoito;
+
+        if (condicoes.desconto_parceiro !== undefined && (condicoes.desconto_parceiro < 0 || condicoes.desconto_parceiro > 1)) {
+            setSimErro('O desconto deve estar entre 0 e 100%');
+            return;
+        }
+
+        try {
+            setSimCalculando(true);
+            const resultado = await precificacaoService.calcular({
+                ingredientes,
+                forma_farmaceutica: simForma,
+                clinica_id: simClinicaId || undefined,
+                condicoes: Object.keys(condicoes).length > 0 ? condicoes : undefined,
+            });
+            setSimResultado(resultado);
+        } catch (error) {
+            // 422 devolve o resultado com os erros do motor (insumo sem estoque, forma proibida…)
+            const resposta = error as { response?: { data?: PrecificacaoResultado & { error?: string } } };
+            const corpo = resposta?.response?.data;
+            if (corpo?.erros?.length) {
+                setSimResultado(corpo);
+                setSimErro(corpo.erros.join('; '));
+            } else {
+                const mensagem = error instanceof Error ? error.message : 'Erro ao calcular o preço';
+                setSimResultado(null);
+                setSimErro(corpo?.error || mensagem);
+            }
+        } finally {
+            setSimCalculando(false);
+        }
+    };
+
+    const origemBadge = (origem?: OrigemCondicao) => {
+        const estilos: Record<OrigemCondicao, string> = {
+            manual: 'bg-amber-100 text-amber-700',
+            clinica: 'bg-teal-100 text-teal-700',
+            padrao: 'bg-gray-100 text-gray-500',
+        };
+        const rotulos: Record<OrigemCondicao, string> = {
+            manual: 'informado',
+            clinica: 'clínica',
+            padrao: 'padrão',
+        };
+        if (!origem) return null;
+        return (
+            <span className={`ml-2 px-1.5 py-0.5 text-[10px] rounded font-medium ${estilos[origem]}`}>
+                {rotulos[origem]}
+            </span>
+        );
     };
 
     const handleToggleControlado = async (insumo: InsumoFarmaceutico) => {
@@ -196,6 +445,16 @@ export function AdminInsumos() {
                     >
                         <Ban className="w-4 h-4 inline mr-2" />
                         Regras de Exceção ({excecoes.length})
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('precificacao')}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'precificacao'
+                            ? 'border-teal-600 text-teal-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700'
+                        }`}
+                    >
+                        <Calculator className="w-4 h-4 inline mr-2" />
+                        Simulador de Preço
                     </button>
                 </nav>
             </div>
@@ -525,6 +784,311 @@ export function AdminInsumos() {
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Tab: Simulador de Preço */}
+            {activeTab === 'precificacao' && (
+                <div className="space-y-6">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                        Monte uma formulação, ajuste os parâmetros do cálculo e confira o preço final.
+                        Os valores digitados aqui valem só para esta simulação — o cadastro das clínicas não é alterado.
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {/* Formulação */}
+                        <div className="bg-white rounded-lg shadow p-6 space-y-4">
+                            <h3 className="font-semibold text-gray-900">1. Formulação</h3>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Adicionar insumo</label>
+                                <div className="flex gap-2">
+                                    <input
+                                        type="text"
+                                        value={simBusca}
+                                        onChange={(e) => setSimBusca(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && handleSimBuscarInsumo()}
+                                        placeholder="Buscar por nome ou código..."
+                                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                    />
+                                    <button
+                                        onClick={handleSimBuscarInsumo}
+                                        className="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"
+                                    >
+                                        <Search className="w-4 h-4" />
+                                    </button>
+                                </div>
+                                {simResultadosBusca.length > 0 && (
+                                    <div className="mt-2 max-h-40 overflow-y-auto border rounded-lg divide-y">
+                                        {simResultadosBusca.map((ins) => (
+                                            <button
+                                                key={ins.id}
+                                                onClick={() => handleSimAddIngrediente(ins)}
+                                                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 flex justify-between gap-2"
+                                            >
+                                                <span>[{ins.codigo_interno}] {ins.descricao}</span>
+                                                <span className="text-gray-500 whitespace-nowrap">
+                                                    {moeda(ins.custo_efetivo)}/g · {ins.markup}x
+                                                </span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {simIngredientes.length === 0 ? (
+                                <p className="text-sm text-gray-500 py-4 text-center border border-dashed rounded-lg">
+                                    Nenhum insumo adicionado
+                                </p>
+                            ) : (
+                                <div className="space-y-2">
+                                    {simIngredientes.map((item) => (
+                                        <div key={item.insumo.codigo_interno} className="border rounded-lg p-3 space-y-2">
+                                            <div className="flex justify-between items-start gap-2">
+                                                <span className="text-sm font-medium text-gray-900">
+                                                    [{item.insumo.codigo_interno}] {item.insumo.descricao}
+                                                </span>
+                                                <button
+                                                    onClick={() => handleSimRemoveIngrediente(item.insumo.codigo_interno)}
+                                                    className="text-gray-400 hover:text-red-600"
+                                                    title="Remover insumo"
+                                                >
+                                                    <X className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <div>
+                                                    <label className="block text-xs text-gray-600 mb-1">Dosagem (mg)</label>
+                                                    <input
+                                                        type="number"
+                                                        value={item.dosagem_mg}
+                                                        onChange={(e) => handleSimIngredienteChange(item.insumo.codigo_interno, 'dosagem_mg', e.target.value)}
+                                                        step="0.01"
+                                                        min="0"
+                                                        placeholder="0"
+                                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs text-gray-600 mb-1">Quantidade (doses)</label>
+                                                    <input
+                                                        type="number"
+                                                        value={item.quantidade}
+                                                        onChange={(e) => handleSimIngredienteChange(item.insumo.codigo_interno, 'quantidade', e.target.value)}
+                                                        step="1"
+                                                        min="1"
+                                                        placeholder="30"
+                                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <p className="text-xs text-gray-500">
+                                                Custo efetivo {moeda(item.insumo.custo_efetivo)}/g · markup {item.insumo.markup}x
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Forma Farmacêutica</label>
+                                <select
+                                    value={simForma}
+                                    onChange={(e) => setSimForma(e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                >
+                                    <option value="">Selecione a forma...</option>
+                                    {formas.map((f) => (
+                                        <option key={f.id} value={f.nome}>{f.nome}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Parâmetros do cálculo */}
+                        <div className="bg-white rounded-lg shadow p-6 space-y-4">
+                            <h3 className="font-semibold text-gray-900">2. Parâmetros do cálculo</h3>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Partir das condições de uma clínica (opcional)
+                                </label>
+                                <select
+                                    value={simClinicaId}
+                                    onChange={(e) => handleSimCarregarClinica(e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                >
+                                    <option value="">Nenhuma — usar só os valores digitados</option>
+                                    {simClinicas.map((c) => (
+                                        <option key={c.id} value={c.id}>{c.nome_fantasia}</option>
+                                    ))}
+                                </select>
+                                <p className="mt-1 text-xs text-gray-500">
+                                    Traz os valores cadastrados do parceiro para os campos abaixo. Depois é só editar.
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t">
+                                {CAMPOS_SIMULADOR.map((campo) => (
+                                    <div key={campo.name}>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            {campo.label}
+                                        </label>
+                                        <input
+                                            type="number"
+                                            name={campo.name}
+                                            value={simCondicoes[campo.name]}
+                                            onChange={handleSimCondicaoChange}
+                                            step={campo.step}
+                                            min="0"
+                                            max={campo.max}
+                                            placeholder="0"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500"
+                                        />
+                                        <p className="mt-1 text-xs text-gray-500">{campo.hint}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <p className="text-xs text-gray-500 pt-2 border-t">
+                                Campo em branco usa o valor da clínica selecionada — ou zero, se nenhuma for escolhida.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end gap-2">
+                        <button
+                            onClick={handleSimLimpar}
+                            className="px-4 py-2 border rounded-lg hover:bg-gray-50 text-sm"
+                        >
+                            Limpar
+                        </button>
+                        <button
+                            onClick={handleSimCalcular}
+                            disabled={simCalculando}
+                            className="flex items-center gap-2 px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 text-sm"
+                        >
+                            {simCalculando ? <Loader2 className="w-4 h-4 animate-spin" /> : <Calculator className="w-4 h-4" />}
+                            {simCalculando ? 'Calculando...' : 'Calcular Preço'}
+                        </button>
+                    </div>
+
+                    {simErro && (
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
+                            {simErro}
+                        </div>
+                    )}
+
+                    {simResultado && (
+                        <div className="bg-white rounded-lg shadow overflow-hidden">
+                            <div className="px-6 py-4 border-b">
+                                <h3 className="font-semibold text-gray-900">Composição do cálculo</h3>
+                                <p className="text-sm text-gray-500">
+                                    Forma: {simResultado.forma_farmaceutica}
+                                </p>
+                            </div>
+
+                            {simResultado.ingredientes.length > 0 && (
+                                <div className="overflow-x-auto border-b">
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-gray-50">
+                                            <tr>
+                                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Insumo</th>
+                                                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">Dosagem</th>
+                                                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">Qtd</th>
+                                                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">Peso total</th>
+                                                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">Custo efetivo</th>
+                                                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">Markup</th>
+                                                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">Custo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gray-200">
+                                            {simResultado.ingredientes.map((ing) => (
+                                                <tr key={ing.codigo_interno}>
+                                                    <td className="px-4 py-2 text-sm text-gray-900">
+                                                        [{ing.codigo_interno}] {ing.descricao}
+                                                    </td>
+                                                    <td className="px-4 py-2 text-sm text-right text-gray-600">{ing.dosagem_mg} mg</td>
+                                                    <td className="px-4 py-2 text-sm text-right text-gray-600">{ing.quantidade}</td>
+                                                    <td className="px-4 py-2 text-sm text-right text-gray-600">{ing.peso_total_g.toFixed(4)} g</td>
+                                                    <td className="px-4 py-2 text-sm text-right text-gray-600">{moeda(ing.custo_efetivo)}</td>
+                                                    <td className="px-4 py-2 text-sm text-right text-gray-600">{ing.markup}x</td>
+                                                    <td className="px-4 py-2 text-sm text-right font-medium text-gray-900">{moeda(ing.custo_ingrediente)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
+                            <div className="p-6 space-y-2 text-sm">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Total matéria-prima</span>
+                                    <span className="font-medium">{moeda(simResultado.total_materia_prima)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">
+                                        + Taxa de manipulação
+                                        {origemBadge(simResultado.condicoes_origem?.taxa_manipulacao)}
+                                    </span>
+                                    <span className="font-medium">{moeda(simResultado.taxa_manipulacao)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">
+                                        + Taxa de embalagem
+                                        {origemBadge(simResultado.condicoes_origem?.custo_embalagens)}
+                                    </span>
+                                    <span className="font-medium">{moeda(simResultado.custo_embalagens)}</span>
+                                </div>
+                                <div className="flex justify-between pt-2 border-t">
+                                    <span className="text-gray-900 font-medium">Subtotal</span>
+                                    <span className="font-medium">{moeda(simResultado.subtotal)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">
+                                        − Desconto ({(simResultado.desconto_parceiro_pct * 100).toFixed(1)}%)
+                                        {origemBadge(simResultado.condicoes_origem?.desconto_parceiro)}
+                                    </span>
+                                    <span className="font-medium text-red-600">− {moeda(simResultado.desconto_valor)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-900 font-medium">Valor com desconto</span>
+                                    <span className="font-medium">{moeda(simResultado.valor_com_desconto)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">
+                                        + Frete / entrega
+                                        {origemBadge(simResultado.condicoes_origem?.adicional_entrega)}
+                                    </span>
+                                    <span className="font-medium">{moeda(simResultado.adicional_entrega)}</span>
+                                </div>
+                                {simResultado.adicional_biscoito > 0 && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600">
+                                            + Adicional biscoito
+                                            {origemBadge(simResultado.condicoes_origem?.adicional_biscoito)}
+                                        </span>
+                                        <span className="font-medium">{moeda(simResultado.adicional_biscoito)}</span>
+                                    </div>
+                                )}
+                                <div className="flex justify-between pt-3 border-t">
+                                    <span className="text-lg font-semibold text-gray-900">Valor final</span>
+                                    <span className="text-2xl font-bold text-teal-700">{moeda(simResultado.valor_final)}</span>
+                                </div>
+                            </div>
+
+                            {simResultado.avisos.length > 0 && (
+                                <div className="px-6 py-4 bg-amber-50 border-t border-amber-200">
+                                    <p className="text-xs font-medium text-amber-800 mb-1">Avisos</p>
+                                    <ul className="list-disc list-inside space-y-1 text-sm text-amber-700">
+                                        {simResultado.avisos.map((aviso, i) => (
+                                            <li key={i}>{aviso}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

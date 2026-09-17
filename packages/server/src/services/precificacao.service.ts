@@ -10,6 +10,10 @@
  *   com_desconto = subtotal × (1 - desconto_parceiro)
  *   valor_final = com_desconto + adicional_entrega
  *   se forma = BISCOITO: valor_final += adicional_biscoito
+ *
+ * Os parâmetros do cálculo (taxa de manipulação, embalagem, desconto, frete e adicional
+ * de biscoito) vêm do cadastro da clínica e podem ser sobrepostos campo a campo por
+ * `input.condicoes` — usado pelo simulador do admin para conferir valores.
  */
 import { PrismaClient } from '@prisma/client';
 
@@ -41,10 +45,23 @@ export interface IngredienteResultado {
   lista_controle: string | null;
 }
 
+/**
+ * Condições comerciais informadas manualmente (simulação).
+ * Cada campo preenchido substitui o valor cadastrado na clínica.
+ */
+export interface CondicoesComerciais {
+  taxa_manipulacao?: number;   // R$ fixo por pedido
+  custo_embalagens?: number;   // R$ fixo por pedido
+  desconto_parceiro?: number;  // 0-1 (ex: 0.4 = 40%)
+  adicional_entrega?: number;  // R$ fixo por pedido (frete)
+  adicional_biscoito?: number; // R$ extra se forma = biscoito
+}
+
 export interface PrecificacaoInput {
   ingredientes: IngredienteInput[];
   forma_farmaceutica: string;  // nome da forma (ex: "CÁPSULAS", "BISCOITOS")
   clinica_id?: string;         // para buscar condições comerciais
+  condicoes?: CondicoesComerciais; // sobrepõe as condições da clínica
 }
 
 export interface PrecificacaoResultado {
@@ -60,9 +77,30 @@ export interface PrecificacaoResultado {
   adicional_biscoito: number;
   valor_final: number;
   forma_farmaceutica: string;
+  condicoes_origem: CondicoesOrigem; // de onde veio cada parâmetro do cálculo
   avisos: string[];
   erros: string[];
 }
+
+export type OrigemCondicao = 'clinica' | 'manual' | 'padrao';
+
+export type CondicoesOrigem = Record<keyof CondicoesComerciais, OrigemCondicao>;
+
+const CAMPOS_CONDICOES: (keyof CondicoesComerciais)[] = [
+  'taxa_manipulacao',
+  'custo_embalagens',
+  'desconto_parceiro',
+  'adicional_entrega',
+  'adicional_biscoito',
+];
+
+const ROTULOS_CONDICOES: Record<keyof CondicoesComerciais, string> = {
+  taxa_manipulacao: 'taxa de manipulação',
+  custo_embalagens: 'taxa de embalagem',
+  desconto_parceiro: 'desconto',
+  adicional_entrega: 'frete/entrega',
+  adicional_biscoito: 'adicional biscoito',
+};
 
 // --- Service ---
 
@@ -80,6 +118,14 @@ export class PrecificacaoService {
     let desconto_parceiro = 0;
     let adicional_entrega = 0;
     let adicional_biscoito = 0;
+
+    const condicoes_origem: CondicoesOrigem = {
+      taxa_manipulacao: 'padrao',
+      custo_embalagens: 'padrao',
+      desconto_parceiro: 'padrao',
+      adicional_entrega: 'padrao',
+      adicional_biscoito: 'padrao',
+    };
 
     if (input.clinica_id) {
       const clinica = await prisma.clinica.findUnique({
@@ -100,11 +146,40 @@ export class PrecificacaoService {
         desconto_parceiro = Number(clinica.desconto_parceiro) || 0;
         adicional_entrega = Number(clinica.adicional_entrega) || 0;
         adicional_biscoito = Number(clinica.adicional_biscoito) || 0;
+
+        for (const campo of CAMPOS_CONDICOES) {
+          if (clinica[campo] != null) condicoes_origem[campo] = 'clinica';
+        }
       } else {
         avisos.push('Clínica não encontrada — usando valores padrão (sem taxa/desconto)');
       }
-    } else {
+    } else if (!input.condicoes) {
       avisos.push('Nenhuma clínica informada — preço sem condições comerciais');
+    }
+
+    // 1b. Sobrepor com as condições informadas manualmente (simulação)
+    if (input.condicoes) {
+      const c = input.condicoes;
+      if (c.taxa_manipulacao != null) taxa_manipulacao = c.taxa_manipulacao;
+      if (c.custo_embalagens != null) custo_embalagens = c.custo_embalagens;
+      if (c.desconto_parceiro != null) desconto_parceiro = c.desconto_parceiro;
+      if (c.adicional_entrega != null) adicional_entrega = c.adicional_entrega;
+      if (c.adicional_biscoito != null) adicional_biscoito = c.adicional_biscoito;
+
+      const informados = CAMPOS_CONDICOES.filter((campo) => c[campo] != null);
+      for (const campo of informados) condicoes_origem[campo] = 'manual';
+
+      if (informados.length > 0) {
+        const rotulos = informados.map((campo) => ROTULOS_CONDICOES[campo]).join(', ');
+        const plural = informados.length > 1;
+        const sobrepoe = input.clinica_id
+          ? ` e ${plural ? 'substituem' : 'substitui'} o cadastro da clínica`
+          : '';
+        avisos.push(
+          `Simulação: ${plural ? 'os parâmetros' : 'o parâmetro'} ${rotulos} ` +
+          `${plural ? 'foram informados' : 'foi informado'} manualmente${sobrepoe}`
+        );
+      }
     }
 
     // 2. Verificar forma farmacêutica
@@ -236,6 +311,7 @@ export class PrecificacaoService {
       adicional_biscoito: isBiscoito ? adicional_biscoito : 0,
       valor_final,
       forma_farmaceutica: input.forma_farmaceutica,
+      condicoes_origem,
       avisos,
       erros,
     };

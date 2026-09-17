@@ -48,10 +48,27 @@ export interface IngredienteResultado {
   lista_controle: string | null;
 }
 
+/**
+ * Parâmetros do cálculo informados manualmente (simulador do admin).
+ * Cada campo preenchido substitui o valor cadastrado na clínica.
+ */
+export interface CondicoesComerciaisInput {
+  taxa_manipulacao?: number;
+  custo_embalagens?: number;
+  desconto_parceiro?: number; // 0-1 (ex: 0.4 = 40%)
+  adicional_entrega?: number;
+  adicional_biscoito?: number;
+}
+
+export type OrigemCondicao = 'clinica' | 'manual' | 'padrao';
+
+export type CondicoesOrigem = Record<keyof CondicoesComerciaisInput, OrigemCondicao>;
+
 export interface PrecificacaoInput {
   ingredientes: IngredienteInput[];
   forma_farmaceutica: string;
   clinica_id?: string;
+  condicoes?: CondicoesComerciaisInput;
 }
 
 export interface PrecificacaoResultado {
@@ -67,6 +84,7 @@ export interface PrecificacaoResultado {
   adicional_biscoito: number;
   valor_final: number;
   forma_farmaceutica: string;
+  condicoes_origem: CondicoesOrigem;
   avisos: string[];
   erros: string[];
 }
