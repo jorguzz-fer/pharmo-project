@@ -3,19 +3,21 @@ import { ClinicaController } from '../controllers/clinica.controller';
 import { DocumentoController, upload } from '../controllers/documento.controller';
 import { ClinicaLogoController, logoUpload } from '../controllers/clinica-logo.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
+import { adminMiddleware } from '../middlewares/admin.middleware';
 
 const router = Router();
 const clinicaController = new ClinicaController();
 const documentoController = new DocumentoController();
 const logoController = new ClinicaLogoController();
 
-// Rotas de Clínicas (Admin only)
+// Rotas de Clínicas — escrita restrita ao admin: estas rotas alteram o cadastro
+// do parceiro, incluindo as condições comerciais que definem o preço.
 router.get('/admin/clinicas', authMiddleware, clinicaController.list);
 router.get('/admin/clinicas/:id', authMiddleware, clinicaController.getById);
-router.post('/admin/clinicas', authMiddleware, clinicaController.create);
-router.put('/admin/clinicas/:id', authMiddleware, clinicaController.update);
-router.patch('/admin/clinicas/:id/status', authMiddleware, clinicaController.updateStatus);
-router.delete('/admin/clinicas/:id', authMiddleware, clinicaController.softDelete);
+router.post('/admin/clinicas', authMiddleware, adminMiddleware, clinicaController.create);
+router.put('/admin/clinicas/:id', authMiddleware, adminMiddleware, clinicaController.update);
+router.patch('/admin/clinicas/:id/status', authMiddleware, adminMiddleware, clinicaController.updateStatus);
+router.delete('/admin/clinicas/:id', authMiddleware, adminMiddleware, clinicaController.softDelete);
 router.get('/admin/clinicas/:id/metrics', authMiddleware, clinicaController.getMetrics);
 
 // Rotas de Documentos
