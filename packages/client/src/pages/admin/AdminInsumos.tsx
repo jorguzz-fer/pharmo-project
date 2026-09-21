@@ -11,6 +11,14 @@ import {
 import type { InsumoFarmaceutico, FormaFarmaceutica, RegraExcecao, InsumoFormData } from '../../services/insumo.service';
 import { precificacaoService } from '../../services/precificacao.service';
 import type { CondicoesComerciaisInput, OrigemCondicao, PrecificacaoResultado } from '../../services/precificacao.service';
+import {
+    CONDICOES_VAZIAS,
+    CAMPOS_SIMULADOR,
+    paraNumero,
+    moeda,
+    lerCondicoes,
+} from './simuladorPrecificacao';
+import type { CondicoesForm } from './simuladorPrecificacao';
 import { clinicService } from '../../services/clinicService';
 import type { Clinica } from '../../services/clinicService';
 
@@ -54,67 +62,6 @@ function insumoParaForm(insumo: InsumoFarmaceutico): InsumoForm {
     };
 }
 
-const CONDICOES_VAZIAS = {
-    taxa_manipulacao: '',
-    custo_embalagens: '',
-    desconto_parceiro: '',
-    adicional_entrega: '',
-    adicional_biscoito: '',
-};
-
-type CondicoesForm = typeof CONDICOES_VAZIAS;
-
-/** Campos editáveis do cálculo, na mesma ordem em que entram na fórmula. */
-const CAMPOS_SIMULADOR: {
-    name: keyof CondicoesForm;
-    label: string;
-    hint: string;
-    step: string;
-    max?: string;
-}[] = [
-    {
-        name: 'taxa_manipulacao',
-        label: 'Taxa de Manipulação (R$)',
-        hint: 'Valor fixo cobrado por manipulação',
-        step: '0.01',
-    },
-    {
-        name: 'custo_embalagens',
-        label: 'Taxa de Embalagem (R$)',
-        hint: 'Custo fixo de embalagem por pedido',
-        step: '0.01',
-    },
-    {
-        name: 'desconto_parceiro',
-        label: 'Desconto (%)',
-        hint: 'Aplicado sobre o subtotal (ex: 40 = 40%)',
-        step: '0.1',
-        max: '100',
-    },
-    {
-        name: 'adicional_entrega',
-        label: 'Frete / Entrega (R$)',
-        hint: 'Somado depois do desconto',
-        step: '0.01',
-    },
-    {
-        name: 'adicional_biscoito',
-        label: 'Adicional Biscoito (R$)',
-        hint: 'Só entra quando a forma é biscoito/petisco',
-        step: '0.01',
-    },
-];
-
-/** Converte o texto do input em número, aceitando vírgula como separador decimal. */
-function paraNumero(valor: string): number | undefined {
-    if (!valor.trim()) return undefined;
-    const n = parseFloat(valor.replace(',', '.'));
-    return Number.isFinite(n) ? n : undefined;
-}
-
-function moeda(valor: number): string {
-    return `R$ ${valor.toFixed(2).replace('.', ',')}`;
-}
 
 export function AdminInsumos() {
     const [activeTab, setActiveTab] = useState<Tab>('insumos');
@@ -165,7 +112,9 @@ export function AdminInsumos() {
     const [simClinicaId, setSimClinicaId] = useState('');
     const [simResultado, setSimResultado] = useState<PrecificacaoResultado | null>(null);
     const [simErro, setSimErro] = useState<string | null>(null);
+    const [simMensagem, setSimMensagem] = useState<string | null>(null);
     const [simCalculando, setSimCalculando] = useState(false);
+    const [simSalvando, setSimSalvando] = useState(false);
 
     useEffect(() => {
         if (activeTab === 'insumos') loadInsumos();
@@ -274,12 +223,14 @@ export function AdminInsumos() {
 
     const handleSimCondicaoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        setSimMensagem(null);
         setSimCondicoes((atual) => ({ ...atual, [name]: value }));
     };
 
     /** Traz as condições cadastradas da clínica para os campos, como ponto de partida. */
     const handleSimCarregarClinica = (clinicaId: string) => {
         setSimClinicaId(clinicaId);
+        setSimMensagem(null);
         if (!clinicaId) {
             setSimCondicoes(CONDICOES_VAZIAS);
             return;
@@ -302,10 +253,12 @@ export function AdminInsumos() {
         setSimForma('');
         setSimResultado(null);
         setSimErro(null);
+        setSimMensagem(null);
     };
 
     const handleSimCalcular = async () => {
         setSimErro(null);
+        setSimMensagem(null);
 
         if (simIngredientes.length === 0) {
             setSimErro('Adicione pelo menos um insumo à formulação');
@@ -331,22 +284,16 @@ export function AdminInsumos() {
             ingredientes.push({ codigo_interno: item.insumo.codigo_interno, dosagem_mg, quantidade });
         }
 
+        const lidas = lerCondicoes(simCondicoes);
+        if ('erro' in lidas) {
+            setSimErro(lidas.erro);
+            return;
+        }
+
         // Só vai para a API o que foi digitado: o resto continua vindo do cadastro da clínica.
         const condicoes: CondicoesComerciaisInput = {};
-        const taxa_manipulacao = paraNumero(simCondicoes.taxa_manipulacao);
-        if (taxa_manipulacao !== undefined) condicoes.taxa_manipulacao = taxa_manipulacao;
-        const custo_embalagens = paraNumero(simCondicoes.custo_embalagens);
-        if (custo_embalagens !== undefined) condicoes.custo_embalagens = custo_embalagens;
-        const desconto = paraNumero(simCondicoes.desconto_parceiro);
-        if (desconto !== undefined) condicoes.desconto_parceiro = desconto / 100;
-        const adicional_entrega = paraNumero(simCondicoes.adicional_entrega);
-        if (adicional_entrega !== undefined) condicoes.adicional_entrega = adicional_entrega;
-        const adicional_biscoito = paraNumero(simCondicoes.adicional_biscoito);
-        if (adicional_biscoito !== undefined) condicoes.adicional_biscoito = adicional_biscoito;
-
-        if (condicoes.desconto_parceiro !== undefined && (condicoes.desconto_parceiro < 0 || condicoes.desconto_parceiro > 1)) {
-            setSimErro('O desconto deve estar entre 0 e 100%');
-            return;
+        for (const [campo, valor] of Object.entries(lidas.valores)) {
+            if (valor !== null) condicoes[campo as keyof CondicoesComerciaisInput] = valor;
         }
 
         try {
@@ -372,6 +319,49 @@ export function AdminInsumos() {
             }
         } finally {
             setSimCalculando(false);
+        }
+    };
+
+    /**
+     * Grava os parâmetros digitados nas condições comerciais da clínica escolhida.
+     * É o cadastro real do parceiro: passa a valer para as próximas prescrições,
+     * por isso a confirmação lista exatamente o que será gravado.
+     */
+    const handleSimAtualizarClinica = async () => {
+        setSimErro(null);
+        setSimMensagem(null);
+
+        if (!simClinicaId) {
+            setSimErro('Escolha a clínica que vai receber estes valores antes de atualizar');
+            return;
+        }
+
+        const lidas = lerCondicoes(simCondicoes);
+        if ('erro' in lidas) {
+            setSimErro(lidas.erro);
+            return;
+        }
+
+        const nomeClinica = simClinicas.find((c) => c.id === simClinicaId)?.nome_fantasia || 'a clínica selecionada';
+        const resumo = CAMPOS_SIMULADOR.map((campo) => {
+            const digitado = simCondicoes[campo.name].trim();
+            return `• ${campo.label}: ${digitado || '(em branco — a condição será apagada e vale zero no cálculo)'}`;
+        }).join('\n');
+
+        if (!confirm(`Gravar estas condições comerciais em ${nomeClinica}?\n\n${resumo}\n\nIsto altera o cadastro do parceiro e passa a valer para as próximas prescrições.`)) {
+            return;
+        }
+
+        try {
+            setSimSalvando(true);
+            await clinicService.updateComercial(simClinicaId, lidas.valores);
+            // Recarrega para que "partir das condições de uma clínica" traga os valores novos
+            await loadClinicas();
+            setSimMensagem(`Condições comerciais de ${nomeClinica} atualizadas.`);
+        } catch (error) {
+            setSimErro(mensagemErro(error, 'Erro ao atualizar as condições da clínica'));
+        } finally {
+            setSimSalvando(false);
         }
     };
 
@@ -1185,7 +1175,8 @@ export function AdminInsumos() {
                                     ))}
                                 </select>
                                 <p className="mt-1 text-xs text-gray-500">
-                                    Traz os valores cadastrados do parceiro para os campos abaixo. Depois é só editar.
+                                    Traz os valores cadastrados do parceiro para os campos abaixo. Depois é só editar —
+                                    e, se fechar, "Atualizar Clínica" grava de volta no cadastro.
                                 </p>
                             </div>
 
@@ -1217,12 +1208,28 @@ export function AdminInsumos() {
                         </div>
                     </div>
 
-                    <div className="flex justify-end gap-2">
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                        {!simClinicaId && (
+                            <p className="text-xs text-gray-500 mr-auto">
+                                Escolha uma clínica acima para poder gravar estes valores no cadastro dela.
+                            </p>
+                        )}
                         <button
                             onClick={handleSimLimpar}
                             className="px-4 py-2 border rounded-lg hover:bg-gray-50 text-sm"
                         >
                             Limpar
+                        </button>
+                        <button
+                            onClick={handleSimAtualizarClinica}
+                            disabled={!simClinicaId || simSalvando}
+                            title={simClinicaId
+                                ? 'Grava os parâmetros acima nas condições comerciais da clínica'
+                                : 'Selecione uma clínica para gravar estes valores'}
+                            className="flex items-center gap-2 px-6 py-2 border border-teal-600 text-teal-700 rounded-lg hover:bg-teal-50 disabled:opacity-50 disabled:hover:bg-transparent text-sm"
+                        >
+                            {simSalvando ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                            {simSalvando ? 'Atualizando...' : 'Atualizar Clínica'}
                         </button>
                         <button
                             onClick={handleSimCalcular}
@@ -1233,6 +1240,12 @@ export function AdminInsumos() {
                             {simCalculando ? 'Calculando...' : 'Calcular Preço'}
                         </button>
                     </div>
+
+                    {simMensagem && (
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-800">
+                            {simMensagem}
+                        </div>
+                    )}
 
                     {simErro && (
                         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
